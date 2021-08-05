@@ -1,5 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:workout_app/screens/index.dart';
+import 'package:workout_app/screens/account_page.dart';
+import 'package:workout_app/screens/login_page.dart';
+import 'package:workout_app/screens/splash_page.dart';
+import 'constants.dart';
 
 class FadeRouter extends PageRouteBuilder {
   final Widget screen;
@@ -28,23 +32,28 @@ class FadeRouter extends PageRouteBuilder {
 }
 
 
-class Routes {
-  final routes = <String, WidgetBuilder>{
-    '/Home': (BuildContext context) => HomeScreen(),
-  };
-
-  Routes() {
-    runApp(
-      MaterialApp(
-        debugShowCheckedModeBanner: false,
-        title: 'Workout App',
-        routes: routes,
-        theme: ThemeData(
-          primaryColor: Colors.white,
+class Routes extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return MaterialApp(
+      title: 'Supabase Flutter',
+      theme: ThemeData.dark().copyWith(
+        primaryColor: Colors.green,
+        accentColor: Colors.green,
+        elevatedButtonTheme: ElevatedButtonThemeData(
+          style: ElevatedButton.styleFrom(
+            onPrimary: Colors.white,
+            primary: Colors.green,
+          ),
         ),
-        home: HomeScreen(),
-      )
+      ),
+      initialRoute: '/',
+      routes: <String, WidgetBuilder>{
+        '/': (_) => const SplashPage(),
+        '/login': (_) => const LoginPage(),
+        '/account': (_) => const AccountPage(),
+        '/Home': (_) => HomeScreen(),
+      },
     );
   }
-
 }
