@@ -2,13 +2,15 @@ import 'package:flutter/material.dart';
 
 //Screens
 const Color defaultBackgroundColour = Color.fromRGBO(38, 38, 38, 1.0);
+const Color WorkoutsAccentColour = Color.fromRGBO(123, 0, 0, 1.0);
+const Color DietAccentColour = Color.fromRGBO(27, 123, 0, 1.0);
 
 //HomeScreen
 
 const double boxSelectionHeight = 175;
 const double boxSelectionWidth = 500;
 
-const Color workoutsTintColour = Color.fromRGBO(2, 52, 182, 0.4);
+const Color workoutsTintColour = Color.fromRGBO(255, 1, 1, 0.4);
 const Color dietTintColour = Color.fromRGBO(32, 142, 26, 0.4);
 
 const boxSelectionDecoration = BoxDecoration(
@@ -25,3 +27,9 @@ const boxSelectionDecoration = BoxDecoration(
     )
   ],
 );
+
+//AppBar
+const Color AppbarColour = Color.fromRGBO(50, 50, 50, 1.0);
+
+//SideBar
+const Color SideBarColour = Color.fromRGBO(50, 50, 50, 1.0);

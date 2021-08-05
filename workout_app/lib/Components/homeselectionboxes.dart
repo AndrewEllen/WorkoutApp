@@ -1,16 +1,29 @@
 import 'package:flutter/material.dart';
 import 'package:workout_app/constants.dart';
+import '../router.dart';
 
 class HomeSelectionBox extends StatelessWidget {
-  HomeSelectionBox({required this.containertext, required this.containerroute, required this.containerimageloc, required this.tintcolour});
-  final String containertext, containerroute, containerimageloc;
+  HomeSelectionBox({
+    required this.containertext, required this.containerroutename,
+    required this.containerimageloc, required this.tintcolour,
+    required this.containerroutewidget,
+  });
+
+  final String containertext, containerroutename, containerimageloc;
+  final Widget containerroutewidget;
   final Color tintcolour;
 
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () {
-        Navigator.pushNamed(context, containerroute);
+        Navigator.push(
+          context,
+          FadeRouter(
+          routeName: containerroutename,
+          screen: containerroutewidget,
+          )
+        );
       },
       child: Container(
         margin: EdgeInsets.only(
@@ -49,9 +62,9 @@ class HomeSelectionBox extends StatelessWidget {
                 fontWeight: FontWeight.w500,
                 shadows: [
                   Shadow(
-                    blurRadius: 2,
+                    blurRadius: 1,
                     color: Colors.black,
-                    offset: Offset(5,5),
+                    offset: Offset(1,5),
                   ),
                 ],
               ),
