@@ -2,8 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:workout_app/Components/homeselectionboxes.dart';
 import 'package:workout_app/screens/index.dart';
 import '../constants.dart';
+import 'package:supabase/supabase.dart';
+import 'package:workout_app/components/auth_required_state.dart';
 
 class HomeScreen extends StatelessWidget {
+
   @override
   Widget build(BuildContext context) {
     return SafeArea(

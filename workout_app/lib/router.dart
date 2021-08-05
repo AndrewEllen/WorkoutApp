@@ -36,14 +36,15 @@ class Routes extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      debugShowCheckedModeBanner: false,
       title: 'Supabase Flutter',
       theme: ThemeData.dark().copyWith(
-        primaryColor: Colors.green,
-        accentColor: Colors.green,
+        primaryColor: Colors.red,
+        accentColor: Colors.red,
         elevatedButtonTheme: ElevatedButtonThemeData(
           style: ElevatedButton.styleFrom(
             onPrimary: Colors.white,
-            primary: Colors.green,
+            primary: Colors.red,
           ),
         ),
       ),
@@ -52,7 +53,7 @@ class Routes extends StatelessWidget {
         '/': (_) => const SplashPage(),
         '/login': (_) => const LoginPage(),
         '/account': (_) => const AccountPage(),
-        '/Home': (_) => HomeScreen(),
+        '/home': (_) => HomeScreen(),
       },
     );
   }

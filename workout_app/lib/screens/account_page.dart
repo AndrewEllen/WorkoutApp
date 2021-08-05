@@ -12,7 +12,6 @@ class AccountPage extends StatefulWidget {
 
 class _AccountPageState extends AuthRequiredState<AccountPage> {
   late final _usernameController = TextEditingController();
-  late final _websiteController = TextEditingController();
   var _loading = false;
 
   Future<void> _getProfile(String userId) async {
@@ -31,7 +30,6 @@ class _AccountPageState extends AuthRequiredState<AccountPage> {
     }
     if (response.data != null) {
       _usernameController.text = response.data!['username'] as String;
-      _websiteController.text = response.data!['website'] as String;
     }
     setState(() {
       _loading = false;
@@ -43,12 +41,10 @@ class _AccountPageState extends AuthRequiredState<AccountPage> {
       _loading = true;
     });
     final userName = _usernameController.text;
-    final website = _websiteController.text;
     final user = supabase.auth.currentUser;
     final updates = {
       'id': user!.id,
       'username': userName,
-      'website': website,
       'updated_at': DateTime.now().toIso8601String(),
     };
     final response = await supabase.from('profiles').upsert(updates).execute();
@@ -93,7 +89,6 @@ class _AccountPageState extends AuthRequiredState<AccountPage> {
   @override
   void dispose() {
     _usernameController.dispose();
-    _websiteController.dispose();
     super.dispose();
   }
 
@@ -110,14 +105,13 @@ class _AccountPageState extends AuthRequiredState<AccountPage> {
             decoration: const InputDecoration(labelText: 'User Name'),
           ),
           const SizedBox(height: 18),
-          TextFormField(
-            controller: _websiteController,
-            decoration: const InputDecoration(labelText: 'Website'),
-          ),
           const SizedBox(height: 18),
           ElevatedButton(
-              onPressed: _updateProfile,
-              child: Text(_loading ? 'Saving...' : 'Update')),
+              onPressed: () {
+                _updateProfile();
+                Navigator.of(context).pushNamedAndRemoveUntil('/home', (route) => false);
+              },
+              child: Text(_loading ? 'Saving...' : 'Save and Continue')),
           const SizedBox(height: 18),
           ElevatedButton(onPressed: _signOut, child: const Text('Sign Out')),
         ],
