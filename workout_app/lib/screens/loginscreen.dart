@@ -165,7 +165,7 @@ class _LoginScreenState extends State<LoginScreen> {
   Future _login() async {
     final sharedPreferences = await SharedPreferences.getInstance();
 
-    final result = await GetIt.I.get<SupabaseClient>().auth.signIn(
+    final result = await supabase.auth.signIn(
         email: _emailController.text, password: _passwordController.text);
 
     if (result.data != null) {

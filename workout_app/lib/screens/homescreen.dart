@@ -15,12 +15,14 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
+
   @override
   Widget build(BuildContext context) {
-    final currentUser = GetIt.instance<SupabaseClient>().auth.user();
+
+    final currentUser = supabase.auth.user();
 
     _logout() async {
-      await GetIt.I.get<SupabaseClient>().auth.signOut();
+      await supabase.auth.signOut();
 
       final sharedPreferences = await SharedPreferences.getInstance();
       sharedPreferences.clear();

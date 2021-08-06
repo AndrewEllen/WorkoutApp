@@ -31,10 +31,9 @@ class _SplashScreenState extends State<SplashScreen> {
         Navigator.pushReplacementNamed(context, '/login');
       });
     } else {
-      final response =
-      await GetIt.instance<SupabaseClient>().auth.recoverSession(session);
+      final response = await supabase.auth.recoverSession(session);
 
-      sharedPreferences.setString('user', response.data!.persistSessionString);
+      //sharedPreferences.setString('user', response.data!.persistSessionString);
 
       Navigator.pushReplacementNamed(context, '/home');
     }
