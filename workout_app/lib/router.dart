@@ -30,7 +30,7 @@ class FadeRouter extends PageRouteBuilder {
 
 class Routes {
   final routes = <String, WidgetBuilder>{
-    '/Home': (BuildContext context) => HomeScreen(),
+    '/Home': (BuildContext context) => HomeScreen2(),
   };
 
   Routes() {
@@ -42,7 +42,7 @@ class Routes {
         theme: ThemeData(
           primaryColor: Colors.white,
         ),
-        home: HomeScreen(),
+        home: HomeScreen2(),
       )
     );
   }

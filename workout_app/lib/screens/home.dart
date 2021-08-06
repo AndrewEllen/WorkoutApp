@@ -3,7 +3,7 @@ import 'package:workout_app/Components/homeselectionboxes.dart';
 import 'package:workout_app/screens/index.dart';
 import '../constants.dart';
 
-class HomeScreen extends StatelessWidget {
+class HomeScreen2 extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SafeArea(
