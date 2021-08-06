@@ -1,3 +1,3 @@
 export 'diethome.dart';
-export 'home.dart';
+export 'homescreen.dart';
 export 'workouthome.dart';
