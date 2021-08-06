@@ -3,6 +3,8 @@ import 'package:get_it/get_it.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:supabase/supabase.dart';
 
+import '../constants.dart';
+
 class LoginScreen extends StatefulWidget {
   const LoginScreen({Key? key}) : super(key: key);
 
@@ -19,7 +21,7 @@ class _LoginScreenState extends State<LoginScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: _buildBody(context),
-      backgroundColor: Color(0XFF181818),
+      backgroundColor: defaultLoginBackgroundColour,
     );
   }
 
@@ -47,6 +49,7 @@ class _LoginScreenState extends State<LoginScreen> {
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 40),
             child: Card(
+              color: SideBarColour,
               elevation: 1,
               child: Container(
                 padding: EdgeInsets.only(bottom: 40),
@@ -61,13 +64,13 @@ class _LoginScreenState extends State<LoginScreen> {
                         padding: EdgeInsets.symmetric(horizontal: 20.0),
                         child: TextFormField(
                           controller: _emailController,
-                          cursorColor: Colors.black,
-                          style: TextStyle(),
+                          cursorColor: Colors.white,
+                          style: TextStyle(color: Colors.white,),
                           decoration: InputDecoration(
                             labelText: 'E-mail',
-                            labelStyle: TextStyle(color: Colors.black),
+                            labelStyle: TextStyle(color: Colors.white),
                             focusedBorder: UnderlineInputBorder(
-                              borderSide: new BorderSide(color: Colors.black),
+                              borderSide: new BorderSide(color: Colors.white),
                             ),
                           ),
                           validator: (String? value) {
@@ -84,14 +87,14 @@ class _LoginScreenState extends State<LoginScreen> {
                         padding: EdgeInsets.symmetric(horizontal: 20.0),
                         child: TextFormField(
                           controller: _passwordController,
-                          cursorColor: Colors.black,
+                          cursorColor: Colors.white,
                           obscureText: true,
-                          style: TextStyle(),
+                          style: TextStyle(color: Colors.white),
                           decoration: InputDecoration(
                             labelText: 'Password',
-                            labelStyle: TextStyle(color: Colors.black),
+                            labelStyle: TextStyle(color: Colors.white),
                             focusedBorder: UnderlineInputBorder(
-                              borderSide: new BorderSide(color: Colors.black),
+                              borderSide: new BorderSide(color: Colors.white),
                             ),
                           ),
                           validator: (String? value) {
@@ -127,7 +130,10 @@ class _LoginScreenState extends State<LoginScreen> {
                       Row(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
-                          Text('Don\'t have an account?'),
+                          Text(
+                            'Don\'t have an account?',
+                            style: TextStyle(color: Colors.white,),
+                          ),
                           SizedBox(
                             width: 10,
                           ),
@@ -137,7 +143,10 @@ class _LoginScreenState extends State<LoginScreen> {
                             },
                             child: Text(
                               'Register',
-                              style: TextStyle(fontWeight: FontWeight.bold),
+                              style: TextStyle(
+                                fontWeight: FontWeight.bold,
+                                color: Colors.white,
+                              ),
                             ),
                           )
                         ],

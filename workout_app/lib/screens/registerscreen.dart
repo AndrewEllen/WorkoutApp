@@ -21,7 +21,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: _buildBody(context),
-      backgroundColor: Color(0XFF181818),
+      backgroundColor: defaultLoginBackgroundColour,
     );
   }
 
@@ -49,6 +49,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 40),
             child: Card(
+              color: SideBarColour,
               elevation: 1,
               child: Container(
                 padding: EdgeInsets.only(bottom: 40),
@@ -63,13 +64,13 @@ class _RegisterScreenState extends State<RegisterScreen> {
                         padding: EdgeInsets.symmetric(horizontal: 20.0),
                         child: TextFormField(
                           controller: _emailController,
-                          cursorColor: Colors.black,
-                          style: TextStyle(),
+                          cursorColor: Colors.white,
+                          style: TextStyle(color: Colors.white),
                           decoration: InputDecoration(
                             labelText: 'E-mail',
-                            labelStyle: TextStyle(color: Colors.black),
+                            labelStyle: TextStyle(color: Colors.white),
                             focusedBorder: UnderlineInputBorder(
-                              borderSide: new BorderSide(color: Colors.black),
+                              borderSide: new BorderSide(color: Colors.white),
                             ),
                           ),
                           validator: (String? value) {
@@ -86,14 +87,14 @@ class _RegisterScreenState extends State<RegisterScreen> {
                         padding: EdgeInsets.symmetric(horizontal: 20.0),
                         child: TextFormField(
                           controller: _passwordController,
-                          cursorColor: Colors.black,
+                          cursorColor: Colors.white,
                           obscureText: true,
-                          style: TextStyle(),
+                          style: TextStyle(color: Colors.white),
                           decoration: InputDecoration(
                             labelText: 'Password',
-                            labelStyle: TextStyle(color: Colors.black),
+                            labelStyle: TextStyle(color: Colors.white),
                             focusedBorder: UnderlineInputBorder(
-                              borderSide: new BorderSide(color: Colors.black),
+                              borderSide: new BorderSide(color: Colors.white),
                             ),
                           ),
                           validator: (String? value) {
@@ -109,14 +110,14 @@ class _RegisterScreenState extends State<RegisterScreen> {
                       Container(
                         padding: EdgeInsets.symmetric(horizontal: 20.0),
                         child: TextFormField(
-                          cursorColor: Colors.black,
+                          cursorColor: Colors.white,
                           obscureText: true,
-                          style: TextStyle(),
+                          style: TextStyle(color: Colors.white),
                           decoration: InputDecoration(
                             labelText: 'Confirm Password',
-                            labelStyle: TextStyle(color: Colors.black),
+                            labelStyle: TextStyle(color: Colors.white),
                             focusedBorder: UnderlineInputBorder(
-                              borderSide: new BorderSide(color: Colors.black),
+                              borderSide: new BorderSide(color: Colors.white),
                             ),
                           ),
                           validator: (String? value) {
@@ -153,7 +154,10 @@ class _RegisterScreenState extends State<RegisterScreen> {
                       Row(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
-                          Text('Already have an account?'),
+                          Text(
+                            'Already have an account?',
+                            style: TextStyle(color: Colors.white,),
+                          ),
                           SizedBox(
                             width: 10,
                           ),
@@ -163,7 +167,10 @@ class _RegisterScreenState extends State<RegisterScreen> {
                             },
                             child: Text(
                               'Login',
-                              style: TextStyle(fontWeight: FontWeight.bold),
+                              style: TextStyle(
+                                fontWeight: FontWeight.bold,
+                                color: Colors.white,
+                              ),
                             ),
                           )
                         ],
