@@ -18,7 +18,8 @@ void main() {
   GetIt locator = GetIt.instance;
   locator.registerSingleton<SupabaseClient>(SupabaseClient(
       'https://lwoqduelpcooopxiryqc.supabase.co',
-      'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJyb2xlIjoiYW5vbiIsImlhdCI6MTYyODIwOTE5MywiZXhwIjoxOTQzNzg1MTkzfQ.UAhcH6uqOMirAUSX5Z_AfS8W8fBttfrlOooJwI-fnoo'));
+      'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJyb2xlIjoiYW5vbiIsImlhdCI6MTYyODIwOTE5MywiZXhwIjoxOTQzNzg1MTkzfQ.UAhcH6uqOMirAUSX5Z_AfS8W8fBttfrlOooJwI-fnoo'
+  ));
 
   runApp(
     MyApp(),
