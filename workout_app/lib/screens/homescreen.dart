@@ -91,8 +91,16 @@ class _HomeScreenState extends State<HomeScreen> {
                         containerimageloc: "assets/diet.jpg",
                         tintcolour: dietTintColour,
                       ),
-                      MaterialButton(
-                        color: Colors.grey[800],
+
+
+                    ],
+                  ),
+                  Align(
+                    alignment: Alignment.bottomCenter,
+                    child: Container(
+                      margin: EdgeInsets.only(bottom:50),
+                      child: MaterialButton(
+                        color: Colors.black,
                         onPressed: () {
                           _logout();
                         },
@@ -102,9 +110,9 @@ class _HomeScreenState extends State<HomeScreen> {
                             color: WorkoutsAccentColour,
                           ),
                         ),
-                      )
-                    ],
-                  ),
+                      ),
+                    ),
+                  )
                 ],
               ),
             )));
