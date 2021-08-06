@@ -18,57 +18,6 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   Widget build(BuildContext context) {
     final currentUser = GetIt.instance<SupabaseClient>().auth.user();
-    //late final _usernameController = TextEditingController();
-    //var _loading = false;
-
-    /*Future<void> _getProfile(String userId) async {
-      setState(() {
-        _loading = true;
-      });
-      final response = await supabase
-          .from('profiles')
-          .select()
-          .eq('id', userId)
-          .single()
-          .execute();
-      if (response.error != null && response.status != 406) {
-        ScaffoldMessenger.of(context)
-            .showSnackBar(SnackBar(content: Text(response.error!.message)));
-      }
-      if (response.data != null) {
-        _usernameController.text = response.data!['username'] as String;
-      }
-      setState(() {
-        _loading = false;
-      });
-    }
-
-    Future<void> _updateProfile() async {
-      final userName = _usernameController.text;
-      final user = supabase.auth.currentUser;
-      final updates = {
-        'id': user!.id,
-        'username': userName,
-        'updated_at': DateTime.now().toIso8601String(),
-      };
-      final response =
-          await supabase.from('profiles').upsert(updates).execute();
-      if (response.error != null) {
-        ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-          content: Text(response.error!.message),
-          backgroundColor: Colors.red,
-        ));
-      } else {
-        ScaffoldMessenger.of(context).showSnackBar(
-            const SnackBar(content: Text('Successfully updated profile!')));
-      }
-    }
-
-    @override
-    void dispose() {
-      _usernameController.dispose();
-      super.dispose();
-    }*/
 
     _logout() async {
       await GetIt.I.get<SupabaseClient>().auth.signOut();
@@ -88,50 +37,32 @@ class _HomeScreenState extends State<HomeScreen> {
                   Align(
                     alignment: Alignment.topCenter,
                     child: Container(
-                      margin: EdgeInsets.only(top: 20),
-                      child: Text(
-                        "Fitness Tracker",
-                        style: TextStyle(
-                          fontSize: 50,
-                          color: Colors.white,
-                          shadows: [
-                            Shadow(
-                              blurRadius: 10,
-                              color: Colors.black,
-                              offset: Offset(1, 2),
+                      margin: EdgeInsets.only(),
+                      decoration: BoxDecoration(
+                        color: AppbarColour,
+                        boxShadow: [
+                          BoxShadow(
+                            color: Color.fromRGBO(1, 1, 1, 0.4),
+                            spreadRadius: 1,
+                            blurRadius: 2,
+                            offset: Offset(0, 3),
+                          )
+                        ],
+                      ),
+                        child: Container(
+                          height: 80,
+                          decoration: BoxDecoration(
+                            image: DecorationImage(
+                              image: ExactAssetImage('assets/logo.png'),
                             ),
-                          ],
+                          ),
                         ),
                       ),
-                    ),
                   ),
                   Column(
                     mainAxisAlignment: MainAxisAlignment.center,
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
-                      /*Row(children: [
-                        Container(
-                          padding: EdgeInsets.symmetric(horizontal: 20.0),
-                          width: 200,
-                          child: TextFormField(
-                            controller: _usernameController,
-                            cursorColor: Colors.black,
-                            style: TextStyle(),
-                            decoration: InputDecoration(
-                              labelText: 'Display Name',
-                              labelStyle: TextStyle(color: Colors.black),
-                              focusedBorder: UnderlineInputBorder(
-                                borderSide: new BorderSide(color: Colors.black),
-                              ),
-                            ),
-                            validator: (String? value) {
-                              if (value!.isEmpty) {
-                                return 'Invalid Username';
-                              }
-                            },
-                          ),
-                        ),
-                      ]),*/
                       Text(
                         'User: ${currentUser?.email}',
                         style: TextStyle(

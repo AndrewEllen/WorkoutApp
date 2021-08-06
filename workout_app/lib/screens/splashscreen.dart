@@ -24,7 +24,10 @@ class _SplashScreenState extends State<SplashScreen> {
     final session = sharedPreferences.getString('user');
 
     if (session == null) {
-      Navigator.pushReplacementNamed(context, '/login');
+      Future.delayed(const Duration(milliseconds: 500), ()
+      {
+        Navigator.pushReplacementNamed(context, '/login');
+      });
     } else {
       final response =
       await GetIt.instance<SupabaseClient>().auth.recoverSession(session);
@@ -39,7 +42,7 @@ class _SplashScreenState extends State<SplashScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: Center(
-        child: CupertinoActivityIndicator(),
+        child: CircularProgressIndicator(),
       ),
     );
   }

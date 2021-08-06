@@ -33,10 +33,14 @@ class _LoginScreenState extends State<LoginScreen> {
             height: 120,
           ),
           Container(
-              child: Image.network(
-                'https://supabase.io/new/images/logo-dark.png',
-                width: 300,
-              )),
+            height: 60,
+            decoration: BoxDecoration(
+              image: DecorationImage(
+                fit: BoxFit.cover,
+                image: ExactAssetImage('assets/logo.png'),
+              ),
+            ),
+          ),
           SizedBox(
             height: 100,
           ),
