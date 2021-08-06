@@ -199,7 +199,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
   Future _register() async {
     final result = await GetIt.instance<SupabaseClient>()
         .auth
-        .signUp(_emailController.text, _UsernameController.text, _passwordController.text);
+        .signUp(_emailController.text, _passwordController.text);
 
     if (result.data != null) {
       Navigator.pushReplacementNamed(context, '/login');

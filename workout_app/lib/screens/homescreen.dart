@@ -2,6 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:supabase/supabase.dart';
+import 'package:workout_app/Components/homeselectionboxes.dart';
+import 'package:workout_app/screens/workouthome.dart';
+
+import '../constants.dart';
+import 'diethome.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({Key? key}) : super(key: key);
@@ -15,31 +20,76 @@ class _HomeScreenState extends State<HomeScreen> {
   Widget build(BuildContext context) {
     final currentUser = GetIt.instance<SupabaseClient>().auth.user();
 
-    return Scaffold(
-      appBar: AppBar(
-        title: Text('Home'),
-      ),
-      body: Container(
-        child: Center(
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Text('Hi ${currentUser?.email}'),
-              SizedBox(
-                height: 30,
+    return SafeArea(
+        child: Scaffold(
+            backgroundColor: defaultBackgroundColour,
+            body: Center(
+              child: Stack(
+                children: [
+                  Align(
+                    alignment: Alignment.topCenter,
+                    child: Container(
+                      margin: EdgeInsets.only(top: 20),
+                      child: Text(
+                        "Fitness Tracker",
+                        style: TextStyle(
+                          fontSize: 50,
+                          color: Colors.white,
+                          shadows: [
+                            Shadow(
+                              blurRadius: 10,
+                              color: Colors.black,
+                              offset: Offset(1, 2),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ),
+                  ),
+                  Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      Text(
+                        'User: ${currentUser?.email}',
+                        style: TextStyle(
+                          fontSize: 16,
+                          color: Colors.white,
+                          shadows: [
+                            Shadow(
+                              blurRadius: 10,
+                              color: Colors.black,
+                              offset: Offset(1, 2),
+                            ),
+                          ],
+                        ),
+                      ),
+                      HomeSelectionBox(
+                        containertext: "Workouts",
+                        containerroutename: "/WorkoutHome",
+                        containerroutewidget: WorkoutHomeScreen(),
+                        containerimageloc: "assets/workouts.jpg",
+                        tintcolour: workoutsTintColour,
+                      ),
+                      HomeSelectionBox(
+                        containertext: "Diet",
+                        containerroutename: "/DietHome",
+                        containerroutewidget: DietHomeScreen(),
+                        containerimageloc: "assets/diet.jpg",
+                        tintcolour: dietTintColour,
+                      ),
+                      MaterialButton(
+                        color: Colors.red,
+                        onPressed: () {
+                          _logout();
+                        },
+                        child: Text('Logout'),
+                      )
+                    ],
+                  ),
+                ],
               ),
-              MaterialButton(
-                color: Colors.red,
-                onPressed: () {
-                  _logout();
-                },
-                child: Text('Logout'),
-              )
-            ],
-          ),
-        ),
-      ),
-    );
+            )));
   }
 
   _logout() async {
