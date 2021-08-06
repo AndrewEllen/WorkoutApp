@@ -169,12 +169,10 @@ void _showDialog(context, {String? title, String? message}) {
   showDialog(
     context: context,
     builder: (BuildContext context) {
-      // retorna um objeto do tipo Dialog
       return AlertDialog(
         title: new Text(title ?? ''),
         content: new Text(message ?? ''),
         actions: <Widget>[
-          // define os botões na base do dialogo
           new MaterialButton(
             child: new Text("Close"),
             onPressed: () {

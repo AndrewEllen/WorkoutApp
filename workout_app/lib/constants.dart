@@ -1,4 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:supabase_flutter/supabase_flutter.dart';
+
+//Supabase
+final supabase = Supabase.instance.client;
 
 //Screens
 const Color defaultBackgroundColour = Color.fromRGBO(38, 38, 38, 1.0);

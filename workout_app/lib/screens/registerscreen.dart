@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
 import 'package:supabase/supabase.dart';
 
+import '../constants.dart';
+
 class RegisterScreen extends StatefulWidget {
   const RegisterScreen({Key? key}) : super(key: key);
 
@@ -9,9 +11,9 @@ class RegisterScreen extends StatefulWidget {
   _RegisterScreenState createState() => _RegisterScreenState();
 }
 
+
 class _RegisterScreenState extends State<RegisterScreen> {
   final _emailController = TextEditingController();
-  final _UsernameController = TextEditingController();
   final _passwordController = TextEditingController();
   final _formKey = GlobalKey<FormState>();
 
@@ -69,29 +71,6 @@ class _RegisterScreenState extends State<RegisterScreen> {
                           validator: (String? value) {
                             if (value!.isEmpty || !value.contains('@')) {
                               return 'Invalid e-mail';
-                            }
-                          },
-                        ),
-                      ),
-                      SizedBox(
-                        height: 10,
-                      ),
-                      Container(
-                        padding: EdgeInsets.symmetric(horizontal: 20.0),
-                        child: TextFormField(
-                          controller: _UsernameController,
-                          cursorColor: Colors.black,
-                          style: TextStyle(),
-                          decoration: InputDecoration(
-                            labelText: 'Username',
-                            labelStyle: TextStyle(color: Colors.black),
-                            focusedBorder: UnderlineInputBorder(
-                              borderSide: new BorderSide(color: Colors.black),
-                            ),
-                          ),
-                          validator: (String? value) {
-                            if (value!.isEmpty ) {
-                              return 'Invalid Username';
                             }
                           },
                         ),
