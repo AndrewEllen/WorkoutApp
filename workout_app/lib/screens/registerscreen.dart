@@ -187,7 +187,9 @@ class _RegisterScreenState extends State<RegisterScreen> {
   }
 
   Future _register() async {
-    final result = await supabase
+    print(_emailController.text);
+    print(_passwordController.text);
+    final result = await GetIt.instance<SupabaseClient>()
         .auth
         .signUp(_emailController.text, _passwordController.text);
 

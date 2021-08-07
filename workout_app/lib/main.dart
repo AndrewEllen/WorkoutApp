@@ -9,17 +9,12 @@ import 'package:workout_app/screens/registerscreen.dart';
 import 'package:workout_app/screens/splashscreen.dart';
 
 void main() {
+  WidgetsFlutterBinding.ensureInitialized();
   Supabase.initialize(
       url: 'https://lwoqduelpcooopxiryqc.supabase.co',
       anonKey: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJyb2xlIjoiYW5vbiIsImlhdCI6MTYyODIwOTE5MywiZXhwIjoxOTQzNzg1MTkzfQ.UAhcH6uqOMirAUSX5Z_AfS8W8fBttfrlOooJwI-fnoo',
       authCallbackUrlHostname: 'login-callback',
   );
-
-  GetIt locator = GetIt.instance;
-  locator.registerSingleton<SupabaseClient>(SupabaseClient(
-      'https://lwoqduelpcooopxiryqc.supabase.co',
-      'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJyb2xlIjoiYW5vbiIsImlhdCI6MTYyODIwOTE5MywiZXhwIjoxOTQzNzg1MTkzfQ.UAhcH6uqOMirAUSX5Z_AfS8W8fBttfrlOooJwI-fnoo'
-  ));
 
   runApp(
     MyApp(),
