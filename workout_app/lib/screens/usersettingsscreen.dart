@@ -25,14 +25,44 @@ class _UserSettingsState extends State<UserSettings> {
     _getProfile(currentUser!.id);
   }
 
-  Future<void> daily_calories() async {
+  Future<String> daily_calories() async {
     var calories;
+    var BMRmultActivity;
     var weight = double.parse(_weightController.text);
     var height = double.parse(_heightController.text);
+    var age = double.parse(_ageController.text);
+
+    if (dropdownValueActivity == "Sedentary") {
+      BMRmultActivity = 1.2;
+    }
+    if (dropdownValueActivity == "Light") {
+      BMRmultActivity = 1.375;
+    }
+    if (dropdownValueActivity == "Moderate") {
+      BMRmultActivity = 1.55;
+    }
+    if (dropdownValueActivity == "Active") {
+      BMRmultActivity = 1.725;
+    }
+    if (dropdownValueActivity == "Very Active") {
+      BMRmultActivity = 1.9;
+    }
 
     if (dropdownValueGender == "Male") {
-      calories = 66 + (6.3 * (weight * 2.205) + 12.9 * (height * 2.54));
+      calories = ((66 + ((6.3 * (weight * 2.205)) + (12.9 * (height / 2.54)) - (6.8 * age)))*BMRmultActivity);
     }
+    if (dropdownValueGender == "Female") {
+      calories = ((655 + ((4.3 * (weight * 2.205)) + (4.7 * (height / 2.54)) - (4.7 * age)))*BMRmultActivity);
+    }
+
+    if (dropdownValueGoals == "Cut") {
+      calories -= 400;
+    }
+    if (dropdownValueGoals == "Bulk") {
+      calories += 400;
+    }
+    
+    return calories.toString();
   }
 
   Future<void> _getProfile(String userId) async {
@@ -76,6 +106,7 @@ class _UserSettingsState extends State<UserSettings> {
     final goal = dropdownValueGoals;
     final activity = dropdownValueActivity;
     final gender = dropdownValueGender;
+    final calories = await daily_calories();
     final updates = {
       'id': user!.id,
       'username': userName,
@@ -85,6 +116,7 @@ class _UserSettingsState extends State<UserSettings> {
       'goal': goal,
       'activity': activity,
       'gender': gender,
+      'daily_calories': calories,
       'updated_at': DateTime.now().toIso8601String(),
     };
     final response = await supabase.from('profiles').upsert(updates).execute();
@@ -96,6 +128,9 @@ class _UserSettingsState extends State<UserSettings> {
     } else {
       ScaffoldMessenger.of(context).showSnackBar(
           const SnackBar(content: Text('Successfully updated profile!')));
+      Timer(Duration(milliseconds: 800), () {
+        Navigator.pop(context);
+      });
     }
     setState(() {
       _loading = false;
@@ -384,7 +419,7 @@ class _UserSettingsState extends State<UserSettings> {
                     dropdownValueActivity = newValue!;
                   });
                 },
-                items: <String>['Sedentary','Light', 'Moderate', 'Active']
+                items: <String>['Sedentary','Light', 'Moderate', 'Active', 'Very Active']
                     .map<DropdownMenuItem<String>>((String value) {
                   return DropdownMenuItem<String>(
                     value: value,
@@ -401,9 +436,6 @@ class _UserSettingsState extends State<UserSettings> {
               child: ElevatedButton(
                 onPressed: () {
                   _updateProfile();
-                  Timer(Duration(milliseconds: 800), () {
-                    Navigator.pop(context);
-                  });
                 },
                 style: ElevatedButton.styleFrom(
                   primary: WorkoutsAccentColour,
