@@ -1,6 +1,5 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
-import 'package:get_it/get_it.dart';
 import 'package:supabase/supabase.dart';
 import '../constants.dart';
 
@@ -61,7 +60,7 @@ class _UserSettingsState extends State<UserSettings> {
     if (dropdownValueGoals == "Bulk") {
       calories += 400;
     }
-    
+
     return calories.toString();
   }
 
