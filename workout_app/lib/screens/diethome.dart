@@ -1,8 +1,9 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:workout_app/Components/Navbar.dart';
 import 'package:workout_app/Components/sidebar.dart';
 import 'dart:async';
-import 'package:supabase/supabase.dart';
+import 'package:workout_app/Components/dietmealbox.dart';
 import '../constants.dart';
 
 class DietHomeScreen extends StatefulWidget {
@@ -55,17 +56,57 @@ class _DietHomeScreenState extends State<DietHomeScreen> {
           sidebaraccentcolour: DietAccentColour,
           sidebarcolour: SideBarColour,
         ),
-        body: Center(
-          child: Container(
-            margin: EdgeInsets.only(bottom:150),
-            child: Text(
-              'Daily Calories Goal: ${calories.toString()}',
-              style: TextStyle(
-                color: Colors.white,
-
+        body: Stack(
+          children: [
+            Align(
+              alignment: Alignment.topCenter,
+              child: DietMealBox(
+                marginsize: 15,
+                boxheading: "Daily Calories Goal",
+                headingcontent: calories.toString(),
               ),
             ),
-          ),
+            Align(
+              alignment: Alignment.topCenter,
+              child: DietMealBox(
+                marginsize: 110,
+                boxheading: "Daily Calories Remaining",
+                headingcontent: calories.toString(),
+              ),
+            ),
+            Align(
+              alignment: Alignment.topCenter,
+              child: DietMealBox(
+                marginsize: 205,
+                boxheading: "Breakfast",
+                headingcontent: 0,
+              ),
+            ),
+            Align(
+              alignment: Alignment.topCenter,
+              child: DietMealBox(
+                marginsize: 300,
+                boxheading: "Lunch",
+                headingcontent: 0,
+              ),
+            ),
+            Align(
+              alignment: Alignment.topCenter,
+              child: DietMealBox(
+                marginsize: 395,
+                boxheading: "Dinner",
+                headingcontent: 0,
+              ),
+            ),
+            Align(
+              alignment: Alignment.topCenter,
+              child: DietMealBox(
+                marginsize: 490,
+                boxheading: "Calories Burned",
+                headingcontent: 0,
+              ),
+            ),
+          ],
         )
       ),
     );

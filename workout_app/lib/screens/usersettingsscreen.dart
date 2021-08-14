@@ -128,7 +128,7 @@ class _UserSettingsState extends State<UserSettings> {
       ScaffoldMessenger.of(context).showSnackBar(
           const SnackBar(content: Text('Successfully updated profile!')));
       Timer(Duration(milliseconds: 800), () {
-        Navigator.pop(context);
+        Navigator.pushNamedAndRemoveUntil(context, "/home", (r) => false);
       });
     }
     setState(() {

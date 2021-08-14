@@ -15,8 +15,37 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
-
+  late final username;
   final currentUser = supabase.auth.user();
+  var _loading = false;
+
+  void initState() {
+    _getProfile(currentUser!.id);
+  }
+
+  Future<void> _getProfile(String userId) async {
+    setState(() {
+      _loading = true;
+    });
+    final response = await supabase
+        .from('profiles')
+        .select()
+        .eq('id', userId)
+        .single()
+        .execute();
+    if (response.error != null && response.status != 406) {
+      ScaffoldMessenger.of(context)
+          .showSnackBar(SnackBar(content: Text(response.error!.message)));
+    }
+    if (response.data != null) {
+      username = response.data!['username'] as String;
+    } else {
+      username = currentUser?.email;
+    }
+    setState(() {
+      _loading = false;
+    });
+  }
 
   _logout() async {
     await supabase.auth.signOut();
@@ -70,7 +99,7 @@ class _HomeScreenState extends State<HomeScreen> {
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
                       Text(
-                        'User: ${currentUser?.email}',
+                        'User: ${_loading ? currentUser?.email : username}',
                         style: TextStyle(
                           fontSize: 16,
                           color: Colors.white,
