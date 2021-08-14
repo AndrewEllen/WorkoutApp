@@ -42,6 +42,7 @@ class _CustomSideBarState extends State<CustomSideBar> {
       username = response.data!['username'] as String;
       avatar = response.data!['avatar_url'] as String;
     } else {
+      avatar = "https://i.imgur.com/yKV9vpH.png";
       username = currentUser?.email;
     }
     setState(() {

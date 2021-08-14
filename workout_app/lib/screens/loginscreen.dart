@@ -1,4 +1,3 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:workout_app/Components/authstate.dart';
@@ -12,8 +11,7 @@ class LoginScreen extends StatefulWidget {
   _LoginScreenState createState() => _LoginScreenState();
 }
 
-class _LoginScreenState extends State<LoginScreen> {
-  final _formKey = GlobalKey<FormState>();
+class _LoginScreenState extends AuthState<LoginScreen> {
   bool _isLoading = false;
   late final TextEditingController _emailController;
 
@@ -94,7 +92,6 @@ class _LoginScreenState extends State<LoginScreen> {
               child: Container(
                 padding: EdgeInsets.only(bottom: 40),
                 child: Form(
-                  key: _formKey,
                   child: Column(
                     children: [
                       SizedBox(
@@ -137,11 +134,7 @@ class _LoginScreenState extends State<LoginScreen> {
                         width: size.width,
                         height: 45,
                         child: MaterialButton(
-                          onPressed: () async {
-                            if (_formKey.currentState!.validate()) {
-                              _signIn();
-                            }
-                          },
+                          onPressed: (_isLoading ? null : _signIn),
                           color: Colors.black,
                           child: Text(
                             'Login',

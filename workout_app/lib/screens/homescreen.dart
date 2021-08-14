@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:get_it/get_it.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:supabase/supabase.dart';
 import 'package:workout_app/Components/homeselectionboxes.dart';
 import 'package:workout_app/screens/workouthome.dart';
 import '../constants.dart';
@@ -49,7 +47,6 @@ class _HomeScreenState extends State<HomeScreen> {
 
   _logout() async {
     await supabase.auth.signOut();
-
     final sharedPreferences = await SharedPreferences.getInstance();
     sharedPreferences.clear();
 
