@@ -1,10 +1,5 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:get_it/get_it.dart';
-import 'package:shared_preferences/shared_preferences.dart';
-import 'package:supabase/supabase.dart';
-
-import '../constants.dart';
+import 'package:workout_app/Components/authstate.dart';
 
 class SplashScreen extends StatefulWidget {
   const SplashScreen({Key? key}) : super(key: key);
@@ -13,39 +8,17 @@ class SplashScreen extends StatefulWidget {
   _SplashScreenState createState() => _SplashScreenState();
 }
 
-class _SplashScreenState extends State<SplashScreen> {
+class _SplashScreenState extends AuthState<SplashScreen> {
   @override
   void initState() {
+    recoverSupabaseSession();
     super.initState();
-
-    checkLogin();
-  }
-
-  void checkLogin() async {
-    final sharedPreferences = await SharedPreferences.getInstance();
-    final session = sharedPreferences.getString('user');
-
-    if (session == null) {
-      Future.delayed(const Duration(milliseconds: 500), ()
-      {
-        Navigator.pushReplacementNamed(context, '/login');
-      });
-    } else {
-      final response = await supabase.auth.recoverSession(session);
-
-      //sharedPreferences.setString('user', response.data!.persistSessionString);
-
-      Navigator.pushReplacementNamed(context, '/home');
-    }
   }
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: defaultBackgroundColour,
-      body: Center(
-        child: CircularProgressIndicator(),
-      ),
+    return const Scaffold(
+      body: Center(child: CircularProgressIndicator()),
     );
   }
 }

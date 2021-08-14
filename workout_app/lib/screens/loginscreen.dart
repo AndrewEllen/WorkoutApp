@@ -1,7 +1,84 @@
+import 'package:flutter/foundation.dart';
+import 'package:flutter/material.dart';
+import 'package:workout_app/Components/authstate.dart';
+import 'package:supabase/supabase.dart';
+import '../constants.dart';
+
+class LoginScreen extends StatefulWidget {
+  const LoginScreen({Key? key}) : super(key: key);
+
+  @override
+  _LoginScreenState createState() => _LoginScreenState();
+}
+
+class _LoginScreenState extends State<LoginScreen> {
+  bool _isLoading = false;
+  late final TextEditingController _emailController;
+
+  Future<void> _signIn() async {
+    setState(() {
+      _isLoading = true;
+    });
+    final response = await supabase.auth.signIn(
+        email: _emailController.text,
+        options: AuthOptions(
+            redirectTo: kIsWeb
+                ? null
+                : 'io.supabase.flutterquickstart://login-callback/'));
+    if (response.error != null) {
+      ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+        content: Text(response.error!.message),
+        backgroundColor: Colors.red,
+      ));
+    } else {
+      ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(content: Text('Check your email for login link!')));
+    }
+    setState(() {
+      _emailController.clear();
+      _isLoading = false;
+    });
+  }
+
+  @override
+  void initState() {
+    _emailController = TextEditingController();
+    super.initState();
+  }
+
+  @override
+  void dispose() {
+    _emailController.dispose();
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(title: const Text('Sign In')),
+      body: ListView(
+        padding: const EdgeInsets.symmetric(vertical: 18, horizontal: 12),
+        children: [
+          const Text('Sign in via the magic link with your email below'),
+          const SizedBox(height: 18),
+          TextFormField(
+            controller: _emailController,
+            decoration: const InputDecoration(labelText: 'Email'),
+          ),
+          const SizedBox(height: 18),
+          ElevatedButton(
+            onPressed: _isLoading ? null : _signIn,
+            child: Text(_isLoading ? 'Loading' : 'Send Magic Link'),
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+/*
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:supabase/supabase.dart';
-
 import '../constants.dart';
 
 class LoginScreen extends StatefulWidget {
@@ -196,3 +273,5 @@ void _showDialog(context, {String? title, String? message}) {
     },
   );
 }
+
+ */

@@ -1,24 +1,18 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
-import 'package:get_it/get_it.dart';
-import 'package:supabase/supabase.dart';
 import 'package:workout_app/screens/homescreen.dart';
 import 'package:workout_app/screens/loginscreen.dart';
-import 'package:workout_app/screens/registerscreen.dart';
 import 'package:workout_app/screens/splashscreen.dart';
 
-void main() {
+Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  Supabase.initialize(
-      url: 'https://lwoqduelpcooopxiryqc.supabase.co',
-      anonKey: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJyb2xlIjoiYW5vbiIsImlhdCI6MTYyODIwOTE5MywiZXhwIjoxOTQzNzg1MTkzfQ.UAhcH6uqOMirAUSX5Z_AfS8W8fBttfrlOooJwI-fnoo',
-      authCallbackUrlHostname: 'login-callback',
-  );
 
-  runApp(
-    MyApp(),
+  await Supabase.initialize(
+    url: 'https://dqimsmzzvoxuefvmtyjd.supabase.co',
+    anonKey: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJyb2xlIjoiYW5vbiIsImlhdCI6MTYyODkxMzAyMSwiZXhwIjoxOTQ0NDg5MDIxfQ.WW6GLEqWWJJRUR1vAx18Af4sxHlFJivJVvxb6YTBqf0',
   );
+  runApp(MyApp());
 }
 
 class MyApp extends StatelessWidget {
@@ -28,10 +22,9 @@ class MyApp extends StatelessWidget {
       title: 'Material App',
       debugShowCheckedModeBanner: false,
       initialRoute: '/',
-      routes: {
+      routes: <String, WidgetBuilder>{
         '/': (_) => const SplashScreen(),
         '/login': (_) => const LoginScreen(),
-        '/register': (_) => const RegisterScreen(),
         '/home': (_) => const HomeScreen(),
       },
     );

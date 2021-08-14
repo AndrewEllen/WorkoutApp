@@ -1,7 +1,5 @@
 import 'package:flutter/cupertino.dart';
 import "package:flutter/material.dart";
-import 'package:get_it/get_it.dart';
-import 'package:supabase/supabase.dart';
 import '../constants.dart';
 import '../router.dart';
 import '../screens/index.dart';

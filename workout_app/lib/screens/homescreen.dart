@@ -16,20 +16,24 @@ class HomeScreen extends StatefulWidget {
 
 class _HomeScreenState extends State<HomeScreen> {
 
+  final currentUser = supabase.auth.user();
+
+  _logout() async {
+    await supabase.auth.signOut();
+
+    final sharedPreferences = await SharedPreferences.getInstance();
+    sharedPreferences.clear();
+
+    Navigator.pushReplacementNamed(context, '/');
+  }
+
+  @override
+  void onUnauthenticated() {
+    Navigator.of(context).pushReplacementNamed('/login');
+  }
+
   @override
   Widget build(BuildContext context) {
-
-    final currentUser = supabase.auth.user();
-
-    _logout() async {
-      await supabase.auth.signOut();
-
-      final sharedPreferences = await SharedPreferences.getInstance();
-      sharedPreferences.clear();
-
-      Navigator.pushReplacementNamed(context, '/');
-    }
-
     return SafeArea(
         child: Scaffold(
             backgroundColor: defaultBackgroundColour,
