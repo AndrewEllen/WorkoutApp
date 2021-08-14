@@ -10,15 +10,29 @@ class UserSettings extends StatefulWidget {
 }
 
 class _UserSettingsState extends State<UserSettings> {
+  String dropdownValueGoals = 'Maintain';
+  String dropdownValueActivity = 'Sedentary';
+  String dropdownValueGender = 'Male';
   late final _usernameController = TextEditingController();
   late final _avatarController = TextEditingController();
   late final _weightController = TextEditingController();
+  late final _ageController = TextEditingController();
   late final _heightController = TextEditingController();
   final currentUser = supabase.auth.user();
   var _loading = false;
 
   void initState() {
     _getProfile(currentUser!.id);
+  }
+
+  Future<void> daily_calories() async {
+    var calories;
+    var weight = double.parse(_weightController.text);
+    var height = double.parse(_heightController.text);
+
+    if (dropdownValueGender == "Male") {
+      calories = 66 + (6.3 * (weight * 2.205) + 12.9 * (height * 2.54));
+    }
   }
 
   Future<void> _getProfile(String userId) async {
@@ -39,7 +53,11 @@ class _UserSettingsState extends State<UserSettings> {
       _usernameController.text = response.data!['username'] as String;
       _avatarController.text = response.data!['avatar_url'] as String;
       _weightController.text = response.data!['weight'] as String;
+      _ageController.text = response.data!['age'] as String;
       _heightController.text = response.data!['height'] as String;
+      dropdownValueGoals = response.data!['goal'] as String;
+      dropdownValueActivity = response.data!['activity'] as String;
+      dropdownValueGender = response.data!['gender'] as String;
     }
     setState(() {
       _loading = false;
@@ -53,12 +71,20 @@ class _UserSettingsState extends State<UserSettings> {
     final userName = _usernameController.text;
     final user = supabase.auth.currentUser;
     final weight = _weightController.text;
+    final age = _ageController.text;
     final height =_heightController.text;
+    final goal = dropdownValueGoals;
+    final activity = dropdownValueActivity;
+    final gender = dropdownValueGender;
     final updates = {
       'id': user!.id,
       'username': userName,
       'weight': weight,
+      'age': age,
       'height': height,
+      'goal': goal,
+      'activity': activity,
+      'gender': gender,
       'updated_at': DateTime.now().toIso8601String(),
     };
     final response = await supabase.from('profiles').upsert(updates).execute();
@@ -184,6 +210,38 @@ class _UserSettingsState extends State<UserSettings> {
               child: TextFormField(
                 keyboardType: TextInputType.number,
                 enableInteractiveSelection : false,
+                controller: _ageController,
+                cursorColor: Colors.white,
+                style: TextStyle(
+                  color: Colors.white,
+                ),
+                textAlign: TextAlign.center,
+                decoration: InputDecoration(
+                  suffixText: "Age",
+                  hintText: 'Enter Age',
+                  hintStyle: TextStyle(
+                    color: Color.fromRGBO(255, 255, 255, 0.4),
+                  ),
+                  focusedBorder: UnderlineInputBorder(
+                    borderSide: new BorderSide(color: Colors.white),
+                  ),
+                ),
+                validator: (String? value) {
+                  if (value!.isEmpty) {
+                    return 'Invalid Age';
+                  }
+                },
+              ),
+            ),
+          ),
+          Align(
+            alignment: Alignment.topCenter,
+            child: Container(
+              margin: EdgeInsets.only(top: 80),
+              padding: EdgeInsets.symmetric(horizontal: 30.0),
+              child: TextFormField(
+                keyboardType: TextInputType.number,
+                enableInteractiveSelection : false,
                 controller: _weightController,
                 cursorColor: Colors.white,
                 style: TextStyle(
@@ -211,7 +269,7 @@ class _UserSettingsState extends State<UserSettings> {
           Align(
             alignment: Alignment.topCenter,
             child: Container(
-              margin: EdgeInsets.only(top: 80),
+              margin: EdgeInsets.only(top: 140),
               padding: EdgeInsets.symmetric(horizontal: 30.0),
               child: TextFormField(
                 keyboardType: TextInputType.number,
@@ -237,6 +295,102 @@ class _UserSettingsState extends State<UserSettings> {
                     return 'Invalid Height';
                   }
                 },
+              ),
+            ),
+          ),
+          Align(
+            alignment: Alignment.topCenter,
+            child: Container(
+              margin: EdgeInsets.only(top: 195),
+              padding: EdgeInsets.symmetric(horizontal: 30.0),
+              child: DropdownButton<String>(
+                dropdownColor: defaultLoginBackgroundColour,
+                value: dropdownValueGender,
+                elevation: 1,
+                style: TextStyle(
+                  fontSize: 16,
+                  color: Colors.white,
+                ),
+                underline: Container(
+                  height: 2,
+                  color: defaultLoginBackgroundColour,
+                ),
+                onChanged: (String? newValue) {
+                  setState(() {
+                    dropdownValueGender = newValue!;
+                  });
+                },
+                items: <String>['Male', 'Female']
+                    .map<DropdownMenuItem<String>>((String value) {
+                  return DropdownMenuItem<String>(
+                    value: value,
+                    child: Text(value),
+                  );
+                }).toList(),
+              ),
+            ),
+          ),
+          Align(
+            alignment: Alignment.topCenter,
+            child: Container(
+              margin: EdgeInsets.only(top: 250),
+              padding: EdgeInsets.symmetric(horizontal: 30.0),
+              child: DropdownButton<String>(
+                dropdownColor: defaultLoginBackgroundColour,
+                value: dropdownValueGoals,
+                elevation: 1,
+                style: TextStyle(
+                  fontSize: 16,
+                  color: Colors.white,
+                ),
+                underline: Container(
+                  height: 2,
+                  color: defaultLoginBackgroundColour,
+                ),
+                onChanged: (String? newValue) {
+                  setState(() {
+                    dropdownValueGoals = newValue!;
+                  });
+                },
+                items: <String>['Bulk', 'Maintain', 'Cut']
+                    .map<DropdownMenuItem<String>>((String value) {
+                  return DropdownMenuItem<String>(
+                    value: value,
+                    child: Text(value),
+                  );
+                }).toList(),
+              ),
+            ),
+          ),
+          Align(
+            alignment: Alignment.topCenter,
+            child: Container(
+              margin: EdgeInsets.only(top: 305),
+              padding: EdgeInsets.symmetric(horizontal: 30.0),
+              child: DropdownButton<String>(
+                dropdownColor: defaultLoginBackgroundColour,
+                value: dropdownValueActivity,
+                elevation: 1,
+                style: TextStyle(
+                  fontSize: 16,
+                  color: Colors.white,
+                ),
+                underline: Container(
+                  height: 2,
+                  color: defaultLoginBackgroundColour,
+                ),
+                onChanged: (String? newValue) {
+                  setState(() {
+                    dropdownValueActivity = newValue!;
+                  });
+                },
+                items: <String>['Sedentary','Light', 'Moderate', 'Active']
+                    .map<DropdownMenuItem<String>>((String value) {
+                  return DropdownMenuItem<String>(
+                    value: value,
+                    child: Text(value),
+                  );
+                }).toList(),
               ),
             ),
           ),

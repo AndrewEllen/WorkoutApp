@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:workout_app/Components/authstate.dart';
+import '../constants.dart';
 
 class SplashScreen extends StatefulWidget {
   const SplashScreen({Key? key}) : super(key: key);
@@ -18,6 +19,7 @@ class _SplashScreenState extends AuthState<SplashScreen> {
   @override
   Widget build(BuildContext context) {
     return const Scaffold(
+      backgroundColor: defaultBackgroundColour,
       body: Center(child: CircularProgressIndicator()),
     );
   }

@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:workout_app/Components/authstate.dart';
@@ -12,6 +13,7 @@ class LoginScreen extends StatefulWidget {
 }
 
 class _LoginScreenState extends State<LoginScreen> {
+  final _formKey = GlobalKey<FormState>();
   bool _isLoading = false;
   late final TextEditingController _emailController;
 
@@ -52,46 +54,6 @@ class _LoginScreenState extends State<LoginScreen> {
     super.dispose();
   }
 
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(title: const Text('Sign In')),
-      body: ListView(
-        padding: const EdgeInsets.symmetric(vertical: 18, horizontal: 12),
-        children: [
-          const Text('Sign in via the magic link with your email below'),
-          const SizedBox(height: 18),
-          TextFormField(
-            controller: _emailController,
-            decoration: const InputDecoration(labelText: 'Email'),
-          ),
-          const SizedBox(height: 18),
-          ElevatedButton(
-            onPressed: _isLoading ? null : _signIn,
-            child: Text(_isLoading ? 'Loading' : 'Send Magic Link'),
-          ),
-        ],
-      ),
-    );
-  }
-}
-
-/*
-import 'package:flutter/material.dart';
-import 'package:shared_preferences/shared_preferences.dart';
-import '../constants.dart';
-
-class LoginScreen extends StatefulWidget {
-  const LoginScreen({Key? key}) : super(key: key);
-
-  @override
-  _LoginScreenState createState() => _LoginScreenState();
-}
-
-class _LoginScreenState extends State<LoginScreen> {
-  final _emailController = TextEditingController();
-  final _passwordController = TextEditingController();
-  final _formKey = GlobalKey<FormState>();
 
   @override
   Widget build(BuildContext context) {
@@ -102,7 +64,9 @@ class _LoginScreenState extends State<LoginScreen> {
   }
 
   Widget _buildBody(context) {
-    final size = MediaQuery.of(context).size;
+    final size = MediaQuery
+        .of(context)
+        .size;
 
     return SingleChildScrollView(
       child: Column(
@@ -137,14 +101,23 @@ class _LoginScreenState extends State<LoginScreen> {
                         height: 10,
                       ),
                       Container(
-                        padding: EdgeInsets.symmetric(horizontal: 20.0),
+                        padding: EdgeInsets.symmetric(vertical:10, horizontal: 20.0),
                         child: TextFormField(
                           controller: _emailController,
                           cursorColor: Colors.white,
                           style: TextStyle(color: Colors.white,),
                           decoration: InputDecoration(
-                            labelText: 'E-mail',
-                            labelStyle: TextStyle(color: Colors.white),
+                            hintText: 'Enter Email',
+                            contentPadding: EdgeInsets.only(top:0),
+                            hintStyle: TextStyle(
+                              color: Color.fromRGBO(255, 255, 255, 0.4),
+                              fontSize: 15,
+                            ),
+                            labelText: 'Sign-in through a magic link',
+                            labelStyle: TextStyle(
+                              color: Colors.white,
+                              fontSize: 20,
+                            ),
                             focusedBorder: UnderlineInputBorder(
                               borderSide: new BorderSide(color: Colors.white),
                             ),
@@ -152,30 +125,6 @@ class _LoginScreenState extends State<LoginScreen> {
                           validator: (String? value) {
                             if (value!.isEmpty || !value.contains('@')) {
                               return 'Invalid e-mail';
-                            }
-                          },
-                        ),
-                      ),
-                      SizedBox(
-                        height: 10,
-                      ),
-                      Container(
-                        padding: EdgeInsets.symmetric(horizontal: 20.0),
-                        child: TextFormField(
-                          controller: _passwordController,
-                          cursorColor: Colors.white,
-                          obscureText: true,
-                          style: TextStyle(color: Colors.white),
-                          decoration: InputDecoration(
-                            labelText: 'Password',
-                            labelStyle: TextStyle(color: Colors.white),
-                            focusedBorder: UnderlineInputBorder(
-                              borderSide: new BorderSide(color: Colors.white),
-                            ),
-                          ),
-                          validator: (String? value) {
-                            if (value!.isEmpty) {
-                              return 'Invalid password';
                             }
                           },
                         ),
@@ -190,7 +139,7 @@ class _LoginScreenState extends State<LoginScreen> {
                         child: MaterialButton(
                           onPressed: () async {
                             if (_formKey.currentState!.validate()) {
-                              _login();
+                              _signIn();
                             }
                           },
                           color: Colors.black,
@@ -207,24 +156,9 @@ class _LoginScreenState extends State<LoginScreen> {
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
                           Text(
-                            'Don\'t have an account?',
+                            'Sign-up with just Email',
                             style: TextStyle(color: Colors.white,),
-                          ),
-                          SizedBox(
-                            width: 10,
-                          ),
-                          GestureDetector(
-                            onTap: () {
-                              Navigator.pushNamed(context, '/register');
-                            },
-                            child: Text(
-                              'Register',
-                              style: TextStyle(
-                                fontWeight: FontWeight.bold,
-                                color: Colors.white,
                               ),
-                            ),
-                          )
                         ],
                       ),
                     ],
@@ -237,7 +171,8 @@ class _LoginScreenState extends State<LoginScreen> {
       ),
     );
   }
-
+}
+/*
   Future _login() async {
     final sharedPreferences = await SharedPreferences.getInstance();
 
@@ -273,5 +208,4 @@ void _showDialog(context, {String? title, String? message}) {
     },
   );
 }
-
- */
+*/
