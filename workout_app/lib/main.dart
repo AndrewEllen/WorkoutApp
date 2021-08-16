@@ -4,6 +4,7 @@ import 'package:supabase_flutter/supabase_flutter.dart';
 import 'package:workout_app/Screens/Main/homescreen.dart';
 import 'package:workout_app/Screens/Main/loginscreen.dart';
 import 'package:workout_app/Screens/Main/splashscreen.dart';
+import 'Screens/Main/usersettingsscreen.dart';
 import 'constants.dart';
 
 Future<void> main() async {
@@ -28,6 +29,7 @@ class MyApp extends StatelessWidget {
         '/': (_) => const SplashScreen(),
         '/login': (_) => const LoginScreen(),
         '/home': (_) => const HomeScreen(),
+        '/accountsettings': (_) => UserSettings(),
       },
     );
   }
