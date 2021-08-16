@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:workout_app/Components/authstate.dart';
-import '../constants.dart';
+import 'package:workout_app/Components/Auth/authstate.dart';
+import '../../constants.dart';
 
 class SplashScreen extends StatefulWidget {
   const SplashScreen({Key? key}) : super(key: key);

@@ -1,8 +1,8 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:workout_app/Components/authstate.dart';
+import 'package:workout_app/Components/Auth/authstate.dart';
 import 'package:supabase/supabase.dart';
-import '../constants.dart';
+import '../../constants.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({Key? key}) : super(key: key);

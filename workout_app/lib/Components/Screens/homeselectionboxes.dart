@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:workout_app/constants.dart';
-import '../router.dart';
+import '../../router.dart';
 
 class HomeSelectionBox extends StatelessWidget {
   HomeSelectionBox({

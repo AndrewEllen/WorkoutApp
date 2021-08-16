@@ -1,13 +1,17 @@
 import 'package:flutter/cupertino.dart';
 import "package:flutter/material.dart";
-import '../constants.dart';
-import '../router.dart';
-import '../screens/index.dart';
+import 'package:workout_app/Components/SideBar/sidebar_menu.dart';
+import '../../constants.dart';
+import '../../router.dart';
+import '../../screens/index.dart';
 
 class CustomSideBar extends StatefulWidget {
   CustomSideBar(
-      {required this.sidebaraccentcolour, required this.sidebarcolour});
+      {required this.sidebaraccentcolour, required this.sidebarcolour, required this.sidebartitle,
+        required this.sidebardata, required this.feedbacktitle, required this.feedbackdata});
   final Color sidebaraccentcolour, sidebarcolour;
+  final String sidebartitle, feedbacktitle;
+  final List sidebardata, feedbackdata;
 
   @override
   _CustomSideBarState createState() => _CustomSideBarState();
@@ -115,6 +119,18 @@ class _CustomSideBarState extends State<CustomSideBar> {
           ),
           automaticallyImplyLeading: false,
         ),
+        body: Column(
+          children: <Widget>[
+            SideBarMenu(
+              containerTitle: widget.sidebartitle,
+              sideBarText: widget.sidebardata,
+            ),
+            SideBarMenu(
+              containerTitle: widget.feedbacktitle,
+              sideBarText: widget.feedbackdata,
+            ),
+          ]
+        )
       ),
     );
   }

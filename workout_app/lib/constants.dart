@@ -6,8 +6,9 @@ final supabase = Supabase.instance.client;
 
 //Screens
 const Color defaultBackgroundColour = Color.fromRGBO(38, 38, 38, 1.0);
-const Color WorkoutsAccentColour = Color.fromRGBO(123, 0, 0, 1.0);
+const Color WorkoutsAccentColour = Color.fromRGBO(161, 0, 0, 1.0);
 const Color DietAccentColour = Color.fromRGBO(27, 123, 0, 1.0);
+const Color OtherAccentColour = Color.fromRGBO(50, 119, 250, 1.0);
 const Color defaultLoginBackgroundColour = Color(0XFF181818);
 
 //HomeScreen
@@ -38,3 +39,32 @@ const Color AppbarColour = Color.fromRGBO(50, 50, 50, 1.0);
 
 //SideBar
 const Color SideBarColour = Color.fromRGBO(50, 50, 50, 1.0);
+
+// SideBar Menu
+const TextStyle sideBarMenuTextStyle = TextStyle(
+  fontSize: 20,
+  fontWeight: FontWeight.w400,
+  color: Colors.white,
+);
+const EdgeInsets sideBarMenuMargin = EdgeInsets.only(
+  top: 3,
+  left: 10,
+  right: 10,
+  bottom: 30,
+);
+
+// TextBuilder
+
+const TextStyle textBuilderTextStyle = TextStyle(
+  fontSize: 20,
+  fontWeight: FontWeight.w300,
+  color: Colors.white,
+  decoration: TextDecoration.underline,
+  decorationColor: Colors.white,
+);
+const EdgeInsets textBuilderContainerMargin = EdgeInsets.only(
+  top: 2.5,
+  bottom: 2.5,
+);
+const double textBuilderHeight = 30;
+const double textBuilderWidth = double.infinity;

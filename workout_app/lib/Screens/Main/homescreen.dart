@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:workout_app/Components/homeselectionboxes.dart';
-import 'package:workout_app/screens/workouthome.dart';
-import '../constants.dart';
-import 'diethome.dart';
+import 'package:workout_app/Components/Screens/homeselectionboxes.dart';
+import 'package:workout_app/Screens/Main/usersettingsscreen.dart';
+import 'package:workout_app/Screens/Workouts/workouthome.dart';
+import '../../constants.dart';
+import '../../router.dart';
+import '../Diet/diethome.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({Key? key}) : super(key: key);
@@ -95,18 +97,29 @@ class _HomeScreenState extends State<HomeScreen> {
                     mainAxisAlignment: MainAxisAlignment.center,
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
-                      Text(
-                        'User: ${_loading ? currentUser?.email : username}',
-                        style: TextStyle(
-                          fontSize: 16,
-                          color: Colors.white,
-                          shadows: [
-                            Shadow(
-                              blurRadius: 10,
-                              color: Colors.black,
-                              offset: Offset(1, 2),
-                            ),
-                          ],
+                      GestureDetector(
+                        onTap: () {
+                          Navigator.pop(context);
+                          Navigator.push(
+                              context,
+                              FadeRouter(
+                                routeName: '/usersettings',
+                                screen: UserSettings(),
+                              ));
+                        },
+                        child: Text(
+                          'User: ${_loading ? currentUser?.email : username}',
+                          style: TextStyle(
+                            fontSize: 16,
+                            color: Colors.white,
+                            shadows: [
+                              Shadow(
+                                blurRadius: 10,
+                                color: Colors.black,
+                                offset: Offset(1, 2),
+                              ),
+                            ],
+                          ),
                         ),
                       ),
                       HomeSelectionBox(

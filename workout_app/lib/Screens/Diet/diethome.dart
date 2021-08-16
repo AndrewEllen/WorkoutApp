@@ -1,10 +1,12 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:workout_app/Components/Navbar.dart';
-import 'package:workout_app/Components/sidebar.dart';
+import 'package:workout_app/Components/Navbar/Navbar.dart';
+import 'package:workout_app/Components/SideBar/sidebar.dart';
 import 'dart:async';
-import 'package:workout_app/Components/dietmealbox.dart';
-import '../constants.dart';
+import 'package:workout_app/Components/Screens/dietmealbox.dart';
+import 'package:workout_app/Data/Screens/feedback.dart';
+import 'package:workout_app/data/Screens/diethome.dart';
+import '../../constants.dart';
 
 class DietHomeScreen extends StatefulWidget {
   @override
@@ -13,10 +15,13 @@ class DietHomeScreen extends StatefulWidget {
 
 class _DietHomeScreenState extends State<DietHomeScreen> {
   final currentUser = supabase.auth.user();
+  List sidebardata = [], feedbackdata = [];
   var _loading = false;
   var calories;
 
   void initState() {
+    sidebardata = SideBarDiet.getContents();
+    feedbackdata = SideBarFeedback.getContents();
     _getProfile(currentUser!.id);
   }
 
@@ -55,6 +60,10 @@ class _DietHomeScreenState extends State<DietHomeScreen> {
         drawer: CustomSideBar(
           sidebaraccentcolour: DietAccentColour,
           sidebarcolour: SideBarColour,
+          sidebartitle: "Meals",
+          feedbacktitle: "Feedback",
+          sidebardata: sidebardata,
+          feedbackdata: feedbackdata,
         ),
         body: Stack(
           children: [
@@ -63,7 +72,7 @@ class _DietHomeScreenState extends State<DietHomeScreen> {
               child: DietMealBox(
                 marginsize: 15,
                 boxheading: "Daily Calories Goal",
-                headingcontent: calories.toString(),
+                headingcontent: _loading ? 0 : calories.toString(),
               ),
             ),
             Align(
@@ -71,39 +80,7 @@ class _DietHomeScreenState extends State<DietHomeScreen> {
               child: DietMealBox(
                 marginsize: 110,
                 boxheading: "Daily Calories Remaining",
-                headingcontent: calories.toString(),
-              ),
-            ),
-            Align(
-              alignment: Alignment.topCenter,
-              child: DietMealBox(
-                marginsize: 205,
-                boxheading: "Breakfast",
-                headingcontent: 0,
-              ),
-            ),
-            Align(
-              alignment: Alignment.topCenter,
-              child: DietMealBox(
-                marginsize: 300,
-                boxheading: "Lunch",
-                headingcontent: 0,
-              ),
-            ),
-            Align(
-              alignment: Alignment.topCenter,
-              child: DietMealBox(
-                marginsize: 395,
-                boxheading: "Dinner",
-                headingcontent: 0,
-              ),
-            ),
-            Align(
-              alignment: Alignment.topCenter,
-              child: DietMealBox(
-                marginsize: 490,
-                boxheading: "Calories Burned",
-                headingcontent: 0,
+                headingcontent: _loading ? 0 : calories.toString(),
               ),
             ),
           ],

@@ -1,9 +1,9 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
-import 'package:workout_app/screens/homescreen.dart';
-import 'package:workout_app/screens/loginscreen.dart';
-import 'package:workout_app/screens/splashscreen.dart';
+import 'package:workout_app/Screens/Main/homescreen.dart';
+import 'package:workout_app/Screens/Main/loginscreen.dart';
+import 'package:workout_app/Screens/Main/splashscreen.dart';
 import 'constants.dart';
 
 Future<void> main() async {
@@ -20,7 +20,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Material App',
+      title: 'Fitness Tracker',
       color: defaultBackgroundColour,
       debugShowCheckedModeBanner: false,
       initialRoute: '/',

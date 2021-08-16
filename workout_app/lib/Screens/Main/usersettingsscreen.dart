@@ -1,7 +1,7 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:supabase/supabase.dart';
-import '../constants.dart';
+import '../../constants.dart';
 
 class UserSettings extends StatefulWidget {
   @override

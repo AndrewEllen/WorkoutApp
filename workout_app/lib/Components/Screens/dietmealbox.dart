@@ -33,7 +33,8 @@ class _DietMealBoxState extends State<DietMealBox> {
           color: AppbarColour,
           child: Center(
             child: Text(
-              '${widget.boxheading}: ${widget.headingcontent}',
+              '${widget.boxheading}:\n${widget.headingcontent}',
+              textAlign: TextAlign.center,
               style: TextStyle(
                 color: Colors.white,
 
