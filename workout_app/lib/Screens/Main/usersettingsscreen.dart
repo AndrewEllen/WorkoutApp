@@ -18,6 +18,13 @@ class _UserSettingsState extends State<UserSettings> {
   late final _ageController = TextEditingController();
   late final _heightController = TextEditingController();
   final currentUser = supabase.auth.user();
+  final _formkey = GlobalKey<FormState>();
+  final _formkey1 = GlobalKey<FormState>();
+  final _formkey2 = GlobalKey<FormState>();
+  final _formkey3 = GlobalKey<FormState>();
+  final _formkey4 = GlobalKey<FormState>();
+  final _formkey5 = GlobalKey<FormState>();
+  final _formkey6 = GlobalKey<FormState>();
   var _loading = false;
 
   void initState() {
@@ -206,15 +213,58 @@ class _UserSettingsState extends State<UserSettings> {
               Container(
                 margin: EdgeInsets.only(top: 140),
                 padding: EdgeInsets.symmetric(horizontal: 30.0),
+                child: Form(
+                  key: _formkey,
+                  child: TextFormField(
+                    controller: _usernameController,
+                    cursorColor: Colors.white,
+                    style: TextStyle(
+                      color: Colors.white,
+                    ),
+                    textAlign: TextAlign.center,
+                    decoration: InputDecoration(
+                      hintText: 'Enter Username',
+                      hintStyle: TextStyle(
+                        color: Color.fromRGBO(255, 255, 255, 0.4),
+                      ),
+                      focusedBorder: UnderlineInputBorder(
+                        borderSide: new BorderSide(color: Colors.white),
+                      ),
+                    ),
+                    validator: (String? value) {
+                      if (value!.isEmpty) {
+                        return 'Invalid Username';
+                      }
+                    },
+                  ),
+                ),
+              ),
+            ],
+          ),
+        ),
+        automaticallyImplyLeading: false,
+      ),
+      body: ListView(
+        children: [
+          Align(
+            alignment: Alignment.topCenter,
+            child: Container(
+              margin: EdgeInsets.only(top: 15),
+              padding: EdgeInsets.symmetric(horizontal: 30.0),
+              child: Form(
+                key: _formkey1,
                 child: TextFormField(
-                  controller: _usernameController,
+                  keyboardType: TextInputType.number,
+                  enableInteractiveSelection : false,
+                  controller: _ageController,
                   cursorColor: Colors.white,
                   style: TextStyle(
                     color: Colors.white,
                   ),
                   textAlign: TextAlign.center,
                   decoration: InputDecoration(
-                    hintText: 'Enter Username',
+                    suffixText: "Age",
+                    hintText: 'Enter Age',
                     hintStyle: TextStyle(
                       color: Color.fromRGBO(255, 255, 255, 0.4),
                     ),
@@ -224,207 +274,185 @@ class _UserSettingsState extends State<UserSettings> {
                   ),
                   validator: (String? value) {
                     if (value!.isEmpty) {
-                      return 'Invalid Username';
+                      return 'Invalid Age';
                     }
                   },
                 ),
               ),
-            ],
+            ),
           ),
-        ),
-        automaticallyImplyLeading: false,
-      ),
-      body: Stack(
-        children: [
           Align(
             alignment: Alignment.topCenter,
             child: Container(
-              margin: EdgeInsets.only(top: 20),
+              margin: EdgeInsets.only(top: 15),
               padding: EdgeInsets.symmetric(horizontal: 30.0),
-              child: TextFormField(
-                keyboardType: TextInputType.number,
-                enableInteractiveSelection : false,
-                controller: _ageController,
-                cursorColor: Colors.white,
-                style: TextStyle(
-                  color: Colors.white,
-                ),
-                textAlign: TextAlign.center,
-                decoration: InputDecoration(
-                  suffixText: "Age",
-                  hintText: 'Enter Age',
-                  hintStyle: TextStyle(
-                    color: Color.fromRGBO(255, 255, 255, 0.4),
+              child: Form(
+                key: _formkey2,
+                child: TextFormField(
+                  keyboardType: TextInputType.number,
+                  enableInteractiveSelection : false,
+                  controller: _weightController,
+                  cursorColor: Colors.white,
+                  style: TextStyle(
+                    color: Colors.white,
                   ),
-                  focusedBorder: UnderlineInputBorder(
-                    borderSide: new BorderSide(color: Colors.white),
+                  textAlign: TextAlign.center,
+                  decoration: InputDecoration(
+                    suffixText: "Kg",
+                    hintText: 'Enter Weight (Kg)',
+                    hintStyle: TextStyle(
+                      color: Color.fromRGBO(255, 255, 255, 0.4),
+                    ),
+                    focusedBorder: UnderlineInputBorder(
+                      borderSide: new BorderSide(color: Colors.white),
+                    ),
                   ),
+                  validator: (String? value) {
+                    if (value!.isEmpty) {
+                      return 'Invalid Weight';
+                    }
+                  },
                 ),
-                validator: (String? value) {
-                  if (value!.isEmpty) {
-                    return 'Invalid Age';
-                  }
-                },
               ),
             ),
           ),
           Align(
             alignment: Alignment.topCenter,
             child: Container(
-              margin: EdgeInsets.only(top: 80),
+              margin: EdgeInsets.only(top: 15),
               padding: EdgeInsets.symmetric(horizontal: 30.0),
-              child: TextFormField(
-                keyboardType: TextInputType.number,
-                enableInteractiveSelection : false,
-                controller: _weightController,
-                cursorColor: Colors.white,
-                style: TextStyle(
-                  color: Colors.white,
-                ),
-                textAlign: TextAlign.center,
-                decoration: InputDecoration(
-                  suffixText: "Kg",
-                  hintText: 'Enter Weight (Kg)',
-                  hintStyle: TextStyle(
-                    color: Color.fromRGBO(255, 255, 255, 0.4),
+              child: Form(
+                key: _formkey3,
+                child: TextFormField(
+                  keyboardType: TextInputType.number,
+                  enableInteractiveSelection : false,
+                  controller: _heightController,
+                  cursorColor: Colors.white,
+                  style: TextStyle(
+                    color: Colors.white,
                   ),
-                  focusedBorder: UnderlineInputBorder(
-                    borderSide: new BorderSide(color: Colors.white),
+                  textAlign: TextAlign.center,
+                  decoration: InputDecoration(
+                    suffixText: "CM",
+                    hintText: 'Enter Height (CM)',
+                    hintStyle: TextStyle(
+                      color: Color.fromRGBO(255, 255, 255, 0.4),
+                    ),
+                    focusedBorder: UnderlineInputBorder(
+                      borderSide: new BorderSide(color: Colors.white),
+                    ),
                   ),
+                  validator: (String? value) {
+                    if (value!.isEmpty) {
+                      return 'Invalid Height';
+                    }
+                  },
                 ),
-                validator: (String? value) {
-                  if (value!.isEmpty) {
-                    return 'Invalid Weight';
-                  }
-                },
               ),
             ),
           ),
           Align(
             alignment: Alignment.topCenter,
             child: Container(
-              margin: EdgeInsets.only(top: 140),
+              margin: EdgeInsets.only(top: 15),
               padding: EdgeInsets.symmetric(horizontal: 30.0),
-              child: TextFormField(
-                keyboardType: TextInputType.number,
-                enableInteractiveSelection : false,
-                controller: _heightController,
-                cursorColor: Colors.white,
-                style: TextStyle(
-                  color: Colors.white,
-                ),
-                textAlign: TextAlign.center,
-                decoration: InputDecoration(
-                  suffixText: "CM",
-                  hintText: 'Enter Height (CM)',
-                  hintStyle: TextStyle(
-                    color: Color.fromRGBO(255, 255, 255, 0.4),
+              child: Form(
+                key: _formkey4,
+                child: DropdownButton<String>(
+                  dropdownColor: defaultLoginBackgroundColour,
+                  value: dropdownValueGender,
+                  elevation: 1,
+                  style: TextStyle(
+                    fontSize: 16,
+                    color: Colors.white,
                   ),
-                  focusedBorder: UnderlineInputBorder(
-                    borderSide: new BorderSide(color: Colors.white),
+                  underline: Container(
+                    height: 2,
+                    color: defaultLoginBackgroundColour,
                   ),
+                  onChanged: (String? newValue) {
+                    setState(() {
+                      dropdownValueGender = newValue!;
+                    });
+                  },
+                  items: <String>['Male', 'Female']
+                      .map<DropdownMenuItem<String>>((String value) {
+                    return DropdownMenuItem<String>(
+                      value: value,
+                      child: Text(value),
+                    );
+                  }).toList(),
                 ),
-                validator: (String? value) {
-                  if (value!.isEmpty) {
-                    return 'Invalid Height';
-                  }
-                },
               ),
             ),
           ),
           Align(
             alignment: Alignment.topCenter,
             child: Container(
-              margin: EdgeInsets.only(top: 195),
+              margin: EdgeInsets.only(top: 15),
               padding: EdgeInsets.symmetric(horizontal: 30.0),
-              child: DropdownButton<String>(
-                dropdownColor: defaultLoginBackgroundColour,
-                value: dropdownValueGender,
-                elevation: 1,
-                style: TextStyle(
-                  fontSize: 16,
-                  color: Colors.white,
+              child: Form(
+                key: _formkey5,
+                child: DropdownButton<String>(
+                  dropdownColor: defaultLoginBackgroundColour,
+                  value: dropdownValueGoals,
+                  elevation: 1,
+                  style: TextStyle(
+                    fontSize: 16,
+                    color: Colors.white,
+                  ),
+                  underline: Container(
+                    height: 2,
+                    color: defaultLoginBackgroundColour,
+                  ),
+                  onChanged: (String? newValue) {
+                    setState(() {
+                      dropdownValueGoals = newValue!;
+                    });
+                  },
+                  items: <String>['Bulk', 'Maintain', 'Cut']
+                      .map<DropdownMenuItem<String>>((String value) {
+                    return DropdownMenuItem<String>(
+                      value: value,
+                      child: Text(value),
+                    );
+                  }).toList(),
                 ),
-                underline: Container(
-                  height: 2,
-                  color: defaultLoginBackgroundColour,
-                ),
-                onChanged: (String? newValue) {
-                  setState(() {
-                    dropdownValueGender = newValue!;
-                  });
-                },
-                items: <String>['Male', 'Female']
-                    .map<DropdownMenuItem<String>>((String value) {
-                  return DropdownMenuItem<String>(
-                    value: value,
-                    child: Text(value),
-                  );
-                }).toList(),
               ),
             ),
           ),
           Align(
             alignment: Alignment.topCenter,
             child: Container(
-              margin: EdgeInsets.only(top: 250),
+              margin: EdgeInsets.only(top: 15),
               padding: EdgeInsets.symmetric(horizontal: 30.0),
-              child: DropdownButton<String>(
-                dropdownColor: defaultLoginBackgroundColour,
-                value: dropdownValueGoals,
-                elevation: 1,
-                style: TextStyle(
-                  fontSize: 16,
-                  color: Colors.white,
+              child: Form(
+                key: _formkey6,
+                child: DropdownButton<String>(
+                  dropdownColor: defaultLoginBackgroundColour,
+                  value: dropdownValueActivity,
+                  elevation: 1,
+                  style: TextStyle(
+                    fontSize: 16,
+                    color: Colors.white,
+                  ),
+                  underline: Container(
+                    height: 2,
+                    color: defaultLoginBackgroundColour,
+                  ),
+                  onChanged: (String? newValue) {
+                    setState(() {
+                      dropdownValueActivity = newValue!;
+                    });
+                  },
+                  items: <String>['Sedentary','Light', 'Moderate', 'Active', 'Very Active']
+                      .map<DropdownMenuItem<String>>((String value) {
+                    return DropdownMenuItem<String>(
+                      value: value,
+                      child: Text(value),
+                    );
+                  }).toList(),
                 ),
-                underline: Container(
-                  height: 2,
-                  color: defaultLoginBackgroundColour,
-                ),
-                onChanged: (String? newValue) {
-                  setState(() {
-                    dropdownValueGoals = newValue!;
-                  });
-                },
-                items: <String>['Bulk', 'Maintain', 'Cut']
-                    .map<DropdownMenuItem<String>>((String value) {
-                  return DropdownMenuItem<String>(
-                    value: value,
-                    child: Text(value),
-                  );
-                }).toList(),
-              ),
-            ),
-          ),
-          Align(
-            alignment: Alignment.topCenter,
-            child: Container(
-              margin: EdgeInsets.only(top: 305),
-              padding: EdgeInsets.symmetric(horizontal: 30.0),
-              child: DropdownButton<String>(
-                dropdownColor: defaultLoginBackgroundColour,
-                value: dropdownValueActivity,
-                elevation: 1,
-                style: TextStyle(
-                  fontSize: 16,
-                  color: Colors.white,
-                ),
-                underline: Container(
-                  height: 2,
-                  color: defaultLoginBackgroundColour,
-                ),
-                onChanged: (String? newValue) {
-                  setState(() {
-                    dropdownValueActivity = newValue!;
-                  });
-                },
-                items: <String>['Sedentary','Light', 'Moderate', 'Active', 'Very Active']
-                    .map<DropdownMenuItem<String>>((String value) {
-                  return DropdownMenuItem<String>(
-                    value: value,
-                    child: Text(value),
-                  );
-                }).toList(),
               ),
             ),
           ),
@@ -434,7 +462,15 @@ class _UserSettingsState extends State<UserSettings> {
               margin: EdgeInsets.only(bottom: 50),
               child: ElevatedButton(
                 onPressed: () {
-                  _updateProfile();
+                  if (_formkey.currentState!.validate() &
+                      _formkey1.currentState!.validate() &
+                      _formkey2.currentState!.validate() &
+                      _formkey3.currentState!.validate() &
+                      _formkey4.currentState!.validate() &
+                      _formkey5.currentState!.validate() &
+                      _formkey6.currentState!.validate()) {
+                    _updateProfile();
+                  }
                 },
                 style: ElevatedButton.styleFrom(
                   primary: WorkoutsAccentColour,

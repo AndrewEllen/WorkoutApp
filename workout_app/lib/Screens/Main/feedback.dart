@@ -5,7 +5,7 @@ import '../../constants.dart';
 
 class FeedBack extends StatefulWidget {
   FeedBack(
-      {required this.appbartitle});
+      {required this.appbartitle, Key? key}): super(key: key);
   final String appbartitle;
 
   @override
@@ -14,6 +14,7 @@ class FeedBack extends StatefulWidget {
 
 class _FeedBackState extends State<FeedBack> {
   late final _feedbackController = TextEditingController();
+  final _formkey = GlobalKey<FormState>();
   var _loading = false;
 
   Future<void> _postFeedback() async {
@@ -76,32 +77,37 @@ class _FeedBackState extends State<FeedBack> {
                         Radius.circular(5),
                       ),
                     ),
-                    child: TextFormField(
-                      keyboardType: TextInputType.multiline,
-                      maxLines: null,
-                      enableInteractiveSelection : true,
-                      controller: _feedbackController,
-                      cursorColor: Colors.white,
-                      style: TextStyle(
-                        color: Colors.white,
-                      ),
-                      textAlign: TextAlign.left,
-                      decoration: InputDecoration(
-                        hintText: 'Enter Feedback or Bugs',
-                        hintStyle: TextStyle(
-                          color: Color.fromRGBO(255, 255, 255, 0.4),
+                    child: Form(
+                      key: _formkey,
+                      child: TextFormField(
+                        keyboardType: TextInputType.multiline,
+                        maxLines: null,
+                        enableInteractiveSelection : true,
+                        controller: _feedbackController,
+                        cursorColor: Colors.white,
+                        style: TextStyle(
+                          color: Colors.white,
                         ),
-                        border: InputBorder.none,
-                        focusedBorder: InputBorder.none,
-                        enabledBorder: InputBorder.none,
-                        errorBorder: InputBorder.none,
-                        disabledBorder: InputBorder.none,
+                        textAlign: TextAlign.left,
+                        decoration: InputDecoration(
+                          hintText: 'Enter Feedback or Bugs',
+                          hintStyle: TextStyle(
+                            color: Color.fromRGBO(255, 255, 255, 0.4),
+                          ),
+                          border: InputBorder.none,
+                          focusedBorder: InputBorder.none,
+                          enabledBorder: InputBorder.none,
+                          errorBorder: InputBorder.none,
+                          disabledBorder: InputBorder.none,
+                        ),
+                        validator: (String? value) {
+                          if (value!.isEmpty || value.length < 20) {
+                            ScaffoldMessenger.of(context).showSnackBar(
+                                const SnackBar(content: Text('Feedback is too short')));
+                            return '';
+                          }
+                        },
                       ),
-                      validator: (String? value) {
-                        if (value!.isEmpty || value.length < 20) {
-                          return 'Invalid Feedback';
-                        }
-                      },
                     ),
                   )
               ),
@@ -110,7 +116,9 @@ class _FeedBackState extends State<FeedBack> {
                   margin: EdgeInsets.only(bottom: 50),
                   child: ElevatedButton(
                     onPressed: () {
-                      _postFeedback();
+                      if (_formkey.currentState!.validate()) {
+                        _postFeedback();
+                      }
                     },
                     style: ElevatedButton.styleFrom(
                       primary: WorkoutsAccentColour,
