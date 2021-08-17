@@ -30,7 +30,7 @@ class _WorkoutHomeScreenState extends State<WorkoutHomeScreen> {
           appbartitle: "Workouts",
         ),
         drawer: CustomSideBar(
-          sidebaraccentcolour: DietAccentColour,
+          sidebaraccentcolour: WorkoutsAccentColour,
           sidebarcolour: SideBarColour,
           sidebartitle: "Meals",
           feedbacktitle: "Feedback",

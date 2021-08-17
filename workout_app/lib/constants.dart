@@ -6,7 +6,7 @@ final supabase = Supabase.instance.client;
 
 //Screens
 const Color defaultBackgroundColour = Color.fromRGBO(38, 38, 38, 1.0);
-const Color WorkoutsAccentColour = Color.fromRGBO(161, 0, 0, 1.0);
+const Color WorkoutsAccentColour = Color.fromRGBO(236, 38, 38, 1.0);
 const Color DietAccentColour = Color.fromRGBO(27, 123, 0, 1.0);
 const Color OtherAccentColour = Color.fromRGBO(50, 119, 250, 1.0);
 const Color defaultLoginBackgroundColour = Color(0XFF181818);

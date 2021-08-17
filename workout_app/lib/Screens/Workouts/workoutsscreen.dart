@@ -102,8 +102,8 @@ class _WorkoutListScreenState extends State<WorkoutListScreen> {
               child: WorkoutsContainer(
                 day: _loading ? "loading..." : day,
                 workouts: _loading? ["loading..."] : workouts,
-                currentUserID: currentUser!.id,
-                listID: listID,
+                currentUserID: _loading? "loading..." : currentUser!.id,
+                listID: _loading? "loading..." :  listID,
               )
             ),
           ],
