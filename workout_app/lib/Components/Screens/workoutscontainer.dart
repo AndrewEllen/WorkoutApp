@@ -21,30 +21,35 @@ class _WorkoutsContainerState extends State<WorkoutsContainer> {
         color: AppbarColour,
         borderRadius: BorderRadius.all(Radius.circular(5)),
       ),
-      child: ListView.builder(
-            itemCount: widget.workouts.length,
-            itemBuilder: (BuildContext context, int index) {
-              final item = widget.workouts[index];
-              return Dismissible(
+      child: ClipRRect(
+        borderRadius: BorderRadius.all(Radius.circular(5)),
+        child: ListView.builder(
+              itemCount: widget.workouts.length,
+              itemBuilder: (BuildContext context, int index) {
+                final item = widget.workouts[index];
+                return ClipRRect(
+                  child: Dismissible(
 
-                key: Key(item),
+                    key: Key(item),
 
-                onDismissed: (direction) {
-                  setState(() {
-                    widget.workouts.removeAt(index);
-                  });
-                ScaffoldMessenger.of(context)
-                .showSnackBar(SnackBar(content: Text('$item dismissed')));
-                },
-                child: Container(
-                  margin: EdgeInsets.only(top: 10, left: 10, bottom: 10),
-                  child: WorkoutListContainer(
-                    workout: widget.workouts[index],
+                    onDismissed: (direction) {
+                      setState(() {
+                        widget.workouts.removeAt(index);
+                      });
+                    ScaffoldMessenger.of(context)
+                    .showSnackBar(SnackBar(content: Text('$item dismissed')));
+                    },
+                    background: Container(color: Colors.red),
+                    child: Container(
+                      child: WorkoutListContainer(
+                        workout: widget.workouts[index],
+                      ),
+                    ),
                   ),
-                ),
-              );
-            },
-          ),
+                );
+              },
+            ),
+      ),
     );
   }
 }
