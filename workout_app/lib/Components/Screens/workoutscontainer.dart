@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:workout_app/Components/Containers/workoutlistcontainer.dart';
 import '../../constants.dart';
 
 class WorkoutsContainer extends StatefulWidget {
@@ -20,31 +21,30 @@ class _WorkoutsContainerState extends State<WorkoutsContainer> {
         color: AppbarColour,
         borderRadius: BorderRadius.all(Radius.circular(5)),
       ),
-      child: ListView(
-          children: [
-            Center(
-              child: Container(
-                margin: EdgeInsets.only(top: 10),
-                child: Text(
-                  widget.day,
-                  style: TextStyle(
-                    color: Colors.white,
-              ),
-            ),
-          ),
-        ),
-            Center(
-              child: Container(
-                margin: EdgeInsets.only(top: 10),
-                child: Text(
-                  widget.workouts[0],
-                  style: TextStyle(
-                    color: Colors.white,
+      child: ListView.builder(
+            itemCount: widget.workouts.length,
+            itemBuilder: (BuildContext context, int index) {
+              final item = widget.workouts[index];
+              return Dismissible(
+
+                key: Key(item),
+
+                onDismissed: (direction) {
+                  setState(() {
+                    widget.workouts.removeAt(index);
+                  });
+                ScaffoldMessenger.of(context)
+                .showSnackBar(SnackBar(content: Text('$item dismissed')));
+                },
+                child: Container(
+                  margin: EdgeInsets.only(top: 10, left: 10, bottom: 10),
+                  child: WorkoutListContainer(
+                    workout: widget.workouts[index],
                   ),
                 ),
-              ),
-            ),
-      ]),
+              );
+            },
+          ),
     );
   }
 }
