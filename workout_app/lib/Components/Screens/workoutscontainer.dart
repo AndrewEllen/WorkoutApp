@@ -30,8 +30,8 @@ class _WorkoutsContainerState extends State<WorkoutsContainer> {
                 return ClipRRect(
                   child: Dismissible(
 
-                    key: Key(item),
-
+                    key: UniqueKey(),
+                    direction: DismissDirection.startToEnd,
                     onDismissed: (direction) {
                       setState(() {
                         widget.workouts.removeAt(index);
@@ -39,7 +39,15 @@ class _WorkoutsContainerState extends State<WorkoutsContainer> {
                     ScaffoldMessenger.of(context)
                     .showSnackBar(SnackBar(content: Text('$item dismissed')));
                     },
-                    background: Container(color: Colors.red),
+                    background: Container(
+                      color: Colors.red,
+                      child: Align(
+                        alignment: Alignment.centerLeft,
+                          child: Container(
+                            margin: EdgeInsets.only(left: 15),
+                            child: Icon(Icons.delete)
+                          )),
+                    ),
                     child: Container(
                       child: WorkoutListContainer(
                         workout: widget.workouts[index],
