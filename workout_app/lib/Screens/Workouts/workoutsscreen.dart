@@ -31,6 +31,7 @@ class _WorkoutListScreenState extends State<WorkoutListScreen> {
         .from('userworkouts')
         .select()
         .eq('UserID', userId)
+        .eq('Day', dropdownValueDay)
         .single()
         .execute();
     if (response.error != null && response.status != 406) {
@@ -76,8 +77,8 @@ class _WorkoutListScreenState extends State<WorkoutListScreen> {
                       height: 2,
                       color: defaultLoginBackgroundColour,
                     ),
-                    onChanged: (String? newValue) {
-                      _getWorkouts(currentUser!.id);
+                    onChanged: (String? newValue) async {
+                      await _getWorkouts(currentUser!.id);
                       setState(() {
                         dropdownValueDay = newValue!;
                       });
