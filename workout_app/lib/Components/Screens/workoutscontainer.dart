@@ -3,14 +3,35 @@ import 'package:workout_app/Components/Containers/workoutlistcontainer.dart';
 import '../../constants.dart';
 
 class WorkoutsContainer extends StatefulWidget {
-  WorkoutsContainer({required this.day, required this.workouts});
-  late String day;
+  WorkoutsContainer({required this.day, required this.workouts, required this.currentUserID, required this.listID});
+  late String day, currentUserID, listID;
   late List workouts;
   @override
   _WorkoutsContainerState createState() => _WorkoutsContainerState();
 }
 
 class _WorkoutsContainerState extends State<WorkoutsContainer> {
+
+  Future<void> _updateProfile() async {
+    final _listID = widget.listID;
+    final _user = widget.currentUserID;
+    final _day = widget.day;
+    final _workouts = widget.workouts;
+    final updates = {
+      "id": _listID,
+      'UserID': _user,
+      'Day': _day,
+      'Exercises': _workouts,
+    };
+    final response = await supabase.from('userworkouts').upsert(updates).execute();
+    if (response.error != null) {
+      ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+        content: Text(response.error!.message),
+        backgroundColor: Colors.red,
+      ));
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -36,6 +57,7 @@ class _WorkoutsContainerState extends State<WorkoutsContainer> {
                       setState(() {
                         widget.workouts.removeAt(index);
                       });
+                      _updateProfile();
                     ScaffoldMessenger.of(context)
                     .showSnackBar(SnackBar(content: Text('$item dismissed')));
                     },

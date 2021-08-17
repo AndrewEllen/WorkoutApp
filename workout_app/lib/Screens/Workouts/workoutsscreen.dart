@@ -16,7 +16,7 @@ class _WorkoutListScreenState extends State<WorkoutListScreen> {
   final currentUser = supabase.auth.user();
   String dropdownValueDay = "Monday";
   final _Dayformkey = GlobalKey<FormState>();
-  late String day;
+  late String day, listID;
   late List workouts;
   bool _loading = true;
 
@@ -40,6 +40,7 @@ class _WorkoutListScreenState extends State<WorkoutListScreen> {
           .showSnackBar(SnackBar(content: Text(response.error!.message)));
     }
     if (response.data != null) {
+      listID = response.data!["id"] as String;
       day = response.data!['Day'] as String;
       workouts = response.data!['Exercises'] as List;
     }
@@ -101,6 +102,8 @@ class _WorkoutListScreenState extends State<WorkoutListScreen> {
               child: WorkoutsContainer(
                 day: _loading ? "loading..." : day,
                 workouts: _loading? ["loading..."] : workouts,
+                currentUserID: currentUser!.id,
+                listID: listID,
               )
             ),
           ],
