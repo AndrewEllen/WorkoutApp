@@ -16,6 +16,8 @@ class _WorkoutListScreenState extends State<WorkoutListScreen> {
   final currentUser = supabase.auth.user();
   String dropdownValueDay = "Monday";
   final _Dayformkey = GlobalKey<FormState>();
+  final _inputController = TextEditingController();
+  final _inputformkey = GlobalKey<FormState>();
   late String day, listID;
   late List workouts;
   bool _loading = true;
@@ -99,12 +101,52 @@ class _WorkoutListScreenState extends State<WorkoutListScreen> {
             ),
             Align(
               alignment: Alignment.topCenter,
-              child: WorkoutsContainer(
-                day: _loading ? "loading..." : day,
-                workouts: _loading? ["loading..."] : workouts,
-                currentUserID: _loading? "loading..." : currentUser!.id,
-                listID: _loading? "loading..." :  listID,
+              child: Container(
+                child: WorkoutsContainer(
+                  day: _loading ? "loading..." : day,
+                  workouts: _loading? ["loading..."] : workouts,
+                  currentUserID: _loading? "loading..." : currentUser!.id,
+                  listID: _loading? "loading..." :  listID,
+                ),
               )
+            ),
+            Align(
+              alignment: Alignment.topCenter,
+              child: Container(
+                height: 60,
+                margin: EdgeInsets.only(left:10,right:10),
+                decoration: BoxDecoration(
+                  color: AppbarColour,
+                  borderRadius: BorderRadius.all(Radius.circular(5)),
+                ),
+                padding: EdgeInsets.symmetric(horizontal: 30.0),
+                child: Form(
+                  key: _inputformkey,
+                  child: TextFormField(
+                    enableInteractiveSelection : true,
+                    controller: _inputController,
+                    cursorColor: Colors.white,
+                    style: TextStyle(
+                      color: Colors.white,
+                    ),
+                    textAlign: TextAlign.center,
+                    decoration: InputDecoration(
+                      hintText: 'Enter Workout',
+                      hintStyle: TextStyle(
+                        color: Color.fromRGBO(255, 255, 255, 0.4),
+                      ),
+                      focusedBorder: UnderlineInputBorder(
+                        borderSide: new BorderSide(color: Colors.white),
+                      ),
+                    ),
+                    validator: (String? value) {
+                      if (value!.isEmpty) {
+                        return 'Invalid Height';
+                      }
+                    },
+                  ),
+                ),
+              ),
             ),
           ],
         ),

@@ -36,7 +36,7 @@ class _WorkoutsContainerState extends State<WorkoutsContainer> {
   Widget build(BuildContext context) {
     return Container(
       width: double.infinity,
-      height: 550,
+      height: 500,
       margin: EdgeInsets.all(10),
       decoration: BoxDecoration(
         color: AppbarColour,
