@@ -1,4 +1,4 @@
-import 'package:workout_app/Screens/Main/homescreen.dart';
+import 'package:workout_app/Screens/Workouts/workoutsscreen.dart';
 import '../models/sidebartextmodel.dart';
 
 class SideBarWorkout {
@@ -7,7 +7,7 @@ class SideBarWorkout {
       SideBarText(
         settingsText: "Workouts",
         textLink: "/workouts",
-        routerWidget: HomeScreen(),
+        routerWidget: WorkoutListScreen(appbartitle: 'Select Workouts'),
         //routerWidget: WorkoutsListScreen(),
       ),
     ];
