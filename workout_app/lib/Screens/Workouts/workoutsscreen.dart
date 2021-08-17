@@ -17,7 +17,8 @@ class _WorkoutListScreenState extends State<WorkoutListScreen> {
   String dropdownValueDay = "Monday";
   final _Dayformkey = GlobalKey<FormState>();
   late String day;
-  bool _loading = false;
+  late List workouts;
+  bool _loading = true;
 
   void initState() {
     _getWorkouts(currentUser!.id);
@@ -40,6 +41,7 @@ class _WorkoutListScreenState extends State<WorkoutListScreen> {
     }
     if (response.data != null) {
       day = response.data!['Day'] as String;
+      workouts = response.data!['Exercises'] as List;
     }
     setState(() {
       _loading = false;
@@ -77,11 +79,11 @@ class _WorkoutListScreenState extends State<WorkoutListScreen> {
                       height: 2,
                       color: defaultLoginBackgroundColour,
                     ),
-                    onChanged: (String? newValue) async {
-                      await _getWorkouts(currentUser!.id);
+                    onChanged: (String? newValue) {
                       setState(() {
                         dropdownValueDay = newValue!;
                       });
+                      _getWorkouts(currentUser!.id);
                     },
                     items: <String>['Monday','Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday']
                         .map<DropdownMenuItem<String>>((String value) {
@@ -96,7 +98,10 @@ class _WorkoutListScreenState extends State<WorkoutListScreen> {
             ),
             Align(
               alignment: Alignment.topCenter,
-              child: WorkoutsContainer(day: _loading ? "loading..." : day),
+              child: WorkoutsContainer(
+                day: _loading ? "loading..." : day,
+                workouts: _loading? ["loading..."] : workouts,
+              )
             ),
           ],
         ),

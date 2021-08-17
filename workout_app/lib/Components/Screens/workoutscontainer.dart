@@ -2,8 +2,9 @@ import 'package:flutter/material.dart';
 import '../../constants.dart';
 
 class WorkoutsContainer extends StatefulWidget {
-  WorkoutsContainer({required this.day});
+  WorkoutsContainer({required this.day, required this.workouts});
   late String day;
+  late List workouts;
   @override
   _WorkoutsContainerState createState() => _WorkoutsContainerState();
 }
@@ -32,6 +33,17 @@ class _WorkoutsContainerState extends State<WorkoutsContainer> {
             ),
           ),
         ),
+            Center(
+              child: Container(
+                margin: EdgeInsets.only(top: 10),
+                child: Text(
+                  widget.workouts[0],
+                  style: TextStyle(
+                    color: Colors.white,
+                  ),
+                ),
+              ),
+            ),
       ]),
     );
   }
