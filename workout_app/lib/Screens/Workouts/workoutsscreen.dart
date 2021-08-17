@@ -151,7 +151,7 @@ class _WorkoutListScreenState extends State<WorkoutListScreen> {
                     onFieldSubmitted: (value) async {
                       if (_inputformkey.currentState!.validate()) {
                         workouts.add(value);
-                        completedlist.add("False");
+                        completedlist.add("false");
                         await _updateWorkouts();
                         _getWorkouts(currentUser!.id);
                         _inputController.clear();

@@ -16,11 +16,10 @@ class _WorkoutHomeScreenState extends State<WorkoutHomeScreen> {
   final currentUser = supabase.auth.user();
   String dropdownValueDay = "Monday";
   final _Dayformkey = GlobalKey<FormState>();
-  final _inputController = TextEditingController();
-  final _inputformkey = GlobalKey<FormState>();
   late String day, listID;
-  late List workouts,completedlist;
+  late List workouts,completedlist,_completedlist;
   bool _loading = true;
+  late bool _completed;
 
   Future<void> _updateWorkouts() async {
     final _listID = listID;
@@ -62,6 +61,18 @@ class _WorkoutHomeScreenState extends State<WorkoutHomeScreen> {
       day = response.data!['Day'] as String;
       workouts = response.data!['Exercises'] as List;
       completedlist = response.data!['Completed'] as List;
+      _completedlist = completedlist;
+    }
+    var i;
+    for (i=0; i < completedlist.length; i++) {
+      if (completedlist[i] == "true"){
+        _completed = true;
+        completedlist[i] = _completed;
+
+      } else {
+        _completed = false;
+        completedlist[i] = _completed;
+      }
     }
     setState(() {
       _loading = false;
@@ -137,9 +148,10 @@ class _WorkoutHomeScreenState extends State<WorkoutHomeScreen> {
                     widthvalue: 580,
                     day: _loading ? "loading..." : day,
                     workouts: _loading? ["loading..."] : workouts,
-                    completedlist: _loading? ["loading..."] : completedlist,
+                    completedlist: _loading? [false] : completedlist,
                     currentUserID: _loading? "loading..." : currentUser!.id,
                     listID: _loading? "loading..." :  listID,
+                    completedliststring: _loading? ["loading..."] : _completedlist,
                   ),
                 )
             ),
