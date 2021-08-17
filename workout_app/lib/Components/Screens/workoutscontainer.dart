@@ -12,7 +12,7 @@ class WorkoutsContainer extends StatefulWidget {
 
 class _WorkoutsContainerState extends State<WorkoutsContainer> {
 
-  Future<void> _updateProfile() async {
+  Future<void> _updateWorkouts() async {
     final _listID = widget.listID;
     final _user = widget.currentUserID;
     final _day = widget.day;
@@ -57,7 +57,7 @@ class _WorkoutsContainerState extends State<WorkoutsContainer> {
                       setState(() {
                         widget.workouts.removeAt(index);
                       });
-                      _updateProfile();
+                      _updateWorkouts();
                     ScaffoldMessenger.of(context)
                     .showSnackBar(SnackBar(content: Text('$item dismissed')));
                     },

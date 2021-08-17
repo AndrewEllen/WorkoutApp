@@ -26,6 +26,26 @@ class _WorkoutListScreenState extends State<WorkoutListScreen> {
     _getWorkouts(currentUser!.id);
   }
 
+  Future<void> _updateWorkouts() async {
+    final _listID = listID;
+    final _user = currentUser!.id;
+    final _day = day;
+    final _workouts = workouts;
+    final updates = {
+      "id": _listID,
+      'UserID': _user,
+      'Day': _day,
+      'Exercises': _workouts,
+    };
+    final response = await supabase.from('userworkouts').upsert(updates).execute();
+    if (response.error != null) {
+      ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+        content: Text(response.error!.message),
+        backgroundColor: Colors.red,
+      ));
+    }
+  }
+
   Future<void> _getWorkouts(String userId) async {
     setState(() {
       _loading = true;
@@ -123,6 +143,14 @@ class _WorkoutListScreenState extends State<WorkoutListScreen> {
                 child: Form(
                   key: _inputformkey,
                   child: TextFormField(
+                    onFieldSubmitted: (value) async {
+                      if (_inputformkey.currentState!.validate()) {
+                        workouts.add(value);
+                        await _updateWorkouts();
+                        _getWorkouts(currentUser!.id);
+                        _inputController.clear();
+                      }
+                    },
                     enableInteractiveSelection : true,
                     controller: _inputController,
                     cursorColor: Colors.white,
