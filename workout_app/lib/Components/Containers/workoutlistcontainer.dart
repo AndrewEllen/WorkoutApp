@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import '../../constants.dart';
 
 class WorkoutListContainer extends StatelessWidget {
   WorkoutListContainer ({required this.workout});

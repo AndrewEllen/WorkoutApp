@@ -5,7 +5,7 @@ class SideBarWorkout {
   static List<SideBarText> getContents() {
     return [
       SideBarText(
-        settingsText: "Workouts",
+        settingsText: "Edit Workout Plan",
         textLink: "/workouts",
         routerWidget: WorkoutListScreen(appbartitle: 'Select Workouts'),
         //routerWidget: WorkoutsListScreen(),

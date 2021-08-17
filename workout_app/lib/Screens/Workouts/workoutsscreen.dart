@@ -19,7 +19,7 @@ class _WorkoutListScreenState extends State<WorkoutListScreen> {
   final _inputController = TextEditingController();
   final _inputformkey = GlobalKey<FormState>();
   late String day, listID;
-  late List workouts;
+  late List workouts,completedlist;
   bool _loading = true;
 
   void initState() {
@@ -31,11 +31,13 @@ class _WorkoutListScreenState extends State<WorkoutListScreen> {
     final _user = currentUser!.id;
     final _day = day;
     final _workouts = workouts;
+    final _completedlist = completedlist;
     final updates = {
       "id": _listID,
       'UserID': _user,
       'Day': _day,
       'Exercises': _workouts,
+      'Completed': _completedlist,
     };
     final response = await supabase.from('userworkouts').upsert(updates).execute();
     if (response.error != null) {
@@ -65,6 +67,7 @@ class _WorkoutListScreenState extends State<WorkoutListScreen> {
       listID = response.data!["id"] as String;
       day = response.data!['Day'] as String;
       workouts = response.data!['Exercises'] as List;
+      completedlist = response.data!['Completed'] as List;
     }
     setState(() {
       _loading = false;
@@ -123,8 +126,10 @@ class _WorkoutListScreenState extends State<WorkoutListScreen> {
               alignment: Alignment.topCenter,
               child: Container(
                 child: WorkoutsContainer(
+                  widthvalue: 500,
                   day: _loading ? "loading..." : day,
                   workouts: _loading? ["loading..."] : workouts,
+                  completedlist: _loading? ["loading..."] : completedlist,
                   currentUserID: _loading? "loading..." : currentUser!.id,
                   listID: _loading? "loading..." :  listID,
                 ),
@@ -146,6 +151,7 @@ class _WorkoutListScreenState extends State<WorkoutListScreen> {
                     onFieldSubmitted: (value) async {
                       if (_inputformkey.currentState!.validate()) {
                         workouts.add(value);
+                        completedlist.add("False");
                         await _updateWorkouts();
                         _getWorkouts(currentUser!.id);
                         _inputController.clear();
