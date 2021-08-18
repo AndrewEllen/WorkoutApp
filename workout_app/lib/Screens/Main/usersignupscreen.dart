@@ -153,7 +153,7 @@ class _UserSignupState extends State<UserSignup> {
           const SnackBar(content: Text('Successfully updated profile!')));
       int i = 0;
       await Future.forEach(days, (day) async {
-        _updateWorkouts(days[i]);
+        _updateWorkouts(day);
         });
       Timer(Duration(milliseconds: 800), () {
         Navigator.pushNamedAndRemoveUntil(context, "/home", (r) => false);

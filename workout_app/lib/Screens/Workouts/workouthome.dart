@@ -16,6 +16,8 @@ class _WorkoutHomeScreenState extends State<WorkoutHomeScreen> {
   final currentUser = supabase.auth.user();
   String dropdownValueDay = "Monday";
   final _Dayformkey = GlobalKey<FormState>();
+  final GlobalKey<RefreshIndicatorState> _refreshIndicatorKey =
+  new GlobalKey<RefreshIndicatorState>();
   late String day, listID;
   late List workouts,completedlist,_completedlist;
   bool _loading = true;
@@ -79,6 +81,12 @@ class _WorkoutHomeScreenState extends State<WorkoutHomeScreen> {
     });
   }
 
+  Future<Null> _refresh() {
+    return _getWorkouts(currentUser!.id).then((_workouts) {
+      setState(() => workouts);
+    });
+  }
+
   void initState() {
     sidebardata = SideBarWorkout.getContents();
     feedbackdata = SideBarFeedback.getContents();
@@ -103,66 +111,70 @@ class _WorkoutHomeScreenState extends State<WorkoutHomeScreen> {
           sidebardata: sidebardata,
           feedbackdata: feedbackdata,
         ),
-        body: ListView(
-          children: [
-            Align(
-              alignment: Alignment.topCenter,
-              child: Container(
-                margin: EdgeInsets.only(top: 15),
-                padding: EdgeInsets.symmetric(horizontal: 30.0),
-                child: Form(
-                  key: _Dayformkey,
-                  child: DropdownButton<String>(
-                    dropdownColor: defaultLoginBackgroundColour,
-                    value: dropdownValueDay,
-                    elevation: 1,
-                    style: TextStyle(
-                      fontSize: 16,
-                      color: Colors.white,
+        body: RefreshIndicator(
+          key: _refreshIndicatorKey,
+          onRefresh: _refresh,
+          child: ListView(
+            children: [
+              Align(
+                alignment: Alignment.topCenter,
+                child: Container(
+                  margin: EdgeInsets.only(top: 15),
+                  padding: EdgeInsets.symmetric(horizontal: 30.0),
+                  child: Form(
+                    key: _Dayformkey,
+                    child: DropdownButton<String>(
+                      dropdownColor: defaultLoginBackgroundColour,
+                      value: dropdownValueDay,
+                      elevation: 1,
+                      style: TextStyle(
+                        fontSize: 16,
+                        color: Colors.white,
+                      ),
+                      underline: Container(
+                        height: 2,
+                        color: defaultLoginBackgroundColour,
+                      ),
+                      onChanged: (String? newValue) {
+                        setState(() {
+                          dropdownValueDay = newValue!;
+                        });
+                        _getWorkouts(currentUser!.id);
+                      },
+                      items: <String>['Monday','Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday']
+                          .map<DropdownMenuItem<String>>((String value) {
+                        return DropdownMenuItem<String>(
+                          value: value,
+                          child: Text(value),
+                        );
+                      }).toList(),
                     ),
-                    underline: Container(
-                      height: 2,
-                      color: defaultLoginBackgroundColour,
-                    ),
-                    onChanged: (String? newValue) {
-                      setState(() {
-                        dropdownValueDay = newValue!;
-                      });
-                      _getWorkouts(currentUser!.id);
-                    },
-                    items: <String>['Monday','Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday']
-                        .map<DropdownMenuItem<String>>((String value) {
-                      return DropdownMenuItem<String>(
-                        value: value,
-                        child: Text(value),
-                      );
-                    }).toList(),
                   ),
                 ),
               ),
-            ),
-            Align(
-                alignment: Alignment.topCenter,
-                child: _loading ? Container(
-                  width: double.infinity,
-                  height: 580,
-                  margin: EdgeInsets.all(10),
-                  decoration: BoxDecoration(
-                    color: AppbarColour,
-                    borderRadius: BorderRadius.all(Radius.circular(5)),
-                  )) : Container(
-                  child: HomeWorkoutsContainer(
-                    widthvalue: 580,
-                    day: _loading ? "loading..." : day,
-                    workouts: _loading? ["loading..."] : workouts,
-                    completedlist: _loading? [false] : completedlist,
-                    currentUserID: _loading? "loading..." : currentUser!.id,
-                    listID: _loading? "loading..." :  listID,
-                    completedliststring: _loading? ["loading..."] : _completedlist,
-                  ),
-                )
-            ),
-          ],
+              Align(
+                  alignment: Alignment.topCenter,
+                  child: _loading ? Container(
+                    width: double.infinity,
+                    height: 580,
+                    margin: EdgeInsets.all(10),
+                    decoration: BoxDecoration(
+                      color: AppbarColour,
+                      borderRadius: BorderRadius.all(Radius.circular(5)),
+                    )) : Container(
+                    child: HomeWorkoutsContainer(
+                      widthvalue: 580,
+                      day: _loading ? "loading..." : day,
+                      workouts: _loading? ["loading..."] : workouts,
+                      completedlist: _loading? [false] : completedlist,
+                      currentUserID: _loading? "loading..." : currentUser!.id,
+                      listID: _loading? "loading..." :  listID,
+                      completedliststring: _loading? ["loading..."] : _completedlist,
+                    ),
+                  )
+              ),
+            ],
+          ),
         ),
       ),
     );

@@ -27,34 +27,34 @@ class _HomeWorkoutsContainerState extends State<HomeWorkoutsContainer> {
       ),
       child: ClipRRect(
         borderRadius: BorderRadius.all(Radius.circular(5)),
-        child: ListView.builder(
-              itemCount: widget.workouts.length,
-              itemBuilder: (BuildContext context, int index) {
-                return ClipRRect(
-                  child: Stack(
-                    children: [
-                      Container(
-                          child: WorkoutListContainer(
-                            workout: widget.workouts[index],
+          child: ListView.builder(
+                itemCount: widget.workouts.length,
+                itemBuilder: (BuildContext context, int index) {
+                  return ClipRRect(
+                    child: Stack(
+                      children: [
+                        Container(
+                            child: WorkoutListContainer(
+                              workout: widget.workouts[index],
+                            ),
                           ),
-                        ),
-                      Align(
-                        alignment: Alignment.centerRight,
-                        child: WorkoutListCheckbox(
-                          completed: widget.completedlist[index],
-                          index: index,
-                          day: widget.day,
-                          completedliststring: widget.completedliststring,
-                          currentUserID: widget.currentUserID,
-                          listID: widget.listID,
-                        ),
-                      )
-                    ],
-                  ),
-                );
-              },
-            ),
-      ),
+                        Align(
+                          alignment: Alignment.centerRight,
+                          child: WorkoutListCheckbox(
+                            completed: widget.completedlist[index],
+                            index: index,
+                            day: widget.day,
+                            completedliststring: widget.completedliststring,
+                            currentUserID: widget.currentUserID,
+                            listID: widget.listID,
+                          ),
+                        )
+                      ],
+                    ),
+                  );
+                },
+              ),
+        ),
     );
   }
 }
