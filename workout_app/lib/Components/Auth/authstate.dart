@@ -5,6 +5,8 @@ import '../../constants.dart';
 
 class AuthState<T extends StatefulWidget> extends SupabaseAuthState<T> {
   late var username;
+  final currentUser = supabase.auth.user();
+
 
   @override
   void onUnauthenticated() {
@@ -27,7 +29,7 @@ class AuthState<T extends StatefulWidget> extends SupabaseAuthState<T> {
     else {
       if (mounted) {
         Navigator.of(context).pushNamedAndRemoveUntil(
-            '/accountsettings', (route) => false);
+            '/signup', (route) => false);
       }
     }
   }

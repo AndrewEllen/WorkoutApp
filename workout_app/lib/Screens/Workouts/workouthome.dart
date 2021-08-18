@@ -143,7 +143,14 @@ class _WorkoutHomeScreenState extends State<WorkoutHomeScreen> {
             ),
             Align(
                 alignment: Alignment.topCenter,
-                child: Container(
+                child: _loading ? Container(
+                  width: double.infinity,
+                  height: 580,
+                  margin: EdgeInsets.all(10),
+                  decoration: BoxDecoration(
+                    color: AppbarColour,
+                    borderRadius: BorderRadius.all(Radius.circular(5)),
+                  )) : Container(
                   child: HomeWorkoutsContainer(
                     widthvalue: 580,
                     day: _loading ? "loading..." : day,

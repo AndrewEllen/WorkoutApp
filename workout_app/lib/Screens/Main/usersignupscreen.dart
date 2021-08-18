@@ -3,12 +3,12 @@ import 'package:flutter/material.dart';
 import 'package:supabase/supabase.dart';
 import '../../constants.dart';
 
-class UserSettings extends StatefulWidget {
+class UserSignup extends StatefulWidget {
   @override
-  _UserSettingsState createState() => _UserSettingsState();
+  _UserSignupState createState() => _UserSignupState();
 }
 
-class _UserSettingsState extends State<UserSettings> {
+class _UserSignupState extends State<UserSignup> {
   String dropdownValueGoals = 'Maintain';
   String dropdownValueActivity = 'Sedentary';
   String dropdownValueGender = 'Male';
@@ -26,6 +26,22 @@ class _UserSettingsState extends State<UserSettings> {
   final _formkey5 = GlobalKey<FormState>();
   final _formkey6 = GlobalKey<FormState>();
   var _loading = false;
+  final List days = ['Monday','Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'];
+
+  Future<void> _updateWorkouts(day) async {
+    final _day = day;
+    final updates = {
+      'UserID': currentUser!.id,
+      'Day': _day,
+    };
+    final response = await supabase.from('userworkouts').upsert(updates).execute();
+    if (response.error != null) {
+      ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+        content: Text(response.error!.message),
+        backgroundColor: Colors.red,
+      ));
+    }
+  }
 
   void initState() {
     _getProfile(currentUser!.id);
@@ -135,6 +151,10 @@ class _UserSettingsState extends State<UserSettings> {
     } else {
       ScaffoldMessenger.of(context).showSnackBar(
           const SnackBar(content: Text('Successfully updated profile!')));
+      int i = 0;
+      await Future.forEach(days, (day) async {
+        _updateWorkouts(days[i]);
+        });
       Timer(Duration(milliseconds: 800), () {
         Navigator.pushNamedAndRemoveUntil(context, "/home", (r) => false);
       });
@@ -199,7 +219,7 @@ class _UserSettingsState extends State<UserSettings> {
                     'User: ${currentUser?.email}',
                     style: TextStyle(
                       fontSize: 13,
-                      color: WorkoutsAccentColour,
+                      color: OtherAccentColour,
                       shadows: [
                         Shadow(
                           blurRadius: 1,

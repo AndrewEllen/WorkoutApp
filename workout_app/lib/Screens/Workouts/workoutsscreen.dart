@@ -124,7 +124,14 @@ class _WorkoutListScreenState extends State<WorkoutListScreen> {
             ),
             Align(
               alignment: Alignment.topCenter,
-              child: Container(
+              child: _loading? Container(
+                  width: double.infinity,
+                  height: 500,
+                  margin: EdgeInsets.all(10),
+                  decoration: BoxDecoration(
+                    color: AppbarColour,
+                    borderRadius: BorderRadius.all(Radius.circular(5)),
+                  )) : Container(
                 child: WorkoutsContainer(
                   widthvalue: 500,
                   day: _loading ? "loading..." : day,
