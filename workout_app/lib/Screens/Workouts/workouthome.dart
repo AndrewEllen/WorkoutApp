@@ -72,7 +72,7 @@ class _WorkoutHomeScreenState extends State<WorkoutHomeScreen> {
   }
 
   void initState() {
-    if (int.parse(DateFormat('h').format(today)) < 4) {
+    if (int.parse(DateFormat('HH').format(today)) < 4) {
       dropdownValueDay = DateFormat('EEEE').format(yesterday);
     } else {
       dropdownValueDay = DateFormat('EEEE').format(today);
