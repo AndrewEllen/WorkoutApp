@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import '../../constants.dart';
 
 class WorkoutListContainer extends StatelessWidget {
   WorkoutListContainer ({required this.workout});
@@ -10,12 +11,13 @@ class WorkoutListContainer extends StatelessWidget {
       height: 50,
       width: double.infinity,
       decoration: BoxDecoration(
+        color: AppbarColour,
         boxShadow: [
           BoxShadow(
             color: Color.fromRGBO(1, 1, 1, 0.75),
             spreadRadius: 1,
             blurRadius: 1,
-            offset: Offset(0, 50),
+            offset: Offset(0, 0),
           )
         ],
       ),

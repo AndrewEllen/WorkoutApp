@@ -86,9 +86,7 @@ class _WorkoutsContainerState extends State<WorkoutsContainer> {
       .toList();
 
   Widget _buildTiles(item ,int index) {
-    return ClipRRect(
-      key: UniqueKey(),
-      child: Dismissible(
+    return Dismissible(
         key: UniqueKey(),
         direction: DismissDirection.startToEnd,
         onDismissed: (direction) {
@@ -113,7 +111,6 @@ class _WorkoutsContainerState extends State<WorkoutsContainer> {
             workout: widget.workouts[index],
           ),
         ),
-      ),
     );
   }
 
