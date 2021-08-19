@@ -5,6 +5,7 @@ import 'package:workout_app/Components/SideBar/sidebar.dart';
 import 'package:workout_app/Data/Screens/feedback.dart';
 import 'package:workout_app/data/Screens/workouthome.dart';
 import '../../constants.dart';
+import 'package:intl/intl.dart';
 
 class WorkoutHomeScreen extends StatefulWidget {
   @override
@@ -14,6 +15,8 @@ class WorkoutHomeScreen extends StatefulWidget {
 class _WorkoutHomeScreenState extends State<WorkoutHomeScreen> {
   List sidebardata = [], feedbackdata = [];
   final currentUser = supabase.auth.user();
+  var yesterday = DateTime.now().subtract(Duration(days:1));
+  var today = DateTime.now();
   String dropdownValueDay = "Monday";
   final _Dayformkey = GlobalKey<FormState>();
   final GlobalKey<RefreshIndicatorState> _refreshIndicatorKey =
@@ -22,26 +25,6 @@ class _WorkoutHomeScreenState extends State<WorkoutHomeScreen> {
   late List workouts,completedlist,_completedlist;
   bool _loading = true;
   late bool _completed;
-
-  Future<void> _updateWorkouts() async {
-    final _listID = listID;
-    final _user = currentUser!.id;
-    final _day = day;
-    final _completed = completedlist;
-    final updates = {
-      "id": _listID,
-      'UserID': _user,
-      'Day': _day,
-      'Exercises': _completed,
-    };
-    final response = await supabase.from('userworkouts').upsert(updates).execute();
-    if (response.error != null) {
-      ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-        content: Text(response.error!.message),
-        backgroundColor: Colors.red,
-      ));
-    }
-  }
 
   Future<void> _getWorkouts(String userId) async {
     setState(() {
@@ -88,6 +71,11 @@ class _WorkoutHomeScreenState extends State<WorkoutHomeScreen> {
   }
 
   void initState() {
+    if (int.parse(DateFormat('h').format(yesterday)) >= 4) {
+      dropdownValueDay = DateFormat('EEEE').format(today);
+    } else {
+      dropdownValueDay = DateFormat('EEEE').format(yesterday);
+    }
     sidebardata = SideBarWorkout.getContents();
     feedbackdata = SideBarFeedback.getContents();
     _getWorkouts(currentUser!.id);

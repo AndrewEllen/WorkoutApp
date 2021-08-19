@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:workout_app/Components/Navbar/Navbar.dart';
 import 'package:workout_app/Components/Screens/workoutscontainer.dart';
 import '../../constants.dart';
+import 'package:intl/intl.dart';
 
 class WorkoutListScreen extends StatefulWidget {
   WorkoutListScreen(
@@ -14,6 +15,8 @@ class WorkoutListScreen extends StatefulWidget {
 
 class _WorkoutListScreenState extends State<WorkoutListScreen> {
   final currentUser = supabase.auth.user();
+  var yesterday = DateTime.now().subtract(Duration(days:1));
+  var today = DateTime.now();
   String dropdownValueDay = "Monday";
   final _Dayformkey = GlobalKey<FormState>();
   final _inputController = TextEditingController();
@@ -23,6 +26,12 @@ class _WorkoutListScreenState extends State<WorkoutListScreen> {
   bool _loading = true;
 
   void initState() {
+    if (int.parse(DateFormat('h').format(yesterday)) >= 4) {
+      dropdownValueDay = DateFormat('EEEE').format(today);
+    } else {
+      dropdownValueDay = DateFormat('EEEE').format(yesterday);
+    }
+
     _getWorkouts(currentUser!.id);
   }
 
