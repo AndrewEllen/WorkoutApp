@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:workout_app/Components/Navbar/Navbar.dart';
 import 'package:workout_app/Components/Screens/workoutscontainer.dart';
+import 'package:workout_app/Data/resetcheckboxes.dart';
 import '../../constants.dart';
 import 'package:intl/intl.dart';
 
@@ -26,10 +27,11 @@ class _WorkoutListScreenState extends State<WorkoutListScreen> {
   bool _loading = true;
 
   void initState() {
-    if (int.parse(DateFormat('h').format(yesterday)) >= 4) {
-      dropdownValueDay = DateFormat('EEEE').format(today);
-    } else {
+    if (int.parse(DateFormat('h').format(today)) < 4) {
       dropdownValueDay = DateFormat('EEEE').format(yesterday);
+    } else {
+      dropdownValueDay = DateFormat('EEEE').format(today);
+      resettickboxes(DateFormat('EEEE').format(yesterday),currentUser!.id);
     }
 
     _getWorkouts(currentUser!.id);

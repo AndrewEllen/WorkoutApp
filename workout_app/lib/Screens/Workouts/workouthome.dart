@@ -3,6 +3,7 @@ import 'package:workout_app/Components/Navbar/Navbar.dart';
 import 'package:workout_app/Components/Screens/homeworkoutscontainer.dart';
 import 'package:workout_app/Components/SideBar/sidebar.dart';
 import 'package:workout_app/Data/Screens/feedback.dart';
+import 'package:workout_app/Data/resetcheckboxes.dart';
 import 'package:workout_app/data/Screens/workouthome.dart';
 import '../../constants.dart';
 import 'package:intl/intl.dart';
@@ -71,10 +72,11 @@ class _WorkoutHomeScreenState extends State<WorkoutHomeScreen> {
   }
 
   void initState() {
-    if (int.parse(DateFormat('h').format(yesterday)) >= 4) {
-      dropdownValueDay = DateFormat('EEEE').format(today);
-    } else {
+    if (int.parse(DateFormat('h').format(today)) < 4) {
       dropdownValueDay = DateFormat('EEEE').format(yesterday);
+    } else {
+      dropdownValueDay = DateFormat('EEEE').format(today);
+      resettickboxes(DateFormat('EEEE').format(yesterday),currentUser!.id);
     }
     sidebardata = SideBarWorkout.getContents();
     feedbackdata = SideBarFeedback.getContents();
