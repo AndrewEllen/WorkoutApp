@@ -109,6 +109,7 @@ class _WorkoutsContainerState extends State<WorkoutsContainer> {
         child: Container(
           child: WorkoutListContainer(
             workout: widget.workouts[index],
+            margin: 0,
           ),
         ),
     );

@@ -36,6 +36,7 @@ class _HomeWorkoutsContainerState extends State<HomeWorkoutsContainer> {
                         Container(
                             child: WorkoutListContainer(
                               workout: widget.workouts[index],
+                              margin: 1,
                             ),
                           ),
                         Align(
