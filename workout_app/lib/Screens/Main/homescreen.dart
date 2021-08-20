@@ -99,7 +99,6 @@ class _HomeScreenState extends State<HomeScreen> {
                     children: [
                       GestureDetector(
                         onTap: () {
-                          Navigator.pop(context);
                           Navigator.push(
                               context,
                               FadeRouter(

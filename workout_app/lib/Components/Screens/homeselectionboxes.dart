@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:workout_app/Screens/Workouts/workouthome.dart';
 import 'package:workout_app/constants.dart';
+import 'package:animations/animations.dart';
 import '../../router.dart';
 
 class HomeSelectionBox extends StatelessWidget {
@@ -15,7 +17,7 @@ class HomeSelectionBox extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return GestureDetector(
+    /*return GestureDetector(
       onTap: () {
         Navigator.push(
           context,
@@ -24,54 +26,65 @@ class HomeSelectionBox extends StatelessWidget {
           screen: containerroutewidget,
           )
         );
-      },
-      child: Container(
-        margin: EdgeInsets.only(
-          top: 30,
-          bottom: 30,
-          left: 20,
-          right: 20,
-        ),
-        decoration: boxSelectionDecoration,
-        height: boxSelectionHeight,
-        width: boxSelectionWidth,
-        child: Stack(
-          children: [
-            Center(
-              child: Container(
-                width: double.infinity,
-                height: double.infinity,
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.all(
-                    Radius.circular(5),
-                  ),
-                  image: DecorationImage(
-                    fit: BoxFit.cover,
-                    colorFilter: ColorFilter.mode(tintcolour, BlendMode.screen),
-                    image: ExactAssetImage(containerimageloc),
-                  ),
-                ),
-              ),
+      },*/
+      return Container(
+            margin: EdgeInsets.only(
+              top: 30,
+              bottom: 30,
+              left: 20,
+              right: 20,
             ),
-            Center(
-                child: Text(
-              containertext,
-              style: TextStyle(
-                color: Colors.white,
-                fontSize: 37,
-                fontWeight: FontWeight.w500,
-                shadows: [
-                  Shadow(
-                    blurRadius: 1,
-                    color: Colors.black,
-                    offset: Offset(1,5),
+            decoration: boxSelectionDecoration,
+            height: boxSelectionHeight,
+            width: boxSelectionWidth,
+        child: OpenContainer(
+          clipBehavior: Clip.hardEdge,
+          transitionType: ContainerTransitionType.fadeThrough,
+          openColor: Color.fromRGBO(0, 0, 0, 0),
+          closedColor: Color.fromRGBO(0, 0, 0, 0),
+          closedBuilder: (context, action) {
+            return Stack(
+                children: [
+                  Center(
+                    child: Container(
+                      width: double.infinity,
+                      height: double.infinity,
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.all(
+                          Radius.circular(5),
+                        ),
+                        image: DecorationImage(
+                          fit: BoxFit.cover,
+                          colorFilter: ColorFilter.mode(
+                              tintcolour, BlendMode.screen),
+                          image: ExactAssetImage(containerimageloc),
+                        ),
+                      ),
+                    ),
                   ),
+                  Center(
+                      child: Text(
+                        containertext,
+                        style: TextStyle(
+                          color: Colors.white,
+                          fontSize: 37,
+                          fontWeight: FontWeight.w500,
+                          shadows: [
+                            Shadow(
+                              blurRadius: 1,
+                              color: Colors.black,
+                              offset: Offset(1, 5),
+                            ),
+                          ],
+                        ),
+                      )),
                 ],
-              ),
-            )),
-          ],
+            );
+          },
+          openBuilder: (context, action) {
+            return containerroutewidget;
+        },
         ),
-      ),
-    );
+      );
   }
 }

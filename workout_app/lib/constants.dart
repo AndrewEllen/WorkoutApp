@@ -20,7 +20,7 @@ const Color workoutsTintColour = Color.fromRGBO(255, 1, 1, 0.4);
 const Color dietTintColour = Color.fromRGBO(32, 142, 26, 0.4);
 
 const boxSelectionDecoration = BoxDecoration(
-  color: Colors.white70,
+  color: Color.fromRGBO(38, 38, 38, 1.0),
   borderRadius: BorderRadius.all(
     Radius.circular(5),
   ),
