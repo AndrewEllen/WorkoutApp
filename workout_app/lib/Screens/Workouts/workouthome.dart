@@ -3,7 +3,6 @@ import 'package:workout_app/Components/Navbar/Navbar.dart';
 import 'package:workout_app/Components/Screens/homeworkoutscontainer.dart';
 import 'package:workout_app/Components/SideBar/sidebar.dart';
 import 'package:workout_app/Data/Screens/feedback.dart';
-import 'package:workout_app/Data/fetchers.dart';
 import 'package:workout_app/Data/resetcheckboxes.dart';
 import 'package:workout_app/data/Screens/workouthome.dart';
 import '../../constants.dart';
@@ -83,8 +82,6 @@ class _WorkoutHomeScreenState extends State<WorkoutHomeScreen> {
     sidebardata = SideBarWorkout.getContents();
     feedbackdata = SideBarFeedback.getContents();
     _getWorkouts(currentUser!.id);
-    userworkoutsdata = getWorkouts();
-    print(userworkoutsdata);
   }
 
   @override
