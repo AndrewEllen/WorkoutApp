@@ -3,6 +3,7 @@ import 'package:workout_app/Components/Navbar/Navbar.dart';
 import 'package:workout_app/Components/Screens/homeworkoutscontainer.dart';
 import 'package:workout_app/Components/SideBar/sidebar.dart';
 import 'package:workout_app/Data/Screens/feedback.dart';
+import 'package:workout_app/Data/fetchers.dart';
 import 'package:workout_app/Data/resetcheckboxes.dart';
 import 'package:workout_app/data/Screens/workouthome.dart';
 import '../../constants.dart';
@@ -15,6 +16,7 @@ class WorkoutHomeScreen extends StatefulWidget {
 
 class _WorkoutHomeScreenState extends State<WorkoutHomeScreen> {
   List sidebardata = [], feedbackdata = [];
+  late final userworkoutsdata;
   final currentUser = supabase.auth.user();
   var yesterday = DateTime.now().subtract(Duration(days:1));
   var today = DateTime.now();
@@ -81,6 +83,8 @@ class _WorkoutHomeScreenState extends State<WorkoutHomeScreen> {
     sidebardata = SideBarWorkout.getContents();
     feedbackdata = SideBarFeedback.getContents();
     _getWorkouts(currentUser!.id);
+    userworkoutsdata = getWorkouts();
+    print(userworkoutsdata);
   }
 
   @override
