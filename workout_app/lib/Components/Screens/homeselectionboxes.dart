@@ -38,10 +38,12 @@ class HomeSelectionBox extends StatelessWidget {
             height: boxSelectionHeight,
             width: boxSelectionWidth,
         child: OpenContainer(
+          transitionDuration: Duration(seconds: 1),
           clipBehavior: Clip.hardEdge,
           transitionType: ContainerTransitionType.fadeThrough,
           openColor: Color.fromRGBO(0, 0, 0, 0),
           closedColor: Color.fromRGBO(0, 0, 0, 0),
+          middleColor: Color.fromRGBO(0, 0, 0, 0),
           closedBuilder: (context, action) {
             return Stack(
                 children: [
