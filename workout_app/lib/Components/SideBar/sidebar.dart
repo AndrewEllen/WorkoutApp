@@ -18,8 +18,7 @@ class CustomSideBar extends StatefulWidget {
 }
 
 class _CustomSideBarState extends State<CustomSideBar> {
-  late final avatar;
-  late final username;
+  late final username, avatar;
   final currentUser = supabase.auth.user();
 
   var _loading = false;
