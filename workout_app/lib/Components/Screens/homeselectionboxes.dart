@@ -35,51 +35,56 @@ class HomeSelectionBox extends StatelessWidget {
                   );
                 },
                 child: OpenContainer(
-    transitionDuration: Duration(seconds: 1),
-    clipBehavior: Clip.hardEdge,
+    transitionDuration: Duration(milliseconds: 300),
+    openElevation: 0,
+    clipBehavior: Clip.antiAlias,
     transitionType: ContainerTransitionType.fadeThrough,
     openColor: Color.fromRGBO(0, 0, 0, 0),
     closedColor: Color.fromRGBO(0, 0, 0, 0),
     middleColor: Color.fromRGBO(0, 0, 0, 0),
     closedBuilder: (context, action) {
-                  //decoration: boxSelectionDecoration,
-                  //height: boxSelectionHeight,
-                  return Stack(
-                    children: [
-                      Center(
-                        child: Container(
-                          width: double.infinity,
-                          height: double.infinity,
-                          decoration: BoxDecoration(
-                            borderRadius: BorderRadius.all(
-                              Radius.circular(5),
-                            ),
-                            image: DecorationImage(
-                              fit: BoxFit.cover,
-                              colorFilter: ColorFilter.mode(tintcolour, BlendMode.screen),
-                              image: ExactAssetImage(containerimageloc),
-                            ),
-                          ),
-                        ),
-                      ),
-                      Center(
-                          child: Text(
-                        "",//containertext,
-                        style: TextStyle(
-                          color: Colors.white,
-                          fontSize: 37,
-                          fontWeight: FontWeight.w500,
-                          shadows: [
-                            Shadow(
-                              blurRadius: 1,
-                              color: Colors.black,
-                              offset: Offset(1,5),
-                            ),
-                          ],
-                        ),
-                      )),
-                    ],
-                  ),
+      //decoration: boxSelectionDecoration,
+      //height: boxSelectionHeight,
+      return Stack(
+        children: [
+          Center(
+            child: Container(
+              width: double.infinity,
+              height: double.infinity,
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.all(
+                  Radius.circular(5),
+                ),
+                image: DecorationImage(
+                  fit: BoxFit.cover,
+                  colorFilter: ColorFilter.mode(tintcolour, BlendMode.screen),
+                  image: ExactAssetImage(containerimageloc),
+                ),
+              ),
+            ),
+          ),
+          Center(
+              child: Text(
+                "", //containertext,
+                style: TextStyle(
+                  color: Colors.white,
+                  fontSize: 37,
+                  fontWeight: FontWeight.w500,
+                  shadows: [
+                    Shadow(
+                      blurRadius: 1,
+                      color: Colors.black,
+                      offset: Offset(1, 5),
+                    ),
+                  ],
+                ),
+              )),
+        ],
+      );
+      },
+    openBuilder: (context, action) {
+      return containerroutewidget;
+    },
                 ),
               ),
           ),
