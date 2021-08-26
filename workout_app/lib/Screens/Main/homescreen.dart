@@ -68,81 +68,86 @@ class _HomeScreenState extends State<HomeScreen> {
     return SafeArea(
         child: Scaffold(
             backgroundColor: defaultBackgroundColour,
-            appBar: PreferredSize(
-              preferredSize: Size.fromHeight(200),
-              child: ClipPath(
-                clipper: HomeAppBarClip(),
-                child: Center(
-                  child: Container(
-                    color: AppbarColour,
-                    child: Column(
-                      children: [
-                        Align(
-                          alignment: Alignment.topCenter,
-                          child: GestureDetector(
-                            onTap: () {
-                              Navigator.push(
-                                  context,
-                                  FadeRouter(
-                                    routeName: '/usersettings',
-                                    screen: UserSettings(),
-                                  ));
-                            },
-                            child: Container(
-                              margin: EdgeInsets.only(top: 30),
-                              width: 50,
-                              height: 50,
-                              decoration: BoxDecoration(
-                                color: Colors.white,
-                                borderRadius: BorderRadius.all(
-                                  Radius.circular(45),
-                                ),
-                                image: DecorationImage(
-                                  image: NetworkImage(_loading
-                                      ? 'https://i.imgur.com/yKV9vpH.png'
-                                      : avatar),
-                                ),
-                              ),
-                            ),
-                          ),
-                        ),
-                        Align(
-                          alignment: Alignment.topCenter,
-                          child: Container(
-                            margin: EdgeInsets.only(right: 0, top: 20),
-                            child: Text(
-                              'User: ${_loading ? currentUser?.email : username}',
-                              style: TextStyle(
-                                fontSize: 13,
-                                color: WorkoutsAccentColour,
-                                shadows: [
-                                  Shadow(
-                                    blurRadius: 1,
-                                    color: Colors.black,
-                                    offset: Offset(1, 2),
-                                  ),
-                                ],
-                              ),
-                            ),
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
-                ),
-              ),
-            ),
-            body: Center(
+            body: Align(
+              alignment: Alignment.topCenter,
               child: Stack(
                 clipBehavior: Clip.none,
                 children: [
-                    HomeSelectionBox(
+                  Container(
+                    margin: EdgeInsets.only(top:160),
+                    child: HomeSelectionBox(
                       containertext: "Workouts",
                       containerroutename: "/WorkoutHome",
                       containerroutewidget: WorkoutHomeScreen(),
                       containerimageloc: "assets/workouts.png",
                       tintcolour: workoutsTintColour,
                     ),
+                  ),
+                  Container(
+                    height: 200,
+                    child: ClipPath(
+                        clipper: HomeAppBarClip(),
+                        child: Center(
+                          child: Container(
+                            color: AppbarColour,
+                            child: Column(
+                              children: [
+                                Align(
+                                  alignment: Alignment.topCenter,
+                                  child: GestureDetector(
+                                    onTap: () {
+                                      Navigator.push(
+                                          context,
+                                          FadeRouter(
+                                            routeName: '/usersettings',
+                                            screen: UserSettings(),
+                                          ));
+                                    },
+                                    child: Container(
+                                      margin: EdgeInsets.only(top: 30),
+                                      width: 50,
+                                      height: 50,
+                                      decoration: BoxDecoration(
+                                        color: Colors.white,
+                                        borderRadius: BorderRadius.all(
+                                          Radius.circular(45),
+                                        ),
+                                        image: DecorationImage(
+                                          image: NetworkImage(_loading
+                                              ? 'https://i.imgur.com/yKV9vpH.png'
+                                              : avatar),
+                                        ),
+                                      ),
+                                    ),
+                                  ),
+                                ),
+                                Align(
+                                  alignment: Alignment.topCenter,
+                                  child: Container(
+                                    margin: EdgeInsets.only(right: 0, top: 20),
+                                    child: Text(
+                                      'User: ${_loading ? currentUser?.email : username}',
+                                      style: TextStyle(
+                                        fontSize: 13,
+                                        color: WorkoutsAccentColour,
+                                        shadows: [
+                                          Shadow(
+                                            blurRadius: 1,
+                                            color: Colors.black,
+                                            offset: Offset(1, 2),
+                                          ),
+                                        ],
+                                      ),
+                                    ),
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
+                        ),
+                    ),
+                  ),
+
                   /*Align(
                     alignment: Alignment.bottomCenter,
                     child: Container(
