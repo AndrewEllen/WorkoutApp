@@ -120,9 +120,9 @@ class _HomeScreenState extends State<HomeScreen> {
                                                 ));
                                           },
                                           child: Container(
-                                            margin: EdgeInsets.only(top: 30),
-                                            width: 50,
-                                            height: 50,
+                                            margin: EdgeInsets.only(top: 23),
+                                            width: 80,
+                                            height: 80,
                                             decoration: BoxDecoration(
                                               color: Colors.white,
                                               borderRadius: BorderRadius.all(
