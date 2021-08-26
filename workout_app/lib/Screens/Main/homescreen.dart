@@ -1,4 +1,3 @@
-import 'package:animations/animations.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:workout_app/Components/Clips/HomeAppBar.dart';
@@ -75,7 +74,7 @@ class _HomeScreenState extends State<HomeScreen> {
                 clipBehavior: Clip.none,
                 children: [
                   Container(
-                    margin: EdgeInsets.only(top:160),
+                    margin: EdgeInsets.only(top: 160),
                     child: HomeSelectionBox(
                       containertext: "Diet",
                       containerroutename: "/DietHome",
@@ -86,7 +85,7 @@ class _HomeScreenState extends State<HomeScreen> {
                     ),
                   ),
                   Container(
-                    margin: EdgeInsets.only(top:160),
+                    margin: EdgeInsets.only(top: 160),
                     child: HomeSelectionBox(
                       containertext: "Workouts",
                       containerroutename: "/WorkoutHome",
@@ -100,85 +99,82 @@ class _HomeScreenState extends State<HomeScreen> {
                     height: 200,
                     child: ClipPath(
                       clipper: HomeAppBarShadowClip(),
-                        child: CustomPaint(
-                          painter: HomeAppBarPainter(),
-                          child: ClipPath(
-                              clipper: HomeAppBarClip(),
-                              child: Center(
-                                child: Container(
-                                  color: HomeAppbarColour,
-                                  child: Column(
-                                    children: [
-                                      Align(
-                                        alignment: Alignment.topCenter,
-                                          child: OpenContainer(
-                                            closedElevation: 0,
-                                            openElevation: 0,
-                                            transitionType: ContainerTransitionType.fadeThrough,
-                                            transitionDuration: Duration(milliseconds: 300),
-                                            closedColor: HomeAppbarColour,
-                                            openColor: Colors.transparent,
-                                            middleColor: HomeAppbarColour,
-                                            openBuilder: (BuildContext context, void Function({Object? returnValue}) action) {
-                                              return UserSettings();
-                                            },
-                                            closedBuilder: (BuildContext context, void Function() action) {
-                                            return Container(
-                                            margin: EdgeInsets.only(top: 23),
-                                            width: 80,
-                                            height: 80,
-                                            decoration: BoxDecoration(
-                                              //color: Colors.white,
-                                              borderRadius: BorderRadius.all(
-                                                Radius.circular(45),
-                                              ),
-                                              image: DecorationImage(
-                                                image: NetworkImage(_loading
-                                                    ? 'https://i.imgur.com/yKV9vpH.png'
-                                                    : avatar),
-                                              ),
-                                            ),
-                                            );
-                                            },
+                      child: CustomPaint(
+                        painter: HomeAppBarPainter(),
+                        child: ClipPath(
+                          clipper: HomeAppBarClip(),
+                          child: Center(
+                            child: Container(
+                              color: HomeAppbarColour,
+                              child: Column(
+                                children: [
+                                  Align(
+                                    alignment: Alignment.topCenter,
+                                    child: GestureDetector(
+                                      onTap: () {
+                                        Navigator.push(
+                                            context,
+                                            FadeRouter(
+                                              routeName: '/usersettings',
+                                              screen: UserSettings(),
+                                            ));
+                                      },
+                                      child: Container(
+                                        margin: EdgeInsets.only(top: 23),
+                                        width: 80,
+                                        height: 80,
+                                        decoration: BoxDecoration(
+                                          //color: Colors.white,
+                                          borderRadius: BorderRadius.all(
+                                            Radius.circular(45),
                                           ),
-                                        ),
-                                      Align(
-                                        alignment: Alignment.topCenter,
-                                        child: GestureDetector(
-                                          onTap: () {
-                                            Navigator.push(
-                                                context,
-                                                FadeRouter(
-                                                  routeName: '/usersettings',
-                                                  screen: UserSettings(),
-                                                ));
-                                          },
-                                        child: Container(
-                                          margin: EdgeInsets.only(right: 0, top: 20),
-                                          child: Text(
-                                            'User: ${_loading ? currentUser?.email : username}',
-                                            style: TextStyle(
-                                              fontSize: 13,
-                                              color: WorkoutsAccentColour,
-                                              shadows: [
-                                                Shadow(
-                                                  blurRadius: 1,
-                                                  color: Colors.black,
-                                                  offset: Offset(1, 2),
-                                                ),
-                                              ],
-                                            ),
+                                          image: DecorationImage(
+                                            image: NetworkImage(_loading
+                                                ? 'https://i.imgur.com/yKV9vpH.png'
+                                                : avatar),
                                           ),
-                                        ),
                                         ),
                                       ),
-                                    ],
+                                    ),
                                   ),
-                                ),
+                                  Align(
+                                    alignment: Alignment.topCenter,
+                                    child: GestureDetector(
+                                      onTap: () {
+                                        Navigator.push(
+                                            context,
+                                            FadeRouter(
+                                              routeName: '/usersettings',
+                                              screen: UserSettings(),
+                                            ));
+                                      },
+                                      child: Container(
+                                        margin:
+                                            EdgeInsets.only(right: 0, top: 20),
+                                        child: Text(
+                                          'User: ${_loading ? currentUser?.email : username}',
+                                          style: TextStyle(
+                                            fontSize: 13,
+                                            color: WorkoutsAccentColour,
+                                            shadows: [
+                                              Shadow(
+                                                blurRadius: 1,
+                                                color: Colors.black,
+                                                offset: Offset(1, 2),
+                                              ),
+                                            ],
+                                          ),
+                                        ),
+                                      ),
+                                    ),
+                                  ),
+                                ],
                               ),
+                            ),
                           ),
                         ),
                       ),
+                    ),
                   ),
 
                   /*Align(

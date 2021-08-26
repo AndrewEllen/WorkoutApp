@@ -1,4 +1,3 @@
-import 'package:animations/animations.dart';
 import 'package:flutter/material.dart';
 import 'package:workout_app/Components/Clips/HomeSelectionBox.dart';
 import 'package:workout_app/constants.dart';
@@ -36,18 +35,10 @@ class HomeSelectionBox extends StatelessWidget {
                     screen: containerroutewidget,
                   ));
             },
-            child: OpenContainer(
-              transitionDuration: Duration(milliseconds: 300),
-              openElevation: 10,
-              clipBehavior: Clip.antiAlias,
-              transitionType: ContainerTransitionType.fadeThrough,
-              openColor: Colors.transparent,
-              closedColor: Colors.transparent,
-              middleColor: Colors.transparent,
-              closedBuilder: (context, action) {
-                //decoration: boxSelectionDecoration,
-                //height: boxSelectionHeight,
-                return Stack(
+            child: Container(
+                decoration: boxSelectionDecoration,
+                height: boxSelectionHeight,
+               child: Stack(
                   children: [
                     Center(
                       child: Container(
@@ -83,11 +74,7 @@ class HomeSelectionBox extends StatelessWidget {
                       ),
                     )),
                   ],
-                );
-              },
-              openBuilder: (context, action) {
-                return containerroutewidget;
-              },
+                ),
             ),
           ),
         ),
