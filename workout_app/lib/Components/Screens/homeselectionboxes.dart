@@ -7,17 +7,18 @@ class HomeSelectionBox extends StatelessWidget {
   HomeSelectionBox({
     required this.containertext, required this.containerroutename,
     required this.containerimageloc, required this.tintcolour,
-    required this.containerroutewidget,
+    required this.containerroutewidget, required this.clip,
   });
 
   final String containertext, containerroutename, containerimageloc;
+  final bool clip;
   final Widget containerroutewidget;
   final Color tintcolour;
 
   @override
   Widget build(BuildContext context) {
     return ClipPath(
-        clipper: HomeSelectionBoxClip(),
+        clipper: clip ? HomeSelectionBoxClip() : null,
         child: GestureDetector(
           onTap: () {
             Navigator.push(
@@ -29,7 +30,7 @@ class HomeSelectionBox extends StatelessWidget {
             );
           },
           child: Container(
-            decoration: boxSelectionDecoration,
+            //decoration: boxSelectionDecoration,
             height: boxSelectionHeight,
             child: Stack(
               children: [

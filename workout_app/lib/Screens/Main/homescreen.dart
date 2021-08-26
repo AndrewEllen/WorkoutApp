@@ -76,11 +76,23 @@ class _HomeScreenState extends State<HomeScreen> {
                   Container(
                     margin: EdgeInsets.only(top:160),
                     child: HomeSelectionBox(
+                      containertext: "Diet",
+                      containerroutename: "/DietHome",
+                      containerroutewidget: DietHomeScreen(),
+                      containerimageloc: "assets/diet.png",
+                      tintcolour: dietTintColour,
+                      clip: false,
+                    ),
+                  ),
+                  Container(
+                    margin: EdgeInsets.only(top:160),
+                    child: HomeSelectionBox(
                       containertext: "Workouts",
                       containerroutename: "/WorkoutHome",
                       containerroutewidget: WorkoutHomeScreen(),
                       containerimageloc: "assets/workouts.png",
                       tintcolour: workoutsTintColour,
+                      clip: true,
                     ),
                   ),
                   Container(

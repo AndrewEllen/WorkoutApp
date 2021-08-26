@@ -13,10 +13,10 @@ const Color defaultLoginBackgroundColour = Color(0XFF181818);
 
 //HomeScreen
 
-const double boxSelectionHeight = 550;
+const double boxSelectionHeight = double.infinity;
 
-const Color workoutsTintColour = Color.fromRGBO(255, 1, 1, 0.4);
-const Color dietTintColour = Color.fromRGBO(32, 142, 26, 0.4);
+const Color workoutsTintColour = Color.fromRGBO(255, 1, 1, 0.25);
+const Color dietTintColour = Color.fromRGBO(32, 142, 26, 0.25);
 
 const boxSelectionDecoration = BoxDecoration(
   color: Colors.white70,
