@@ -35,6 +35,7 @@ const boxSelectionDecoration = BoxDecoration(
 
 //AppBar
 const Color AppbarColour = Color.fromRGBO(50, 50, 50, 1.0);
+const Color HomeAppbarColour = Color.fromRGBO(33, 33, 33, 1.0);
 
 //SideBar
 const Color SideBarColour = Color.fromRGBO(50, 50, 50, 1.0);

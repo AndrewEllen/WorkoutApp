@@ -105,7 +105,7 @@ class _HomeScreenState extends State<HomeScreen> {
                               clipper: HomeAppBarClip(),
                               child: Center(
                                 child: Container(
-                                  color: AppbarColour,
+                                  color: HomeAppbarColour,
                                   child: Column(
                                     children: [
                                       Align(
