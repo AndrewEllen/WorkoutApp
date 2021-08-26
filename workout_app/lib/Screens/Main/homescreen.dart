@@ -139,6 +139,15 @@ class _HomeScreenState extends State<HomeScreen> {
                                       ),
                                       Align(
                                         alignment: Alignment.topCenter,
+                                        child: GestureDetector(
+                                          onTap: () {
+                                            Navigator.push(
+                                                context,
+                                                FadeRouter(
+                                                  routeName: '/usersettings',
+                                                  screen: UserSettings(),
+                                                ));
+                                          },
                                         child: Container(
                                           margin: EdgeInsets.only(right: 0, top: 20),
                                           child: Text(
@@ -155,6 +164,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                               ],
                                             ),
                                           ),
+                                        ),
                                         ),
                                       ),
                                     ],
