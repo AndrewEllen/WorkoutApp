@@ -1,3 +1,4 @@
+import 'package:animations/animations.dart';
 import 'package:flutter/material.dart';
 import 'package:workout_app/Components/Clips/HomeSelectionBox.dart';
 import 'package:workout_app/constants.dart';
@@ -33,10 +34,17 @@ class HomeSelectionBox extends StatelessWidget {
                     )
                   );
                 },
-                child: Container(
+                child: OpenContainer(
+    transitionDuration: Duration(seconds: 1),
+    clipBehavior: Clip.hardEdge,
+    transitionType: ContainerTransitionType.fadeThrough,
+    openColor: Color.fromRGBO(0, 0, 0, 0),
+    closedColor: Color.fromRGBO(0, 0, 0, 0),
+    middleColor: Color.fromRGBO(0, 0, 0, 0),
+    closedBuilder: (context, action) {
                   //decoration: boxSelectionDecoration,
-                  height: boxSelectionHeight,
-                  child: Stack(
+                  //height: boxSelectionHeight,
+                  return Stack(
                     children: [
                       Center(
                         child: Container(
