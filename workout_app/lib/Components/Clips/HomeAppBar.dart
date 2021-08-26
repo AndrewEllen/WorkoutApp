@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-class HomeAppBar extends CustomClipper<Path> {
+class HomeAppBarClip extends CustomClipper<Path> {
   @override
   Path getClip(Size size) {
     

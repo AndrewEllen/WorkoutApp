@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:workout_app/Components/Containers/HomeAppBar.dart';
+import 'package:workout_app/Components/Clips/HomeAppBar.dart';
 import 'package:workout_app/Components/Screens/homeselectionboxes.dart';
 import 'package:workout_app/Screens/Main/usersettingsscreen.dart';
 import 'package:workout_app/Screens/Workouts/workouthome.dart';
@@ -71,7 +71,7 @@ class _HomeScreenState extends State<HomeScreen> {
             appBar: PreferredSize(
               preferredSize: Size.fromHeight(200),
               child: ClipPath(
-                clipper: HomeAppBar(),
+                clipper: HomeAppBarClip(),
                 child: Center(
                   child: Container(
                     color: AppbarColour,
@@ -134,33 +134,19 @@ class _HomeScreenState extends State<HomeScreen> {
             ),
             body: Center(
               child: Stack(
+                clipBehavior: Clip.none,
                 children: [
-                  Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children: [
-                      HomeSelectionBox(
-                        containertext: "Workouts",
-                        containerroutename: "/WorkoutHome",
-                        containerroutewidget: WorkoutHomeScreen(),
-                        containerimageloc: "assets/workouts.png",
-                        tintcolour: workoutsTintColour,
-                      ),
-                      HomeSelectionBox(
-                        containertext: "Diet",
-                        containerroutename: "/DietHome",
-                        containerroutewidget: DietHomeScreen(),
-                        containerimageloc: "assets/diet.png",
-                        tintcolour: dietTintColour,
-                      ),
-
-
-                    ],
-                  ),
-                  Align(
+                    HomeSelectionBox(
+                      containertext: "Workouts",
+                      containerroutename: "/WorkoutHome",
+                      containerroutewidget: WorkoutHomeScreen(),
+                      containerimageloc: "assets/workouts.png",
+                      tintcolour: workoutsTintColour,
+                    ),
+                  /*Align(
                     alignment: Alignment.bottomCenter,
                     child: Container(
-                      margin: EdgeInsets.only(bottom:50),
+                      margin: EdgeInsets.only(bottom: 50),
                       child: MaterialButton(
                         color: Colors.black,
                         onPressed: () {
@@ -174,26 +160,9 @@ class _HomeScreenState extends State<HomeScreen> {
                         ),
                       ),
                     ),
-                  )
+                  )*/
                 ],
               ),
             )));
   }
-}
-
-class CurvedClipper extends ContinuousRectangleBorder {
-  @override
-  Path getClip(Size size) {
-    var path = Path();
-    path.lineTo(0, size.height - 30);
-    path.quadraticBezierTo(
-        size.width / 2, size.height, size.width, size.height - 30);
-    path.lineTo(size.width, 0);
-
-    path.close();
-    return path;
-  }
-
-  @override
-  bool shouldReclip(CustomClipper<Path> oldClipper) => false;
 }
