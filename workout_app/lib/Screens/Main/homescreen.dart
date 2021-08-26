@@ -1,3 +1,4 @@
+import 'package:animations/animations.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:workout_app/Components/Clips/HomeAppBar.dart';
@@ -110,21 +111,24 @@ class _HomeScreenState extends State<HomeScreen> {
                                     children: [
                                       Align(
                                         alignment: Alignment.topCenter,
-                                        child: GestureDetector(
-                                          onTap: () {
-                                            Navigator.push(
-                                                context,
-                                                FadeRouter(
-                                                  routeName: '/usersettings',
-                                                  screen: UserSettings(),
-                                                ));
-                                          },
-                                          child: Container(
+                                          child: OpenContainer(
+                                            closedElevation: 0,
+                                            openElevation: 0,
+                                            transitionType: ContainerTransitionType.fadeThrough,
+                                            transitionDuration: Duration(milliseconds: 300),
+                                            closedColor: HomeAppbarColour,
+                                            openColor: Colors.transparent,
+                                            middleColor: HomeAppbarColour,
+                                            openBuilder: (BuildContext context, void Function({Object? returnValue}) action) {
+                                              return UserSettings();
+                                            },
+                                            closedBuilder: (BuildContext context, void Function() action) {
+                                            return Container(
                                             margin: EdgeInsets.only(top: 23),
                                             width: 80,
                                             height: 80,
                                             decoration: BoxDecoration(
-                                              color: Colors.white,
+                                              //color: Colors.white,
                                               borderRadius: BorderRadius.all(
                                                 Radius.circular(45),
                                               ),
@@ -134,9 +138,10 @@ class _HomeScreenState extends State<HomeScreen> {
                                                     : avatar),
                                               ),
                                             ),
+                                            );
+                                            },
                                           ),
                                         ),
-                                      ),
                                       Align(
                                         alignment: Alignment.topCenter,
                                         child: GestureDetector(
