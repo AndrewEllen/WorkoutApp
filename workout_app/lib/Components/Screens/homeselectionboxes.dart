@@ -19,8 +19,6 @@ class HomeSelectionBox extends StatelessWidget {
   Widget build(BuildContext context) {
     return ClipPath(
       clipper: clip ? HomeSelectionBoxShadowClip() : null,
-      child: Container(
-        //color: Colors.white,
         child: CustomPaint(
           painter: clip ? HomeSelectionBoxPainter() : null,
           child: ClipPath(
@@ -78,7 +76,6 @@ class HomeSelectionBox extends StatelessWidget {
               ),
           ),
         ),
-      ),
     );
   }
 }

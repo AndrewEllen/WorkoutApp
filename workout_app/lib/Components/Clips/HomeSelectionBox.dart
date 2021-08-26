@@ -29,12 +29,12 @@ class HomeSelectionBoxShadowClip extends CustomClipper<Path> {
   Path getClip(Size size) {
 
     Path path = Path();
-    path.lineTo(0, size.height+13);
+    path.lineTo(0, size.height+20);
 
     path.quadraticBezierTo(
         size.width / 3.7, size.height / 1.78, size.width / 1.8,
         size.height * 0.45);
-    path.quadraticBezierTo(size.width * 0.76, size.height * 0.29, size.width+10, 0);
+    path.quadraticBezierTo(size.width * 0.77, size.height * 0.29, size.width+12, 0);
 
     path.lineTo(size.width, 0);
     path.close();
