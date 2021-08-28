@@ -45,7 +45,7 @@ class _WorkoutListScreenState extends State<WorkoutListScreen> {
     final _completedlist = completedlist;
     final updates = {
       "id": _listID,
-      'UserID': _user,
+      'userid': _user,
       'Day': _day,
       'Exercises': _workouts,
       'Completed': _completedlist,
@@ -66,7 +66,7 @@ class _WorkoutListScreenState extends State<WorkoutListScreen> {
     final response = await supabase
         .from('userworkouts')
         .select()
-        .eq('UserID', userId)
+        .eq('userid', userId)
         .eq('Day', dropdownValueDay)
         .single()
         .execute();

@@ -26,7 +26,7 @@ class _WorkoutsContainerState extends State<WorkoutsContainer> {
     final _completedlist = widget.completedlist;
     final updates = {
       "id": _listID,
-      'UserID': _user,
+      'userid': _user,
       'Day': _day,
       'Exercises': _workouts,
       'Completed': _completedlist,

@@ -3,6 +3,7 @@ import 'package:workout_app/Components/Navbar/Navbar.dart';
 import 'package:workout_app/Components/Screens/homeworkoutscontainer.dart';
 import 'package:workout_app/Components/SideBar/sidebar.dart';
 import 'package:workout_app/Data/Screens/feedback.dart';
+import 'package:workout_app/Data/Screens/settings.dart';
 import 'package:workout_app/Data/resetcheckboxes.dart';
 import 'package:workout_app/data/Screens/workouthome.dart';
 import '../../constants.dart';
@@ -23,7 +24,7 @@ class _WorkoutHomeScreenState extends State<WorkoutHomeScreen> {
   final GlobalKey<RefreshIndicatorState> _refreshIndicatorKey =
   new GlobalKey<RefreshIndicatorState>();
   late String day, listID;
-  late List workouts,completedlist,_completedlist;
+  late List workouts,completedlist,_completedlist, settingsdata;
   bool _loading = true;
   late bool _completed;
 
@@ -34,7 +35,7 @@ class _WorkoutHomeScreenState extends State<WorkoutHomeScreen> {
     final response = await supabase
         .from('userworkouts')
         .select()
-        .eq('UserID', userId)
+        .eq('userid', userId)
         .eq('Day', dropdownValueDay)
         .single()
         .execute();
@@ -80,6 +81,7 @@ class _WorkoutHomeScreenState extends State<WorkoutHomeScreen> {
     }
     sidebardata = SideBarWorkout.getContents();
     feedbackdata = SideBarFeedback.getContents();
+    settingsdata = SideBarSettings.getContents();
     _getWorkouts(currentUser!.id);
   }
 
@@ -98,8 +100,10 @@ class _WorkoutHomeScreenState extends State<WorkoutHomeScreen> {
           sidebarcolour: SideBarColour,
           sidebartitle: "Meals",
           feedbacktitle: "Feedback",
+          settingstitle: "Settings",
           sidebardata: sidebardata,
           feedbackdata: feedbackdata,
+          settingsdata: settingsdata,
         ),
         body: RefreshIndicator(
           key: _refreshIndicatorKey,
