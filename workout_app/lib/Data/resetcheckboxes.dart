@@ -1,8 +1,8 @@
 import '../constants.dart';
 
 Future<void> resettickboxes(day,userId) async {
-  late String listID;
-  late List completedlist;
+  late String listID = "null";
+  late List completedlist = [];
   late bool resetchecked = true;
 
   Future<void> _getWorkouts(String userId) async {

@@ -11,7 +11,7 @@ class SettingsPage extends StatelessWidget {
   Future<void> _deletedata() async {
     final currentUser = supabase.auth.user()!.id;
     final responseWorkouts = await supabase
-        .from('userworkouts_duplicate')
+        .from('userworkouts')
         .delete()
         .eq('userid', currentUser)
         .execute();
@@ -20,10 +20,10 @@ class SettingsPage extends StatelessWidget {
         .delete()
         .eq('id', currentUser)
         .execute();
-    final responseUserDelete = await supabase.auth.api.deleteUser(
+/*    final responseUserDelete = await supabase.auth.api.deleteUser(
       currentUser,
 
-    )
+    )*/
   }
 
 

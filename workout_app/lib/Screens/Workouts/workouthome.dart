@@ -24,7 +24,7 @@ class _WorkoutHomeScreenState extends State<WorkoutHomeScreen> {
   final GlobalKey<RefreshIndicatorState> _refreshIndicatorKey =
   new GlobalKey<RefreshIndicatorState>();
   late String day, listID;
-  late List workouts,completedlist,_completedlist, settingsdata;
+  late List workouts = [],completedlist = [],_completedlist = [], settingsdata = [];
   bool _loading = true;
   late bool _completed;
 
