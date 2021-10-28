@@ -9,24 +9,31 @@ import 'package:workout_app/data/Screens/workouthome.dart';
 import '../../constants.dart';
 import 'package:intl/intl.dart';
 
+// https://dartpad.dev/?null_safety=true&id=afc693da482659e918d46a21c5e80ae4
+
 class WorkoutHomeScreen extends StatefulWidget {
   @override
   _WorkoutHomeScreenState createState() => _WorkoutHomeScreenState();
 }
 
-class _WorkoutHomeScreenState extends State<WorkoutHomeScreen> {
+class _WorkoutHomeScreenState extends State<WorkoutHomeScreen> with SingleTickerProviderStateMixin {
   List sidebardata = [], feedbackdata = [];
   final currentUser = supabase.auth.user();
-  var yesterday = DateTime.now().subtract(Duration(days:1));
+  var yesterday = DateTime.now().subtract(Duration(days: 1));
   var today = DateTime.now();
+  final dropdownlist = ['Monday','Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'];
   String dropdownValueDay = "Monday";
   final _Dayformkey = GlobalKey<FormState>();
   final GlobalKey<RefreshIndicatorState> _refreshIndicatorKey =
-  new GlobalKey<RefreshIndicatorState>();
+      new GlobalKey<RefreshIndicatorState>();
   late String day, listID;
-  late List workouts = [],completedlist = [],_completedlist = [], settingsdata = [];
+  late List workouts = [],
+      completedlist = [],
+      _completedlist = [],
+      settingsdata = [];
   bool _loading = true;
   late bool _completed;
+  late TabController? tabController;
 
   Future<void> _getWorkouts(String userId) async {
     setState(() {
@@ -51,11 +58,10 @@ class _WorkoutHomeScreenState extends State<WorkoutHomeScreen> {
       _completedlist = completedlist;
     }
     var i;
-    for (i=0; i < completedlist.length; i++) {
-      if (completedlist[i] == "true"){
+    for (i = 0; i < completedlist.length; i++) {
+      if (completedlist[i] == "true") {
         _completed = true;
         completedlist[i] = _completed;
-
       } else {
         _completed = false;
         completedlist[i] = _completed;
@@ -72,13 +78,36 @@ class _WorkoutHomeScreenState extends State<WorkoutHomeScreen> {
     });
   }
 
+  void _setTabIndex() {
+    tabController!.index = dropdownlist.indexWhere((dropdownlist) => dropdownlist.startsWith(dropdownValueDay));
+  }
+
+  void _increaseTabControllerHandler() {
+    setState(() {
+      (tabController!.index == dropdownlist.length - 1) ? tabController!.index = 0 : tabController!.index++;
+      dropdownValueDay = dropdownlist[tabController!.index];
+    });
+  }
+  void _decreaseTabControllerHandler() {
+    setState(() {
+      (tabController!.index == 0) ? tabController!.index = dropdownlist.length - 1 : tabController!.index--;
+      dropdownValueDay = dropdownlist[tabController!.index];
+    });
+  }
+
   void initState() {
+    tabController = TabController(
+      length: dropdownlist.length,
+      vsync: this,
+    );
+
     if (int.parse(DateFormat('HH').format(today)) < 4) {
       dropdownValueDay = DateFormat('EEEE').format(yesterday);
     } else {
       dropdownValueDay = DateFormat('EEEE').format(today);
-      resettickboxes(DateFormat('EEEE').format(yesterday),currentUser!.id);
+      resettickboxes(DateFormat('EEEE').format(yesterday), currentUser!.id);
     }
+    _setTabIndex();
     sidebardata = SideBarWorkout.getContents();
     feedbackdata = SideBarFeedback.getContents();
     settingsdata = SideBarSettings.getContents();
@@ -88,6 +117,58 @@ class _WorkoutHomeScreenState extends State<WorkoutHomeScreen> {
   @override
   Widget build(BuildContext context) {
     return SafeArea(
+        child: Scaffold(
+            backgroundColor: defaultBackgroundColour,
+            appBar: CustomAppBar(
+              appbaraccentcolour: WorkoutsAccentColour,
+              appbarcolour: AppbarColour,
+              appbartitle: "$dropdownValueDay",
+            ),
+            drawer: CustomSideBar(
+              sidebaraccentcolour: WorkoutsAccentColour,
+              sidebarcolour: SideBarColour,
+              sidebartitle: "Meals",
+              feedbacktitle: "Feedback",
+              settingstitle: "Settings",
+              sidebardata: sidebardata,
+              feedbackdata: feedbackdata,
+              settingsdata: settingsdata,
+            ),
+            body: Column(
+                  children: [
+                    Row(
+                      children: [
+                        Container(
+                          width: 300,
+                          height: 500,
+                          color: Colors.black,
+                          child: Text(
+                            "$dropdownValueDay",
+                            style: TextStyle(
+                              color: Colors.white,
+                            ),
+                          ),
+                        ),
+                    TabPageSelector(
+                      controller: tabController,
+                      color: Colors.white,
+                      selectedColor: WorkoutsAccentColour,
+                      indicatorSize: 14,
+                      direction: Direction.vertical,
+                    ),
+                      ]
+                    ),
+                    Row(
+                      children: [
+                        FloatingActionButton(onPressed: () {_decreaseTabControllerHandler();}),
+                        FloatingActionButton(onPressed: () {_increaseTabControllerHandler();}),
+                      ],
+                    )
+                  ],
+                )
+            )
+    );
+    /*return SafeArea(
       child: Scaffold(
         backgroundColor: defaultBackgroundColour,
         appBar: CustomAppBar(
@@ -171,6 +252,6 @@ class _WorkoutHomeScreenState extends State<WorkoutHomeScreen> {
           ),
         ),
       ),
-    );
+    );*/
   }
 }
