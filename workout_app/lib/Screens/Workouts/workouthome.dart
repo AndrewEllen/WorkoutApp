@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:scroll_snap_list/scroll_snap_list.dart';
 import 'package:workout_app/Components/Navbar/Navbar.dart';
 import 'package:workout_app/Components/Screens/homeworkoutscontainer.dart';
 import 'package:workout_app/Components/SideBar/sidebar.dart';
@@ -95,6 +96,13 @@ class _WorkoutHomeScreenState extends State<WorkoutHomeScreen> with SingleTicker
     });
   }
 
+  void _onItemFocus(int index) {
+    setState(() {
+      tabController!.index = index;
+      dropdownValueDay = dropdownlist[index];
+    });
+  }
+
   void initState() {
     tabController = TabController(
       length: dropdownlist.length,
@@ -140,12 +148,17 @@ class _WorkoutHomeScreenState extends State<WorkoutHomeScreen> with SingleTicker
                       children: [
                         Container(
                           width: 300,
-                          height: 500,
+                          height: 550,
                           color: Colors.black,
-                          child: Text(
-                            "$dropdownValueDay",
-                            style: TextStyle(
-                              color: Colors.white,
+                          child: Expanded(
+                            child: ScrollSnapList(
+                              scrollDirection: Axis.vertical,
+                              onItemFocus: _onItemFocus,
+                              itemSize: 550,
+                              itemBuilder: _buildListItem,
+                              itemCount: dropdownlist.length,
+                              reverse: false,
+                              initialIndex: tabController!.index.toDouble(),
                             ),
                           ),
                         ),
@@ -253,5 +266,27 @@ class _WorkoutHomeScreenState extends State<WorkoutHomeScreen> with SingleTicker
         ),
       ),
     );*/
+  }
+
+  Widget _buildListItem(BuildContext context, int index) {
+    return Container(
+     child: Column(
+       mainAxisAlignment: MainAxisAlignment.center,
+       children: [
+         Container(
+           margin: EdgeInsets.only(top:25,bottom:25),
+           height: 500,
+           width: 300,
+           color: Colors.grey,
+           child: Text(
+             "$dropdownValueDay",
+             style: TextStyle(
+               color: Colors.white,
+             ),
+           ),
+         )
+       ],
+     )
+    );
   }
 }
