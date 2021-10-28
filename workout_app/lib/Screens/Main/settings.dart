@@ -32,7 +32,7 @@ class SettingsPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return SafeArea(
         child: Scaffold(
-          backgroundColor: defaultBackgroundColour,
+          backgroundColor: primary,
           appBar: CustomAppBar(
             appbaraccentcolour: OtherAccentColour,
             appbarcolour: AppbarColour,

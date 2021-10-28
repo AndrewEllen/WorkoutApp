@@ -5,7 +5,9 @@ import 'package:supabase_flutter/supabase_flutter.dart';
 final supabase = Supabase.instance.client;
 
 //Screens
-const Color defaultBackgroundColour = Color.fromRGBO(38, 38, 38, 1.0);
+const Color primary = Color.fromRGBO(16, 16, 16, 1.0);
+const Color secondary = Color.fromRGBO(39,39,39, 1.0);
+const Color tertiary = Color.fromRGBO(255, 255, 255, 1.0);
 const Color WorkoutsAccentColour = Color.fromRGBO(236, 38, 38, 1.0);
 const Color DietAccentColour = Color.fromRGBO(27, 123, 0, 1.0);
 const Color OtherAccentColour = Color.fromRGBO(50, 119, 250, 1.0);

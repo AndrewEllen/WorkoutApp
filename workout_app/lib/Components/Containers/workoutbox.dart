@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:scroll_snap_list/scroll_snap_list.dart';
+import '../../constants.dart';
 
 class WorkoutBox extends StatefulWidget {
   WorkoutBox({required this.workouts});
@@ -23,7 +24,6 @@ class _WorkoutBoxState extends State<WorkoutBox> {
     return Container(
       width: 300,
       height: 500,
-      color: Colors.green,
       child: Expanded(
         child: ScrollSnapList(
           scrollDirection: Axis.horizontal,
@@ -44,9 +44,10 @@ class _WorkoutBoxState extends State<WorkoutBox> {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             Container(
-              height: 500,
-              width: 300,
-              color: Colors.grey,
+              margin: EdgeInsets.only(left: 25, right: 25,),
+              height: 300,
+              width: 250,
+              color: secondary,
               child: Text(
                 "${widget.workouts[index]}",
                 style: TextStyle(

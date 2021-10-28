@@ -67,7 +67,7 @@ class _HomeScreenState extends State<HomeScreen> {
   Widget build(BuildContext context) {
     return SafeArea(
         child: Scaffold(
-            backgroundColor: defaultBackgroundColour,
+            backgroundColor: primary,
             body: Align(
               alignment: Alignment.topCenter,
               child: Stack(

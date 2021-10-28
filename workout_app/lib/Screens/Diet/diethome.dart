@@ -53,7 +53,7 @@ class _DietHomeScreenState extends State<DietHomeScreen> {
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
-        backgroundColor: defaultBackgroundColour,
+        backgroundColor: primary,
         appBar: CustomAppBar(
           appbaraccentcolour: DietAccentColour,
           appbarcolour: AppbarColour,

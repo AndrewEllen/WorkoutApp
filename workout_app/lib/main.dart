@@ -26,7 +26,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'Fitness Tracker',
-      color: defaultBackgroundColour,
+      color: primary,
       debugShowCheckedModeBanner: false,
       initialRoute: '/',
       routes: <String, WidgetBuilder>{

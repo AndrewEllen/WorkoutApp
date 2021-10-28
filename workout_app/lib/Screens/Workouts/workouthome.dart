@@ -125,10 +125,10 @@ class _WorkoutHomeScreenState extends State<WorkoutHomeScreen>
   Widget build(BuildContext context) {
     return SafeArea(
         child: Scaffold(
-            backgroundColor: defaultBackgroundColour,
+            backgroundColor: primary,
             appBar: CustomAppBar(
               appbaraccentcolour: WorkoutsAccentColour,
-              appbarcolour: AppbarColour,
+              appbarcolour: secondary,
               appbartitle: "$dropdownValueDay",
             ),
             drawer: CustomSideBar(
@@ -143,11 +143,13 @@ class _WorkoutHomeScreenState extends State<WorkoutHomeScreen>
             ),
             body: Column(
               children: [
-                Row(children: [
+                Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
                   Container(
+                    margin: EdgeInsets.only(left: 50, right: 30),
                     width: 300,
                     height: 550,
-                    color: Colors.black,
                     child: Expanded(
                       child: ScrollSnapList(
                         scrollDirection: Axis.vertical,
@@ -157,6 +159,7 @@ class _WorkoutHomeScreenState extends State<WorkoutHomeScreen>
                         itemCount: dropdownlist.length,
                         reverse: false,
                         initialIndex: tabController!.index.toDouble(),
+                        updateOnScroll: true,
                       ),
                     ),
                   ),
@@ -266,7 +269,6 @@ class _WorkoutHomeScreenState extends State<WorkoutHomeScreen>
             margin: EdgeInsets.only(top: 25, bottom: 25),
             height: 500,
             width: 300,
-            color: Colors.grey,
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
