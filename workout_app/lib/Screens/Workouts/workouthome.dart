@@ -34,11 +34,12 @@ class _WorkoutHomeScreenState extends State<WorkoutHomeScreen>
     'Sunday'
   ];
   String dropdownValueDay = "Monday";
-  final _Dayformkey = GlobalKey<FormState>();
   final GlobalKey<RefreshIndicatorState> _refreshIndicatorKey =
       new GlobalKey<RefreshIndicatorState>();
   late String day, listID;
   late List workouts = [],
+      workoutsSets = [],
+      workoutsReps = [],
       completedlist = [],
       _completedlist = [],
       settingsdata = [];
@@ -65,6 +66,8 @@ class _WorkoutHomeScreenState extends State<WorkoutHomeScreen>
       listID = response.data!["id"] as String;
       day = response.data!['Day'] as String;
       workouts = response.data!['Exercises'] as List;
+      workoutsSets = response.data!['ExerciseSets'] as List;
+      workoutsReps = response.data!['ExerciseReps'] as List;
       completedlist = response.data!['Completed'] as List;
       _completedlist = completedlist;
     }
@@ -274,6 +277,8 @@ class _WorkoutHomeScreenState extends State<WorkoutHomeScreen>
               children: [
                 WorkoutBox(
                   workouts: _loading ? ["loading..."] : workouts,
+                  sets: _loading ? ["loading..."] : workoutsSets,
+                  reps: _loading ? ["loading..."] : workoutsReps,
                 ),
               ],
             ))
