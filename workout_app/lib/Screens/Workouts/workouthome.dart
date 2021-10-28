@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:scroll_snap_list/scroll_snap_list.dart';
+import 'package:workout_app/Components/Containers/workoutbox.dart';
 import 'package:workout_app/Components/Navbar/Navbar.dart';
 import 'package:workout_app/Components/Screens/homeworkoutscontainer.dart';
 import 'package:workout_app/Components/SideBar/sidebar.dart';
@@ -17,12 +18,21 @@ class WorkoutHomeScreen extends StatefulWidget {
   _WorkoutHomeScreenState createState() => _WorkoutHomeScreenState();
 }
 
-class _WorkoutHomeScreenState extends State<WorkoutHomeScreen> with SingleTickerProviderStateMixin {
+class _WorkoutHomeScreenState extends State<WorkoutHomeScreen>
+    with SingleTickerProviderStateMixin {
   List sidebardata = [], feedbackdata = [];
   final currentUser = supabase.auth.user();
   var yesterday = DateTime.now().subtract(Duration(days: 1));
   var today = DateTime.now();
-  final dropdownlist = ['Monday','Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'];
+  final dropdownlist = [
+    'Monday',
+    'Tuesday',
+    'Wednesday',
+    'Thursday',
+    'Friday',
+    'Saturday',
+    'Sunday'
+  ];
   String dropdownValueDay = "Monday";
   final _Dayformkey = GlobalKey<FormState>();
   final GlobalKey<RefreshIndicatorState> _refreshIndicatorKey =
@@ -80,26 +90,15 @@ class _WorkoutHomeScreenState extends State<WorkoutHomeScreen> with SingleTicker
   }
 
   void _setTabIndex() {
-    tabController!.index = dropdownlist.indexWhere((dropdownlist) => dropdownlist.startsWith(dropdownValueDay));
-  }
-
-  void _increaseTabControllerHandler() {
-    setState(() {
-      (tabController!.index == dropdownlist.length - 1) ? tabController!.index = 0 : tabController!.index++;
-      dropdownValueDay = dropdownlist[tabController!.index];
-    });
-  }
-  void _decreaseTabControllerHandler() {
-    setState(() {
-      (tabController!.index == 0) ? tabController!.index = dropdownlist.length - 1 : tabController!.index--;
-      dropdownValueDay = dropdownlist[tabController!.index];
-    });
+    tabController!.index = dropdownlist.indexWhere(
+        (dropdownlist) => dropdownlist.startsWith(dropdownValueDay));
   }
 
   void _onItemFocus(int index) {
     setState(() {
       tabController!.index = index;
       dropdownValueDay = dropdownlist[index];
+      _getWorkouts(currentUser!.id);
     });
   }
 
@@ -143,44 +142,34 @@ class _WorkoutHomeScreenState extends State<WorkoutHomeScreen> with SingleTicker
               settingsdata: settingsdata,
             ),
             body: Column(
-                  children: [
-                    Row(
-                      children: [
-                        Container(
-                          width: 300,
-                          height: 550,
-                          color: Colors.black,
-                          child: Expanded(
-                            child: ScrollSnapList(
-                              scrollDirection: Axis.vertical,
-                              onItemFocus: _onItemFocus,
-                              itemSize: 550,
-                              itemBuilder: _buildListItem,
-                              itemCount: dropdownlist.length,
-                              reverse: false,
-                              initialIndex: tabController!.index.toDouble(),
-                            ),
-                          ),
-                        ),
-                    TabPageSelector(
-                      controller: tabController,
-                      color: Colors.white,
-                      selectedColor: WorkoutsAccentColour,
-                      indicatorSize: 14,
-                      direction: Direction.vertical,
+              children: [
+                Row(children: [
+                  Container(
+                    width: 300,
+                    height: 550,
+                    color: Colors.black,
+                    child: Expanded(
+                      child: ScrollSnapList(
+                        scrollDirection: Axis.vertical,
+                        onItemFocus: _onItemFocus,
+                        itemSize: 550,
+                        itemBuilder: _buildListItem,
+                        itemCount: dropdownlist.length,
+                        reverse: false,
+                        initialIndex: tabController!.index.toDouble(),
+                      ),
                     ),
-                      ]
-                    ),
-                    Row(
-                      children: [
-                        FloatingActionButton(onPressed: () {_decreaseTabControllerHandler();}),
-                        FloatingActionButton(onPressed: () {_increaseTabControllerHandler();}),
-                      ],
-                    )
-                  ],
-                )
-            )
-    );
+                  ),
+                  TabPageSelector(
+                    controller: tabController,
+                    color: Colors.white,
+                    selectedColor: WorkoutsAccentColour,
+                    indicatorSize: 14,
+                    direction: Direction.vertical,
+                  ),
+                ]),
+              ],
+            )));
     /*return SafeArea(
       child: Scaffold(
         backgroundColor: defaultBackgroundColour,
@@ -270,23 +259,23 @@ class _WorkoutHomeScreenState extends State<WorkoutHomeScreen> with SingleTicker
 
   Widget _buildListItem(BuildContext context, int index) {
     return Container(
-     child: Column(
-       mainAxisAlignment: MainAxisAlignment.center,
-       children: [
-         Container(
-           margin: EdgeInsets.only(top:25,bottom:25),
-           height: 500,
-           width: 300,
-           color: Colors.grey,
-           child: Text(
-             "$dropdownValueDay",
-             style: TextStyle(
-               color: Colors.white,
-             ),
-           ),
-         )
-       ],
-     )
-    );
+        child: Column(
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: [
+        Container(
+            margin: EdgeInsets.only(top: 25, bottom: 25),
+            height: 500,
+            width: 300,
+            color: Colors.grey,
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                WorkoutBox(
+                  workouts: _loading ? ["loading..."] : workouts,
+                ),
+              ],
+            ))
+      ],
+    ));
   }
 }
