@@ -46,10 +46,13 @@ class _WorkoutBoxState extends State<WorkoutBox> {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             Container(
+              decoration: BoxDecoration(
+                color: secondary,
+                borderRadius: BorderRadius.circular(10),
+              ),
               margin: EdgeInsets.only(left: 25, right: 25,),
               height: 300,
               width: 250,
-              color: secondary,
               child: Column(
                 children: [
                   Container(
