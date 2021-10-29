@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:scroll_indicator/scroll_indicator.dart';
 import 'package:scroll_snap_list/scroll_snap_list.dart';
 import 'package:workout_app/Components/Containers/workoutbox.dart';
 import 'package:workout_app/Components/Navbar/Navbar.dart';
-import 'package:workout_app/Components/Screens/homeworkoutscontainer.dart';
 import 'package:workout_app/Components/SideBar/sidebar.dart';
 import 'package:workout_app/Data/Screens/feedback.dart';
 import 'package:workout_app/Data/Screens/settings.dart';
@@ -34,8 +34,6 @@ class _WorkoutHomeScreenState extends State<WorkoutHomeScreen>
     'Sunday'
   ];
   String dropdownValueDay = "Monday";
-  final GlobalKey<RefreshIndicatorState> _refreshIndicatorKey =
-      new GlobalKey<RefreshIndicatorState>();
   late String day, listID;
   late List workouts = [],
       workoutsSets = [],
@@ -46,6 +44,7 @@ class _WorkoutHomeScreenState extends State<WorkoutHomeScreen>
   bool _loading = true;
   late bool _completed;
   late TabController? tabController;
+  late ScrollController scrollBarController = ScrollController();
 
   Future<void> _getWorkouts(String userId) async {
     setState(() {
@@ -163,6 +162,7 @@ class _WorkoutHomeScreenState extends State<WorkoutHomeScreen>
                         reverse: false,
                         initialIndex: tabController!.index.toDouble(),
                         updateOnScroll: true,
+                        scrollPhysics: BouncingScrollPhysics(),
                       ),
                     ),
                   ),
@@ -172,96 +172,11 @@ class _WorkoutHomeScreenState extends State<WorkoutHomeScreen>
                     selectedColor: WorkoutsAccentColour,
                     indicatorSize: 13,
                     direction: Direction.vertical,
-                    margin: 17,
+                    margin: 21,
                   ),
                 ]),
               ],
             )));
-    /*return SafeArea(
-      child: Scaffold(
-        backgroundColor: defaultBackgroundColour,
-        appBar: CustomAppBar(
-          appbaraccentcolour: WorkoutsAccentColour,
-          appbarcolour: AppbarColour,
-          appbartitle: "Workouts",
-        ),
-        drawer: CustomSideBar(
-          sidebaraccentcolour: WorkoutsAccentColour,
-          sidebarcolour: SideBarColour,
-          sidebartitle: "Meals",
-          feedbacktitle: "Feedback",
-          settingstitle: "Settings",
-          sidebardata: sidebardata,
-          feedbackdata: feedbackdata,
-          settingsdata: settingsdata,
-        ),
-        body: RefreshIndicator(
-          key: _refreshIndicatorKey,
-          onRefresh: _refresh,
-          child: ListView(
-            children: [
-              Align(
-                alignment: Alignment.topCenter,
-                child: Container(
-                  margin: EdgeInsets.only(top: 15),
-                  padding: EdgeInsets.symmetric(horizontal: 30.0),
-                  child: Form(
-                    key: _Dayformkey,
-                    child: DropdownButton<String>(
-                      dropdownColor: defaultLoginBackgroundColour,
-                      value: dropdownValueDay,
-                      elevation: 1,
-                      style: TextStyle(
-                        fontSize: 16,
-                        color: Colors.white,
-                      ),
-                      underline: Container(
-                        height: 2,
-                        color: defaultLoginBackgroundColour,
-                      ),
-                      onChanged: (String? newValue) {
-                        setState(() {
-                          dropdownValueDay = newValue!;
-                        });
-                        _getWorkouts(currentUser!.id);
-                      },
-                      items: <String>['Monday','Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday']
-                          .map<DropdownMenuItem<String>>((String value) {
-                        return DropdownMenuItem<String>(
-                          value: value,
-                          child: Text(value),
-                        );
-                      }).toList(),
-                    ),
-                  ),
-                ),
-              ),
-              Align(
-                  alignment: Alignment.topCenter,
-                  child: _loading ? Container(
-                    width: double.infinity,
-                    height: 580,
-                    margin: EdgeInsets.all(10),
-                    decoration: BoxDecoration(
-                      color: AppbarColour,
-                      borderRadius: BorderRadius.all(Radius.circular(5)),
-                    )) : Container(
-                    child: HomeWorkoutsContainer(
-                      widthvalue: 580,
-                      day: _loading ? "loading..." : day,
-                      workouts: _loading? ["loading..."] : workouts,
-                      completedlist: _loading? [false] : completedlist,
-                      currentUserID: _loading? "loading..." : currentUser!.id,
-                      listID: _loading? "loading..." :  listID,
-                      completedliststring: _loading? ["loading..."] : _completedlist,
-                    ),
-                  )
-              ),
-            ],
-          ),
-        ),
-      ),
-    );*/
   }
 
   Widget _buildListItem(BuildContext context, int index) {

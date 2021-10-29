@@ -34,6 +34,7 @@ dependencies:
   intl: ^0.17.0
   flutter_dotenv: ^5.0.2
   scroll_snap_list: ^0.8.3
+  scroll_indicator: ^0.0.3
 
 dev_dependencies:
   flutter_test:

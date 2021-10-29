@@ -1,12 +1,16 @@
 import 'package:flutter/material.dart';
+import 'package:scroll_indicator/scroll_indicator.dart';
 import 'package:scroll_snap_list/scroll_snap_list.dart';
 import '../../constants.dart';
+
+//https://www.digitalocean.com/community/tutorials/flutter-widget-communication
 
 class WorkoutBox extends StatefulWidget {
   WorkoutBox({required this.workouts, required this.sets, required this.reps});
   late List workouts;
   late List sets;
   late List reps;
+  final ScrollController scrollBarController = ScrollController();
 
   @override
   _WorkoutBoxState createState() => _WorkoutBoxState();
@@ -28,6 +32,7 @@ class _WorkoutBoxState extends State<WorkoutBox> {
       height: 500,
       child: Expanded(
         child: ScrollSnapList(
+          listController: widget.scrollBarController,
           scrollDirection: Axis.horizontal,
           onItemFocus: _onItemFocus,
           itemSize: 300,
@@ -35,8 +40,9 @@ class _WorkoutBoxState extends State<WorkoutBox> {
           itemCount: widget.workouts.length,
           reverse: false,
           initialIndex: 0,
+          scrollPhysics: BouncingScrollPhysics(),
+          ),
         ),
-      ),
     );
   }
 
@@ -51,14 +57,15 @@ class _WorkoutBoxState extends State<WorkoutBox> {
                 borderRadius: BorderRadius.circular(10),
               ),
               margin: EdgeInsets.only(left: 25, right: 25,),
-              height: 300,
+              height: 350,
               width: 250,
               child: Column(
                 children: [
-                  Container(
-                    margin: EdgeInsets.only(top: 40, bottom: 40),
+                    Container(
+                    margin: EdgeInsets.only(top: 40, bottom: 20),
                     child: Text(
                       "${widget.workouts[index]}",
+                      textAlign: TextAlign.center,
                       style: TextStyle(
                         color: Colors.white,
                         fontSize: 30,
@@ -67,9 +74,10 @@ class _WorkoutBoxState extends State<WorkoutBox> {
                     ),
                   ),
                   Container(
-                    margin: EdgeInsets.only(top: 20, bottom: 40),
+                    margin: EdgeInsets.only(top: 30, bottom: 30),
                     child: Text(
                         "${widget.sets[index]} Sets",
+                        textAlign: TextAlign.center,
                         style: TextStyle(
                           color: Colors.white,
                           fontSize: 25,
@@ -78,9 +86,10 @@ class _WorkoutBoxState extends State<WorkoutBox> {
                       ),
                   ),
                   Container(
-                    margin: EdgeInsets.only(top: 20, bottom: 20),
+                    margin: EdgeInsets.only(top: 30),
                     child: Text(
                         "${widget.reps[index]} Reps",
+                        textAlign: TextAlign.center,
                         style: TextStyle(
                           color: Colors.white,
                           fontSize: 25,
@@ -88,8 +97,15 @@ class _WorkoutBoxState extends State<WorkoutBox> {
                         ),
                       ),
                   ),
+                  BottomAppBar(
+                      color: Colors.white,
+                      child: ScrollIndicator(
+                        scrollController: widget.scrollBarController,
+                      )
+                  ),
                 ],
               ),
+
             )
           ],
         )
