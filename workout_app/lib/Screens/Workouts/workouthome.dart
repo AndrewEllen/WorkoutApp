@@ -219,13 +219,16 @@ class _WorkoutHomeScreenState extends State<WorkoutHomeScreen>
                       scrollPhysics: BouncingScrollPhysics(),
                     ),
                   ),
-                  TabPageSelector(
-                    controller: tabController,
-                    color: Colors.white,
-                    selectedColor: WorkoutsAccentColour,
-                    indicatorSize: 13,
-                    direction: Direction.vertical,
-                    margin: 21,
+                  Container(
+                    margin: EdgeInsets.only(right: 8),
+                    child: TabPageSelector(
+                      controller: tabController,
+                      color: Colors.white,
+                      selectedColor: WorkoutsAccentColour,
+                      indicatorSize: 13,
+                      direction: Direction.vertical,
+                      margin: 21,
+                    ),
                   ),
                 ]),
                 Container(
