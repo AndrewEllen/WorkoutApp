@@ -204,7 +204,7 @@ class _WorkoutHomeScreenState extends State<WorkoutHomeScreen>
               children: [
                 Row(mainAxisAlignment: MainAxisAlignment.center, children: [
                   Container(
-                    margin: EdgeInsets.only(left: 50, right: 20),
+                    margin: EdgeInsets.only(left: 50, right: 15),
                     width: 300,
                     height: 550,
                     child: ScrollSnapList(
@@ -220,7 +220,7 @@ class _WorkoutHomeScreenState extends State<WorkoutHomeScreen>
                     ),
                   ),
                   Container(
-                    margin: EdgeInsets.only(right: 25),
+                    margin: EdgeInsets.only(right: 30),
                     child: TabPageSelector(
                       controller: tabController,
                       color: Colors.white,
