@@ -1,14 +1,19 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
-import 'package:scroll_indicator/scroll_indicator.dart';
 import 'package:scroll_snap_list/scroll_snap_list.dart';
 import 'package:workout_app/Components/Navbar/Navbar.dart';
 import 'package:workout_app/Components/SideBar/sidebar.dart';
 import 'package:workout_app/Data/Screens/feedback.dart';
 import 'package:workout_app/Data/Screens/settings.dart';
 import 'package:workout_app/Data/resetcheckboxes.dart';
+import 'package:workout_app/Screens/Workouts/editcurrentworkout.dart';
+import 'package:workout_app/Screens/Workouts/workoutsscreen.dart';
 import 'package:workout_app/data/Screens/workouthome.dart';
 import '../../constants.dart';
 import 'package:intl/intl.dart';
+
+import '../../router.dart';
 
 // https://dartpad.dev/?null_safety=true&id=afc693da482659e918d46a21c5e80ae4
 
@@ -102,9 +107,17 @@ class _WorkoutHomeScreenState extends State<WorkoutHomeScreen>
 
   void _onItemFocus(int index) {
     setState(() {
+      workouts.clear();
+      workoutsSets.clear();
+      workoutsReps.clear();
       tabController!.index = index;
       dropdownValueDay = dropdownlist[index];
       _getWorkouts(currentUser!.id);
+      if (workouts.length == 0) {
+          workouts.add("Loading...");
+          workoutsSets.add(0);
+          workoutsReps.add(0);
+        }
     });
   }
 
@@ -218,6 +231,22 @@ class _WorkoutHomeScreenState extends State<WorkoutHomeScreen>
                 Container(
                   margin: EdgeInsets.only(top:30),
                   child: FloatingActionButton(onPressed: (){
+                    Navigator.push(
+                        context,
+                        FadeRouter(
+                          routeName: "editworkout",
+                          screen: EditCurrentWorkout(
+                            workout: workouts[tabControllerWorkouts!.index],
+                            set: workoutsSets[tabControllerWorkouts!.index],
+                            rep: workoutsReps[tabControllerWorkouts!.index],
+                            workouts: workouts,
+                            workoutsSets: workoutsSets,
+                            workoutsReps: workoutsReps,
+                            day: day,
+                            listID: listID,
+                            index: tabControllerWorkouts!.index,
+                          ),
+                        ));
                   },
                     elevation: 1,
                     hoverElevation: 1,
