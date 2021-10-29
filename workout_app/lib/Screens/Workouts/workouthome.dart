@@ -40,10 +40,10 @@ class _WorkoutHomeScreenState extends State<WorkoutHomeScreen>
       completedlist = [],
       _completedlist = [],
       settingsdata = [];
+
   bool _loading = true;
   late bool _completed;
   late TabController? tabController;
-  late ScrollController scrollBarController = ScrollController();
 
   Future<void> _getWorkouts(String userId) async {
     setState(() {
@@ -63,7 +63,7 @@ class _WorkoutHomeScreenState extends State<WorkoutHomeScreen>
     if (response.data != null) {
       listID = response.data!["id"] as String;
       day = response.data!['Day'] as String;
-      workouts = response.data!['Exercises'] as List;
+      workouts = response.data!['Exercises'];
       workoutsSets = response.data!['ExerciseSets'] as List;
       workoutsReps = response.data!['ExerciseReps'] as List;
       completedlist = response.data!['Completed'] as List;
@@ -141,11 +141,8 @@ class _WorkoutHomeScreenState extends State<WorkoutHomeScreen>
                 color: Colors.white,
                 child: Container(
                   height: 100,
-                  child: ScrollIndicator(
-                    scrollController: scrollBarController,
-                  ),
-                )
-            ),
+                  child: Text("hi")
+                )),
             drawer: CustomSideBar(
               sidebaraccentcolour: WorkoutsAccentColour,
               sidebarcolour: SideBarColour,
@@ -158,24 +155,22 @@ class _WorkoutHomeScreenState extends State<WorkoutHomeScreen>
             ),
             body: Column(
               children: [
-                Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
+                Row(mainAxisAlignment: MainAxisAlignment.center, children: [
                   Container(
                     margin: EdgeInsets.only(left: 50, right: 30),
                     width: 300,
                     height: 550,
-                      child: ScrollSnapList(
-                        scrollDirection: Axis.vertical,
-                        onItemFocus: _onItemFocus,
-                        itemSize: 550,
-                        itemBuilder: _buildListItem,
-                        itemCount: dropdownlist.length,
-                        reverse: false,
-                        initialIndex: tabController!.index.toDouble(),
-                        updateOnScroll: true,
-                        scrollPhysics: BouncingScrollPhysics(),
-                      ),
+                    child: ScrollSnapList(
+                      scrollDirection: Axis.vertical,
+                      onItemFocus: _onItemFocus,
+                      itemSize: 550,
+                      itemBuilder: _buildListItem,
+                      itemCount: dropdownlist.length,
+                      reverse: false,
+                      initialIndex: tabController!.index.toDouble(),
+                      updateOnScroll: true,
+                      scrollPhysics: BouncingScrollPhysics(),
+                    ),
                   ),
                   TabPageSelector(
                     controller: tabController,
@@ -191,33 +186,33 @@ class _WorkoutHomeScreenState extends State<WorkoutHomeScreen>
   }
 
   Widget _buildListItem(BuildContext context, int index) {
+
     return Container(
         child: Column(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
         Container(
-            margin: EdgeInsets.only(top: 25, bottom: 25),
-            height: 500,
-            width: 300,
-              child: ScrollSnapList(
-                listController: scrollBarController,
-                scrollDirection: Axis.horizontal,
-                onItemFocus: _onItemFocusWorkouts,
-                itemSize: 300,
-                itemBuilder: _buildListItemWorkouts,
-                itemCount: workouts.length,
-                reverse: false,
-                initialIndex: 0,
-                scrollPhysics: BouncingScrollPhysics(),
-              ),
-            ),
+          margin: EdgeInsets.only(top: 25, bottom: 25),
+          height: 500,
+          width: 300,
+          child: ScrollSnapList(
+            scrollDirection: Axis.horizontal,
+            onItemFocus: _onItemFocusWorkouts,
+            itemSize: 300,
+            itemBuilder: _buildListItemWorkouts,
+            itemCount: workouts.length,
+            reverse: false,
+            initialIndex: 0,
+            scrollPhysics: BouncingScrollPhysics(),
+          ),
+        ),
       ],
     ));
   }
 
   Widget _buildListItemWorkouts(BuildContext context, int index) {
     return Container(
-      key: PageStorageKey("WorkoutsList_Key"),
+        key: PageStorageKey("WorkoutsList_Key"),
         child: Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
@@ -226,7 +221,10 @@ class _WorkoutHomeScreenState extends State<WorkoutHomeScreen>
                 color: secondary,
                 borderRadius: BorderRadius.circular(10),
               ),
-              margin: EdgeInsets.only(left: 25, right: 25,),
+              margin: EdgeInsets.only(
+                left: 25,
+                right: 25,
+              ),
               height: 350,
               width: 250,
               child: Column(
@@ -271,7 +269,6 @@ class _WorkoutHomeScreenState extends State<WorkoutHomeScreen>
               ),
             ),
           ],
-        )
-    );
+        ));
   }
 }
