@@ -100,7 +100,7 @@ class _CustomSideBarState extends State<CustomSideBar> {
                     child: Text(
                       'User: ${_loading ? currentUser?.email : username}',
                       style: TextStyle(
-                        fontSize: 13,
+                        fontSize: 18,
                         color: widget.sidebaraccentcolour,
                         shadows: [
                           Shadow(

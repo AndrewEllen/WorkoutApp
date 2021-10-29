@@ -253,6 +253,10 @@ class _WorkoutHomeScreenState extends State<WorkoutHomeScreen>
                     focusElevation: 0,
                     highlightElevation: 0,
                     backgroundColor: WorkoutsAccentColour,
+                    child: Icon(
+                      Icons.edit,
+                      size: 35,
+                    ),
                   ),
                 )
               ],

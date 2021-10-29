@@ -54,7 +54,7 @@ class _WorkoutsContainerState extends State<WorkoutsContainer> {
       height: widget.widthvalue,
       margin: EdgeInsets.all(10),
       decoration: BoxDecoration(
-        color: AppbarColour,
+        color: secondary,
         borderRadius: BorderRadius.all(Radius.circular(5)),
       ),
       child: ClipRRect(

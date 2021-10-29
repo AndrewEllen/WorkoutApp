@@ -29,7 +29,8 @@ class WorkoutListContainer extends StatelessWidget {
         child: Text(
           workout,
           style: TextStyle(
-            color: Colors.white,
+            color: tertiary,
+            fontSize: 20,
           ),
         ),
       ),

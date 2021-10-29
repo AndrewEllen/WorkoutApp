@@ -102,18 +102,21 @@ class _LoginScreenState extends AuthState<LoginScreen> {
                         child: TextFormField(
                           controller: _emailController,
                           cursorColor: Colors.white,
-                          style: TextStyle(color: Colors.white,),
+                          style: TextStyle(
+                            color: tertiary,
+                            fontSize: 24,
+                          ),
                           decoration: InputDecoration(
                             hintText: 'Enter Email',
                             contentPadding: EdgeInsets.only(top:0),
                             hintStyle: TextStyle(
                               color: Color.fromRGBO(255, 255, 255, 0.4),
-                              fontSize: 15,
+                              fontSize: 18,
                             ),
                             labelText: 'Sign-in through a magic link',
                             labelStyle: TextStyle(
                               color: Colors.white,
-                              fontSize: 20,
+                              fontSize: 26,
                             ),
                             focusedBorder: UnderlineInputBorder(
                               borderSide: new BorderSide(color: Colors.white),
@@ -138,7 +141,10 @@ class _LoginScreenState extends AuthState<LoginScreen> {
                           color: Colors.black,
                           child: Text(
                             'Login',
-                            style: TextStyle(color: Colors.white),
+                            style: TextStyle(
+                                color: tertiary,
+                              fontSize: 20,
+                            ),
                           ),
                         ),
                       ),
@@ -150,7 +156,10 @@ class _LoginScreenState extends AuthState<LoginScreen> {
                         children: [
                           Text(
                             'Sign-up with just Email',
-                            style: TextStyle(color: Colors.white,),
+                            style: TextStyle(
+                              color: tertiary,
+                              fontSize: 18,
+                            ),
                               ),
                         ],
                       ),

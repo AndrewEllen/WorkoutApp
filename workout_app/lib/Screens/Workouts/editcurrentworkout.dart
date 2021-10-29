@@ -1,6 +1,6 @@
 import 'dart:async';
-
 import 'package:flutter/material.dart';
+import 'package:workout_app/Components/Navbar/Navbar.dart';
 import '../../constants.dart';
 
 class EditCurrentWorkout extends StatefulWidget {
@@ -76,6 +76,11 @@ class _EditCurrentWorkoutState extends State<EditCurrentWorkout> {
   Widget build(BuildContext context) {
     return SafeArea(
         child: Scaffold(
+            appBar: CustomAppBar(
+              appbaraccentcolour: WorkoutsAccentColour,
+              appbarcolour: secondary,
+              appbartitle: widget.day,
+            ),
           backgroundColor: primary,
           body: Center(
             child: Column(
@@ -106,13 +111,15 @@ class _EditCurrentWorkoutState extends State<EditCurrentWorkout> {
                                     controller: _workoutController,
                                     cursorColor: Colors.white,
                                     style: TextStyle(
-                                      color: Colors.white,
+                                      color: tertiary,
+                                      fontSize: 20
                                     ),
                                     textAlign: TextAlign.center,
                                     decoration: InputDecoration(
-                                      hintText: 'Enter Username',
+                                      hintText: 'Enter Workout',
                                       hintStyle: TextStyle(
                                         color: Color.fromRGBO(255, 255, 255, 0.4),
+                                        fontSize: 20,
                                       ),
                                       focusedBorder: UnderlineInputBorder(
                                         borderSide: new BorderSide(color: Colors.white),
@@ -134,7 +141,8 @@ class _EditCurrentWorkoutState extends State<EditCurrentWorkout> {
                                     controller: _setsController,
                                     cursorColor: Colors.white,
                                     style: TextStyle(
-                                      color: Colors.white,
+                                        color: tertiary,
+                                        fontSize: 20
                                     ),
                                     textAlign: TextAlign.center,
                                     decoration: InputDecoration(
@@ -145,6 +153,7 @@ class _EditCurrentWorkoutState extends State<EditCurrentWorkout> {
                                       hintText: 'Enter Sets',
                                       hintStyle: TextStyle(
                                         color: Color.fromRGBO(255, 255, 255, 0.4),
+                                        fontSize: 20,
                                       ),
                                       focusedBorder: UnderlineInputBorder(
                                         borderSide: new BorderSide(color: Colors.white),
@@ -166,7 +175,8 @@ class _EditCurrentWorkoutState extends State<EditCurrentWorkout> {
                                     controller: _repsController,
                                     cursorColor: Colors.white,
                                     style: TextStyle(
-                                      color: Colors.white,
+                                        color: tertiary,
+                                        fontSize: 20
                                     ),
                                     textAlign: TextAlign.center,
                                     decoration: InputDecoration(
@@ -177,6 +187,7 @@ class _EditCurrentWorkoutState extends State<EditCurrentWorkout> {
                                       hintText: 'Enter Reps',
                                       hintStyle: TextStyle(
                                         color: Color.fromRGBO(255, 255, 255, 0.4),
+                                        fontSize: 20,
                                       ),
                                       focusedBorder: UnderlineInputBorder(
                                         borderSide: new BorderSide(color: Colors.white),

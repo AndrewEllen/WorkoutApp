@@ -68,6 +68,33 @@ class _HomeScreenState extends State<HomeScreen> {
     return SafeArea(
         child: Scaffold(
             backgroundColor: primary,
+            drawer: Drawer(
+              child: Scaffold(
+                backgroundColor: primary,
+                body: Center(
+                  child: Container(
+                    margin: EdgeInsets.only(bottom: 50),
+                    child: ElevatedButton(
+                      onPressed: () {
+                        _logout();
+                        print("Clicked");
+                      },
+                      style: ElevatedButton.styleFrom(
+                        primary: WorkoutsAccentColour,
+                        minimumSize: Size(130,38),
+                      ),
+                      child: Text(
+                        "Logout",
+                        style: TextStyle(
+                          color: Colors.white,
+                          fontSize: 25
+                        ),
+                      ),
+                    ),
+                  ),
+                ),
+              ),
+            ),
             body: Align(
               alignment: Alignment.topCenter,
               child: Stack(
@@ -105,7 +132,7 @@ class _HomeScreenState extends State<HomeScreen> {
                           clipper: HomeAppBarClip(),
                           child: Center(
                             child: Container(
-                              color: HomeAppbarColour,
+                              color: primary,
                               child: Column(
                                 children: [
                                   Align(
@@ -154,7 +181,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                         child: Text(
                                           'User: ${_loading ? currentUser?.email : username}',
                                           style: TextStyle(
-                                            fontSize: 13,
+                                            fontSize: 22,
                                             color: WorkoutsAccentColour,
                                             shadows: [
                                               Shadow(

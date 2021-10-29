@@ -13,18 +13,7 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
       child: AppBar(
         backgroundColor: appbarcolour,
         elevation: 1,
-        leading: GestureDetector(
-          onTap: () {
-            Scaffold.of(context).openDrawer();
-          },
-          child: Container(
-            margin: EdgeInsets.only(left:10),
-            child: Icon(
-              Icons.menu_sharp,
-              size: 35,
-            ),
-          ),
-        ),
+        leading: null,
         title: Center(
           child: Container(
             margin: EdgeInsets.only(right:40),
@@ -33,7 +22,7 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
               style: TextStyle(
                 color: appbaraccentcolour,
                 fontWeight: FontWeight.w400,
-                fontSize: 30,
+                fontSize: 40,
 /*                shadows: [
                   Shadow(
                     blurRadius: 2,

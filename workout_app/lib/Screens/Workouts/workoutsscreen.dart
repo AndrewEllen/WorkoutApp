@@ -146,7 +146,7 @@ class _WorkoutListScreenState extends State<WorkoutListScreen> {
                   height: 500,
                   margin: EdgeInsets.all(10),
                   decoration: BoxDecoration(
-                    color: AppbarColour,
+                    color: secondary,
                     borderRadius: BorderRadius.all(Radius.circular(5)),
                   )) : Container(
                 child: WorkoutsContainer(
@@ -190,12 +190,14 @@ class _WorkoutListScreenState extends State<WorkoutListScreen> {
                     cursorColor: Colors.white,
                     style: TextStyle(
                       color: Colors.white,
+                      fontSize: 20,
                     ),
                     textAlign: TextAlign.center,
                     decoration: InputDecoration(
                       hintText: 'Enter Workout',
                       hintStyle: TextStyle(
                         color: Color.fromRGBO(255, 255, 255, 0.4),
+                        fontSize: 20,
                       ),
                       focusedBorder: UnderlineInputBorder(
                         borderSide: new BorderSide(color: Colors.white),
