@@ -18,7 +18,7 @@ class WorkoutHomeScreen extends StatefulWidget {
 }
 
 class _WorkoutHomeScreenState extends State<WorkoutHomeScreen>
-    with SingleTickerProviderStateMixin {
+    with TickerProviderStateMixin {
   List sidebardata = [], feedbackdata = [];
   final currentUser = supabase.auth.user();
   var yesterday = DateTime.now().subtract(Duration(days: 1));
@@ -44,6 +44,7 @@ class _WorkoutHomeScreenState extends State<WorkoutHomeScreen>
   bool _loading = true;
   late bool _completed;
   late TabController? tabController;
+  late TabController? tabControllerWorkouts;
 
   Future<void> _getWorkouts(String userId) async {
     setState(() {
@@ -82,6 +83,10 @@ class _WorkoutHomeScreenState extends State<WorkoutHomeScreen>
     setState(() {
       _loading = false;
     });
+    tabControllerWorkouts = TabController(
+      length: workouts.length,
+      vsync: this,
+    );
   }
 
   Future<Null> _refresh() {
@@ -105,14 +110,20 @@ class _WorkoutHomeScreenState extends State<WorkoutHomeScreen>
 
   void _onItemFocusWorkouts(int index) {
     setState(() {
+      tabControllerWorkouts!.index = index;
     });
   }
 
   void initState() {
+    tabControllerWorkouts = TabController(
+      length: 0,
+      vsync: this,
+    );
     tabController = TabController(
       length: dropdownlist.length,
       vsync: this,
     );
+    _setTabIndex();
 
     if (int.parse(DateFormat('HH').format(today)) < 4) {
       dropdownValueDay = DateFormat('EEEE').format(yesterday);
@@ -120,11 +131,11 @@ class _WorkoutHomeScreenState extends State<WorkoutHomeScreen>
       dropdownValueDay = DateFormat('EEEE').format(today);
       resettickboxes(DateFormat('EEEE').format(yesterday), currentUser!.id);
     }
-    _setTabIndex();
     sidebardata = SideBarWorkout.getContents();
     feedbackdata = SideBarFeedback.getContents();
     settingsdata = SideBarSettings.getContents();
     _getWorkouts(currentUser!.id);
+
   }
 
   @override
@@ -138,10 +149,33 @@ class _WorkoutHomeScreenState extends State<WorkoutHomeScreen>
               appbartitle: "$dropdownValueDay",
             ),
             bottomNavigationBar: BottomAppBar(
-                color: Colors.white,
+                color: secondary,
                 child: Container(
-                  height: 100,
-                  child: Text("hi")
+                  height: 60,
+                  child: Stack(
+                    children: [
+                      Center(
+                        child: Container(
+                          height:13.5,
+                          width:13*workouts.length.toDouble(),
+                          decoration: BoxDecoration(
+                            color: tertiary,
+                            borderRadius: BorderRadius.all(Radius.circular(45)),
+                          ),
+                        ),
+                      ),
+                      Center(
+                          child: TabPageSelector(
+                            controller: tabControllerWorkouts,
+                            color: tertiary,
+                            selectedColor: WorkoutsAccentColour,
+                            indicatorSize: 13,
+                            direction: Direction.horizontal,
+                            margin: 21,
+                          ),
+                      ),
+                    ],
+                  ),
                 )),
             drawer: CustomSideBar(
               sidebaraccentcolour: WorkoutsAccentColour,
@@ -181,6 +215,17 @@ class _WorkoutHomeScreenState extends State<WorkoutHomeScreen>
                     margin: 21,
                   ),
                 ]),
+                Container(
+                  margin: EdgeInsets.only(top:30),
+                  child: FloatingActionButton(onPressed: (){
+                  },
+                    elevation: 1,
+                    hoverElevation: 1,
+                    focusElevation: 0,
+                    highlightElevation: 0,
+                    backgroundColor: WorkoutsAccentColour,
+                  ),
+                )
               ],
             )));
   }
