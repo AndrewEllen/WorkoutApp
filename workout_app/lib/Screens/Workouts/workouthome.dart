@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:scroll_indicator/scroll_indicator.dart';
 import 'package:scroll_snap_list/scroll_snap_list.dart';
-import 'package:workout_app/Components/Containers/workoutbox.dart';
 import 'package:workout_app/Components/Navbar/Navbar.dart';
 import 'package:workout_app/Components/SideBar/sidebar.dart';
 import 'package:workout_app/Data/Screens/feedback.dart';
@@ -104,6 +103,11 @@ class _WorkoutHomeScreenState extends State<WorkoutHomeScreen>
     });
   }
 
+  void _onItemFocusWorkouts(int index) {
+    setState(() {
+    });
+  }
+
   void initState() {
     tabController = TabController(
       length: dropdownlist.length,
@@ -133,6 +137,15 @@ class _WorkoutHomeScreenState extends State<WorkoutHomeScreen>
               appbarcolour: secondary,
               appbartitle: "$dropdownValueDay",
             ),
+            bottomNavigationBar: BottomAppBar(
+                color: Colors.white,
+                child: Container(
+                  height: 100,
+                  child: ScrollIndicator(
+                    scrollController: scrollBarController,
+                  ),
+                )
+            ),
             drawer: CustomSideBar(
               sidebaraccentcolour: WorkoutsAccentColour,
               sidebarcolour: SideBarColour,
@@ -152,7 +165,6 @@ class _WorkoutHomeScreenState extends State<WorkoutHomeScreen>
                     margin: EdgeInsets.only(left: 50, right: 30),
                     width: 300,
                     height: 550,
-                    child: Expanded(
                       child: ScrollSnapList(
                         scrollDirection: Axis.vertical,
                         onItemFocus: _onItemFocus,
@@ -164,7 +176,6 @@ class _WorkoutHomeScreenState extends State<WorkoutHomeScreen>
                         updateOnScroll: true,
                         scrollPhysics: BouncingScrollPhysics(),
                       ),
-                    ),
                   ),
                   TabPageSelector(
                     controller: tabController,
@@ -188,17 +199,79 @@ class _WorkoutHomeScreenState extends State<WorkoutHomeScreen>
             margin: EdgeInsets.only(top: 25, bottom: 25),
             height: 500,
             width: 300,
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                WorkoutBox(
-                  workouts: _loading ? ["loading..."] : workouts,
-                  sets: _loading ? ["loading..."] : workoutsSets,
-                  reps: _loading ? ["loading..."] : workoutsReps,
-                ),
-              ],
-            ))
+              child: ScrollSnapList(
+                listController: scrollBarController,
+                scrollDirection: Axis.horizontal,
+                onItemFocus: _onItemFocusWorkouts,
+                itemSize: 300,
+                itemBuilder: _buildListItemWorkouts,
+                itemCount: workouts.length,
+                reverse: false,
+                initialIndex: 0,
+                scrollPhysics: BouncingScrollPhysics(),
+              ),
+            ),
       ],
     ));
+  }
+
+  Widget _buildListItemWorkouts(BuildContext context, int index) {
+    return Container(
+      key: PageStorageKey("WorkoutsList_Key"),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Container(
+              decoration: BoxDecoration(
+                color: secondary,
+                borderRadius: BorderRadius.circular(10),
+              ),
+              margin: EdgeInsets.only(left: 25, right: 25,),
+              height: 350,
+              width: 250,
+              child: Column(
+                children: [
+                  Container(
+                    margin: EdgeInsets.only(top: 40, bottom: 20),
+                    child: Text(
+                      "${workouts[index]}",
+                      textAlign: TextAlign.center,
+                      style: TextStyle(
+                        color: Colors.white,
+                        fontSize: 30,
+                        fontWeight: FontWeight.w500,
+                      ),
+                    ),
+                  ),
+                  Container(
+                    margin: EdgeInsets.only(top: 30, bottom: 30),
+                    child: Text(
+                      "${workoutsSets[index]} Sets",
+                      textAlign: TextAlign.center,
+                      style: TextStyle(
+                        color: Colors.white,
+                        fontSize: 25,
+                        fontWeight: FontWeight.w500,
+                      ),
+                    ),
+                  ),
+                  Container(
+                    margin: EdgeInsets.only(top: 30),
+                    child: Text(
+                      "${workoutsReps[index]} Reps",
+                      textAlign: TextAlign.center,
+                      style: TextStyle(
+                        color: Colors.white,
+                        fontSize: 25,
+                        fontWeight: FontWeight.w500,
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          ],
+        )
+    );
   }
 }

@@ -10,7 +10,6 @@ class WorkoutBox extends StatefulWidget {
   late List workouts;
   late List sets;
   late List reps;
-  final ScrollController scrollBarController = ScrollController();
 
   @override
   _WorkoutBoxState createState() => _WorkoutBoxState();
@@ -18,6 +17,7 @@ class WorkoutBox extends StatefulWidget {
 
 class _WorkoutBoxState extends State<WorkoutBox> {
   late int workoutIndex;
+  final ScrollController scrollBarController = ScrollController();
 
   void _onItemFocus(int index) {
     setState(() {
@@ -30,9 +30,8 @@ class _WorkoutBoxState extends State<WorkoutBox> {
     return Container(
       width: 300,
       height: 500,
-      child: Expanded(
         child: ScrollSnapList(
-          listController: widget.scrollBarController,
+          listController: scrollBarController,
           scrollDirection: Axis.horizontal,
           onItemFocus: _onItemFocus,
           itemSize: 300,
@@ -42,7 +41,6 @@ class _WorkoutBoxState extends State<WorkoutBox> {
           initialIndex: 0,
           scrollPhysics: BouncingScrollPhysics(),
           ),
-        ),
     );
   }
 
@@ -97,16 +95,16 @@ class _WorkoutBoxState extends State<WorkoutBox> {
                         ),
                       ),
                   ),
-                  BottomAppBar(
-                      color: Colors.white,
-                      child: ScrollIndicator(
-                        scrollController: widget.scrollBarController,
-                      )
-                  ),
                 ],
               ),
+            ),
+            BottomAppBar(
+                color: Colors.white,
+                child: ScrollIndicator(
+                  scrollController: scrollBarController,
 
-            )
+                )
+            ),
           ],
         )
     );
