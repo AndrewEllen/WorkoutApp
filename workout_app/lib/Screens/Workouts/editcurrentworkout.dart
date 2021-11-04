@@ -94,13 +94,7 @@ class _EditCurrentWorkoutState extends State<EditCurrentWorkout>
       _workoutformkeys.add(GlobalKey<FormState>());
       _setformkeys.add(GlobalKey<FormState>());
       _repformkeys.add(GlobalKey<FormState>());
-      print("\n ============Loop============");
-      print(_workoutControllers[i].text);
-      print(i);
     }
-    print("\n ============List After Loop============");
-    print(_workoutControllers.length);
-    print(_workoutControllers[0].text);
   }
 
   @override
@@ -191,121 +185,127 @@ class _EditCurrentWorkoutState extends State<EditCurrentWorkout>
   }
 
   Widget _buildListItem(BuildContext context, int index) {
-    print("\n ============List Builder============");
-    print(_workoutControllers[index].text);
-    print(index);
     return Container(
-        decoration: BoxDecoration(
-          color: secondary,
-          borderRadius: BorderRadius.circular(10),
-        ),
-        margin: EdgeInsets.only(
-          left: 25,
-          right: 25,
-        ),
-        height: 350,
-        width: 250,
-        child: Column(
-          children: [
-            Container(
-              margin: EdgeInsets.only(top: 40, bottom: 20),
-              child: Form(
-                key: _workoutformkeys[index],
-                child: TextFormField(
-                  controller: _workoutControllers[index],
-                  cursorColor: Colors.white,
-                  style: TextStyle(
-                      color: tertiary,
-                      fontSize: 20
-                  ),
-                  textAlign: TextAlign.center,
-                  decoration: InputDecoration(
-                    hintText: 'Enter Workout',
-                    hintStyle: TextStyle(
-                      color: Color.fromRGBO(255, 255, 255, 0.4),
-                      fontSize: 20,
-                    ),
-                    focusedBorder: UnderlineInputBorder(
-                      borderSide: new BorderSide(color: Colors.white),
-                    ),
-                  ),
-                  validator: (String? value) {
-                    if (value!.isEmpty) {
-                      return 'Invalid Input';
-                    }
-                  },
-                ),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          Container(
+              decoration: BoxDecoration(
+                color: secondary,
+                borderRadius: BorderRadius.circular(10),
               ),
-            ),
-            Container(
-              margin: EdgeInsets.only(top: 30, bottom: 30),
-              child: Form(
-                key: _setformkeys[index],
-                child: TextFormField(
-                  controller: _setControllers[index],
-                  cursorColor: Colors.white,
-                  style: TextStyle(
-                      color: tertiary,
-                      fontSize: 20
-                  ),
-                  textAlign: TextAlign.center,
-                  decoration: InputDecoration(
-                    suffixText: "Sets",
-                    suffixStyle: TextStyle(
-                      color: Color.fromRGBO(255, 255, 255, 1),
-                    ),
-                    hintText: 'Enter Sets',
-                    hintStyle: TextStyle(
-                      color: Color.fromRGBO(255, 255, 255, 0.4),
-                      fontSize: 20,
-                    ),
-                    focusedBorder: UnderlineInputBorder(
-                      borderSide: new BorderSide(color: Colors.white),
-                    ),
-                  ),
-                  validator: (String? value) {
-                    if (value!.isEmpty) {
-                      return 'Invalid Input';
-                    }
-                  },
-                ),
+              margin: EdgeInsets.only(
+                left: 25,
+                right: 25,
               ),
-            ),
-            Container(
-              margin: EdgeInsets.only(top: 30),
-              child: Form(
-                key: _repformkeys[index],
-                child: TextFormField(
-                  controller: _repControllers[index],
-                  cursorColor: Colors.white,
-                  style: TextStyle(
-                      color: tertiary,
-                      fontSize: 20
+              height: 350,
+              width: 250,
+              child: Column(
+                children: [
+                  Container(
+                    margin: EdgeInsets.only(top: 40, bottom: 20, right: 10, left: 10),
+                    child: Form(
+                      key: _workoutformkeys[index],
+                      child: TextFormField(
+                        controller: _workoutControllers[index],
+                        cursorColor: Colors.white,
+                        style: TextStyle(
+                            color: tertiary,
+                            fontSize: (30-(_workoutControllers[index].text.length.toDouble() / 3))
+                        ),
+                        textAlign: TextAlign.center,
+                        decoration: InputDecoration(
+                          hintText: 'Enter Workout',
+                          hintStyle: TextStyle(
+                            color: Color.fromRGBO(255, 255, 255, 0.4),
+                            fontSize: 30,
+                          ),
+                          focusedBorder: UnderlineInputBorder(
+                            borderSide: new BorderSide(color: Colors.white),
+                          ),
+                        ),
+                        validator: (String? value) {
+                          if (value!.isEmpty) {
+                            return 'Invalid Input';
+                          }
+                        },
+                      ),
+                    ),
                   ),
-                  textAlign: TextAlign.center,
-                  decoration: InputDecoration(
-                    suffixText: "Reps",
-                    suffixStyle: TextStyle(
-                      color: Color.fromRGBO(255, 255, 255, 1),
-                    ),
-                    hintText: 'Enter Reps',
-                    hintStyle: TextStyle(
-                      color: Color.fromRGBO(255, 255, 255, 0.4),
-                      fontSize: 20,
-                    ),
-                    focusedBorder: UnderlineInputBorder(
-                      borderSide: new BorderSide(color: Colors.white),
+                  Container(
+                    margin: EdgeInsets.only(top: 30, bottom: 30, right: 10, left: 10),
+                    child: Form(
+                      key: _setformkeys[index],
+                      child: TextFormField(
+                        controller: _setControllers[index],
+                        cursorColor: Colors.white,
+                        style: TextStyle(
+                            color: tertiary,
+                            fontSize: 30
+                        ),
+                        textAlign: TextAlign.center,
+                        decoration: InputDecoration(
+                          suffixText: "Sets",
+                          suffixStyle: TextStyle(
+                            color: Color.fromRGBO(255, 255, 255, 1),
+                            fontSize: 25,
+                          ),
+                          hintText: 'Enter Sets',
+                          hintStyle: TextStyle(
+                            color: Color.fromRGBO(255, 255, 255, 0.4),
+                            fontSize: 30,
+                          ),
+                          focusedBorder: UnderlineInputBorder(
+                            borderSide: new BorderSide(color: Colors.white),
+                          ),
+                        ),
+                        validator: (String? value) {
+                          if (value!.isEmpty) {
+                            return 'Invalid Input';
+                          }
+                        },
+                      ),
                     ),
                   ),
-                  validator: (String? value) {
-                    if (value!.isEmpty) {
-                      return 'Invalid Input';
-                    }
-                  },
-                ),
-              ),
-            ),
-          ],
-        ));
+                  Container(
+                    margin: EdgeInsets.only(top: 30, right: 10, left: 10),
+                    child: Form(
+                      key: _repformkeys[index],
+                      child: TextFormField(
+                        controller: _repControllers[index],
+                        cursorColor: Colors.white,
+                        style: TextStyle(
+                            color: tertiary,
+                            fontSize: 30
+                        ),
+                        textAlign: TextAlign.center,
+                        decoration: InputDecoration(
+                          suffixText: "Reps",
+                          suffixStyle: TextStyle(
+                            color: Color.fromRGBO(255, 255, 255, 1),
+                            fontSize: 25,
+                          ),
+                          hintText: 'Enter Reps',
+                          hintStyle: TextStyle(
+                            color: Color.fromRGBO(255, 255, 255, 0.4),
+                            fontSize: 30,
+                          ),
+                          focusedBorder: UnderlineInputBorder(
+                            borderSide: new BorderSide(color: Colors.white),
+                          ),
+                        ),
+                        validator: (String? value) {
+                          if (value!.isEmpty) {
+                            return 'Invalid Input';
+                          }
+                        },
+                      ),
+                    ),
+                  ),
+                ],
+              )),
+        ],
+      ),
+    );
   }
 }
