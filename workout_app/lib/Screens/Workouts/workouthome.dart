@@ -101,23 +101,16 @@ class _WorkoutHomeScreenState extends State<WorkoutHomeScreen>
   }
 
   void _setTabIndex() {
+    print(dropdownValueDay);
     tabController!.index = dropdownlist.indexWhere(
         (dropdownlist) => dropdownlist.startsWith(dropdownValueDay));
   }
 
   void _onItemFocus(int index) {
     setState(() {
-      workouts.clear();
-      workoutsSets.clear();
-      workoutsReps.clear();
       tabController!.index = index;
       dropdownValueDay = dropdownlist[index];
       _getWorkouts(currentUser!.id);
-      if (workouts.length == 0) {
-          workouts.add("Loading...");
-          workoutsSets.add(0);
-          workoutsReps.add(0);
-        }
     });
   }
 
@@ -128,6 +121,13 @@ class _WorkoutHomeScreenState extends State<WorkoutHomeScreen>
   }
 
   void initState() {
+    if (int.parse(DateFormat('HH').format(today)) < 4) {
+      dropdownValueDay = DateFormat('EEEE').format(yesterday);
+    } else {
+      dropdownValueDay = DateFormat('EEEE').format(today);
+      resettickboxes(DateFormat('EEEE').format(yesterday), currentUser!.id);
+    }
+
     tabControllerWorkouts = TabController(
       length: 0,
       vsync: this,
@@ -138,12 +138,6 @@ class _WorkoutHomeScreenState extends State<WorkoutHomeScreen>
     );
     _setTabIndex();
 
-    if (int.parse(DateFormat('HH').format(today)) < 4) {
-      dropdownValueDay = DateFormat('EEEE').format(yesterday);
-    } else {
-      dropdownValueDay = DateFormat('EEEE').format(today);
-      resettickboxes(DateFormat('EEEE').format(yesterday), currentUser!.id);
-    }
     sidebardata = SideBarWorkout.getContents();
     feedbackdata = SideBarFeedback.getContents();
     settingsdata = SideBarSettings.getContents();
@@ -193,7 +187,7 @@ class _WorkoutHomeScreenState extends State<WorkoutHomeScreen>
             drawer: CustomSideBar(
               sidebaraccentcolour: WorkoutsAccentColour,
               sidebarcolour: SideBarColour,
-              sidebartitle: "Meals",
+              sidebartitle: "Workouts",
               feedbacktitle: "Feedback",
               settingstitle: "Settings",
               sidebardata: sidebardata,
@@ -204,7 +198,7 @@ class _WorkoutHomeScreenState extends State<WorkoutHomeScreen>
               children: [
                 Row(mainAxisAlignment: MainAxisAlignment.center, children: [
                   Container(
-                    margin: EdgeInsets.only(left: 50, right: 15),
+                    margin: EdgeInsets.only(left: 40, right: 15),
                     width: 300,
                     height: 550,
                     child: ScrollSnapList(
@@ -293,7 +287,6 @@ class _WorkoutHomeScreenState extends State<WorkoutHomeScreen>
 
   Widget _buildListItemWorkouts(BuildContext context, int index) {
     return Container(
-        key: PageStorageKey("WorkoutsList_Key"),
         child: Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
