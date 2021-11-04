@@ -29,9 +29,9 @@ class _EditCurrentWorkoutState extends State<EditCurrentWorkout>
   late final _workoutControllers = <TextEditingController>[];
   late final _setControllers = <TextEditingController>[];
   late final _repControllers = <TextEditingController>[];
-  late final _workoutformkeys = <Key>[];
-  late final _setformkeys = <Key>[];
-  late final _repformkeys = <Key>[];
+  late final _workoutformkeys = <GlobalKey<FormState>>[];
+  late final _setformkeys = <GlobalKey<FormState>>[];
+  late final _repformkeys = <GlobalKey<FormState>>[];
   late TabController? tabControllerEdit;
 
   Future<void> _updateWorkouts() async {
@@ -159,12 +159,18 @@ class _EditCurrentWorkoutState extends State<EditCurrentWorkout>
                   margin: EdgeInsets.only(top:30),
                   child: FloatingActionButton(
                     onPressed: () {
-/*                      if (_formkey.currentState!.validate() &
-                      _formkey1.currentState!.validate() &
-                      _formkey2.currentState!.validate()) {
-                        _updateWorkouts();
-                      }*/
+
+                    var _keycheck = 0;
+                    for (var i = 0; i < widget.workouts.length; i++) {
+                      if (_workoutformkeys[i].currentState!.validate() &
+                      _setformkeys[i].currentState!.validate() &
+                      _repformkeys[i].currentState!.validate()) {
+                        _keycheck++;
+                      }
+                    }
+                    if (_keycheck == widget.workouts.length) {
                       _updateWorkouts();
+                    }
                     },
                     elevation: 1,
                     hoverElevation: 1,
