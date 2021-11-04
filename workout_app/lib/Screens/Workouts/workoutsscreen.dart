@@ -95,6 +95,7 @@ class _WorkoutListScreenState extends State<WorkoutListScreen> {
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
+        resizeToAvoidBottomInset: true,
         backgroundColor: primary,
         appBar: CustomAppBar(
           appbaraccentcolour: WorkoutsAccentColour,

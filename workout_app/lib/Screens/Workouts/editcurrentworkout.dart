@@ -101,6 +101,7 @@ class _EditCurrentWorkoutState extends State<EditCurrentWorkout>
   Widget build(BuildContext context) {
     return SafeArea(
         child: Scaffold(
+          resizeToAvoidBottomInset: false,
             appBar: CustomAppBar(
               appbaraccentcolour: WorkoutsAccentColour,
               appbarcolour: secondary,
@@ -209,7 +210,7 @@ class _EditCurrentWorkoutState extends State<EditCurrentWorkout>
               child: Column(
                 children: [
                   Container(
-                    margin: EdgeInsets.only(top: 40, bottom: 20, right: 10, left: 10),
+                    margin: EdgeInsets.only(top: 30, bottom: 20, right: 10, left: 10),
                     child: Form(
                       key: _workoutformkeys[index],
                       child: TextFormField(
@@ -239,7 +240,7 @@ class _EditCurrentWorkoutState extends State<EditCurrentWorkout>
                     ),
                   ),
                   Container(
-                    margin: EdgeInsets.only(top: 30, bottom: 30, right: 10, left: 10),
+                    margin: EdgeInsets.only(top: 20, bottom: 30, right: 10, left: 10),
                     child: Form(
                       key: _setformkeys[index],
                       child: TextFormField(
@@ -274,7 +275,7 @@ class _EditCurrentWorkoutState extends State<EditCurrentWorkout>
                     ),
                   ),
                   Container(
-                    margin: EdgeInsets.only(top: 30, right: 10, left: 10),
+                    margin: EdgeInsets.only(top: 20, right: 10, left: 10),
                     child: Form(
                       key: _repformkeys[index],
                       child: TextFormField(
