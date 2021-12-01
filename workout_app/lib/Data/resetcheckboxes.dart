@@ -1,51 +1,52 @@
 import '../constants.dart';
 
-Future<void> resettickboxes(day,userId) async {
+Future<void> resettickboxes(day, daylist, userId) async {
   late String listID = "null";
   late List completedlist = [];
-  late bool resetchecked = true;
+  int daytoskip = daylist.indexOf('$day');
 
-  Future<void> _getWorkouts(String userId) async {
+  Future<void> _getWorkouts(String userId, String currentDay) async {
     final response = await supabase
         .from('userworkouts')
         .select()
-        .eq('UserID', userId)
-        .eq('Day', day)
+        .eq('userid', userId)
+        .eq('Day', currentDay)
         .single()
         .execute();
     if (response.data != null) {
       listID = response.data!["id"] as String;
       completedlist = response.data!['Completed'] as List;
-      resetchecked = response.data!['resetchecked'] as bool;
+      print(completedlist);
     }
   }
 
-  Future<void> _updateWorkouts() async {
+  Future<void> _updateWorkouts(currentDay) async {
     final _listID = listID;
     final _user = userId;
-    final _day = day;
+    final _day = currentDay;
     final _completedlist = completedlist;
     final updates = {
       "id": _listID,
-      'UserID': _user,
+      'userid': _user,
       'Day': _day,
       'Completed': _completedlist,
-      "resetchecked" : resetchecked,
     };
     final response = await supabase.from('userworkouts').upsert(updates).execute();
     if (response.error != null) {
     }
   }
 
-  await _getWorkouts(userId);
+  for (var i = 0; i < daylist.length; i++) {
+    if (i != daytoskip) {
+      await _getWorkouts(userId, daylist[i]);
 
-  if (resetchecked == true) {
-    var i;
-    for (i=0;i < completedlist.length; i++) {
-      completedlist[i] = "false";
+      for (var x = 0; x < completedlist.length; x++) {
+        completedlist[x] = "false";
+      }
+      await _updateWorkouts(daylist[i]);
+      print(i);
+      print(completedlist);
     }
-    resetchecked == false;
-    await _updateWorkouts();
   }
 
 }

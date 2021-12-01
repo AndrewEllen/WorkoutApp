@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:scroll_snap_list/scroll_snap_list.dart';
+import 'package:workout_app/Components/Containers/workoutlistcheckbox.dart';
 import 'package:workout_app/Components/Navbar/Navbar.dart';
 import 'package:workout_app/Components/SideBar/sidebar.dart';
 import 'package:workout_app/Data/Screens/feedback.dart';
@@ -126,7 +127,7 @@ class _WorkoutHomeScreenState extends State<WorkoutHomeScreen>
       dropdownValueDay = DateFormat('EEEE').format(yesterday);
     } else {
       dropdownValueDay = DateFormat('EEEE').format(today);
-      resettickboxes(DateFormat('EEEE').format(yesterday), currentUser!.id);
+      resettickboxes(dropdownValueDay, dropdownlist, currentUser!.id);
     }
 
     tabControllerWorkouts = TabController(
@@ -371,6 +372,15 @@ class _WorkoutHomeScreenState extends State<WorkoutHomeScreen>
                         fontWeight: FontWeight.w500,
                       ),
                     ),
+                  ),
+                  WorkoutListCheckbox(
+                    day: dropdownValueDay,
+                    completed: completedlist[index],
+                    currentUserID: currentUser!.id,
+                    index: index,
+                    listID: listID,
+                    completedlist: completedlist,
+                    completedliststring: _completedlist,
                   ),
                 ],
               ),

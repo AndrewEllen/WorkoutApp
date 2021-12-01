@@ -48,6 +48,7 @@ class _HomeWorkoutsContainerState extends State<HomeWorkoutsContainer> {
                             completedliststring: widget.completedliststring,
                             currentUserID: widget.currentUserID,
                             listID: widget.listID,
+                            completedlist: [],
                           ),
                         )
                       ],

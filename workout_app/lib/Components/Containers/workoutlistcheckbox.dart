@@ -3,11 +3,12 @@ import '../../constants.dart';
 
 class WorkoutListCheckbox extends StatefulWidget {
   WorkoutListCheckbox({required this.day, required this.currentUserID, required this.listID,
-    required this.completed, required this.index, required this.completedliststring});
+    required this.completed, required this.index, required this.completedlist, required this.completedliststring});
   late String day, currentUserID, listID;
-  late List completedliststring;
+  late List completedlist, completedliststring;
   late int index;
   late bool completed;
+
 
   @override
   _WorkoutListCheckboxState createState() => _WorkoutListCheckboxState();
@@ -38,10 +39,16 @@ class _WorkoutListCheckboxState extends State<WorkoutListCheckbox> {
         backgroundColor: Colors.red,
       ));
     }
+    if (value == true) {
+      widget.completedliststring[widget.index] = true;
+    } else {
+      widget.completedliststring[widget.index] = false;
+    }
   }
 
   @override
   Widget build(BuildContext context) {
+
     Color getColor(Set<MaterialState> states) {
       const Set<MaterialState> interactiveStates = <MaterialState>{
         MaterialState.pressed,
