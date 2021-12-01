@@ -53,6 +53,7 @@ class _WorkoutHomeScreenState extends State<WorkoutHomeScreen>
   late bool _completed;
   late TabController? tabController;
   late TabController? tabControllerWorkouts;
+  late final daytosave;
 
   Future<void> _getWorkouts(String userId) async {
     setState(() {
@@ -88,6 +89,7 @@ class _WorkoutHomeScreenState extends State<WorkoutHomeScreen>
         completedlist[i] = _completed;
       }
     }
+    await resettickboxes(dropdownValueDay, daytosave, currentUser!.id);
     setState(() {
       _loading = false;
     });
@@ -127,7 +129,7 @@ class _WorkoutHomeScreenState extends State<WorkoutHomeScreen>
       dropdownValueDay = DateFormat('EEEE').format(yesterday);
     } else {
       dropdownValueDay = DateFormat('EEEE').format(today);
-      resettickboxes(dropdownValueDay, dropdownlist, currentUser!.id);
+      daytosave = DateFormat('yyyy-dd-MM').format(today);
     }
 
     tabControllerWorkouts = TabController(
