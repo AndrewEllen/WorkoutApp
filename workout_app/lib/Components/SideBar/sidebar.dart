@@ -8,18 +8,17 @@ import '../../screens/index.dart';
 class CustomSideBar extends StatefulWidget {
   CustomSideBar(
       {required this.sidebaraccentcolour, required this.sidebarcolour, required this.sidebartitle,
-        required this.sidebardata, required this.feedbacktitle, required this.feedbackdata});
+        required this.sidebardata, required this.feedbacktitle, required this.feedbackdata, required this.settingsdata, required this.settingstitle});
   final Color sidebaraccentcolour, sidebarcolour;
-  final String sidebartitle, feedbacktitle;
-  final List sidebardata, feedbackdata;
+  final String sidebartitle, feedbacktitle, settingstitle;
+  final List sidebardata, feedbackdata, settingsdata;
 
   @override
   _CustomSideBarState createState() => _CustomSideBarState();
 }
 
 class _CustomSideBarState extends State<CustomSideBar> {
-  late final avatar;
-  late final username;
+  late final username, avatar;
   final currentUser = supabase.auth.user();
 
   var _loading = false;
@@ -101,7 +100,7 @@ class _CustomSideBarState extends State<CustomSideBar> {
                     child: Text(
                       'User: ${_loading ? currentUser?.email : username}',
                       style: TextStyle(
-                        fontSize: 13,
+                        fontSize: 18,
                         color: widget.sidebaraccentcolour,
                         shadows: [
                           Shadow(
@@ -128,6 +127,10 @@ class _CustomSideBarState extends State<CustomSideBar> {
             SideBarMenu(
               containerTitle: widget.feedbacktitle,
               sideBarText: widget.feedbackdata,
+            ),
+            SideBarMenu(
+              containerTitle: widget.settingstitle,
+              sideBarText: widget.settingsdata,
             ),
           ]
         )

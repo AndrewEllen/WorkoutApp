@@ -19,7 +19,7 @@ class _SplashScreenState extends AuthState<SplashScreen> {
   @override
   Widget build(BuildContext context) {
     return const Scaffold(
-      backgroundColor: defaultBackgroundColour,
+      backgroundColor: primary,
       body: Center(child: CircularProgressIndicator()),
     );
   }

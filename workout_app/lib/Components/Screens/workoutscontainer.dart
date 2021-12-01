@@ -6,13 +6,15 @@ class WorkoutsContainer extends StatefulWidget {
   WorkoutsContainer(
       {required this.day,
       required this.workouts,
+        required this.sets,
+        required this.reps,
       required this.currentUserID,
       required this.listID,
       required this.widthvalue,
       required this.completedlist});
   late String day, currentUserID, listID;
   late double widthvalue;
-  late List workouts, completedlist;
+  late List workouts, completedlist, sets, reps;
   @override
   _WorkoutsContainerState createState() => _WorkoutsContainerState();
 }
@@ -24,12 +26,16 @@ class _WorkoutsContainerState extends State<WorkoutsContainer> {
     final _day = widget.day;
     final _workouts = widget.workouts;
     final _completedlist = widget.completedlist;
+    final _sets = widget.sets;
+    final _reps = widget.reps;
     final updates = {
       "id": _listID,
-      'UserID': _user,
+      'userid': _user,
       'Day': _day,
       'Exercises': _workouts,
       'Completed': _completedlist,
+      "ExerciseSets": _sets,
+      "ExerciseReps": _reps,
     };
     final response =
         await supabase.from('userworkouts').upsert(updates).execute();
@@ -48,7 +54,7 @@ class _WorkoutsContainerState extends State<WorkoutsContainer> {
       height: widget.widthvalue,
       margin: EdgeInsets.all(10),
       decoration: BoxDecoration(
-        color: AppbarColour,
+        color: secondary,
         borderRadius: BorderRadius.all(Radius.circular(5)),
       ),
       child: ClipRRect(
@@ -70,11 +76,20 @@ class _WorkoutsContainerState extends State<WorkoutsContainer> {
     setState(() {
       var item1 = widget.workouts[oldIndex];
       var item2 = widget.completedlist[oldIndex];
+      var item3 = widget.sets[oldIndex];
+      var item4 = widget.reps[oldIndex];
 
       widget.workouts.removeAt(oldIndex);
       widget.workouts.insert(newIndex,item1);
+
       widget.completedlist.removeAt(oldIndex);
       widget.completedlist.insert(newIndex,item2);
+
+      widget.sets.removeAt(oldIndex);
+      widget.sets.insert(newIndex,item3);
+
+      widget.reps.removeAt(oldIndex);
+      widget.reps.insert(newIndex,item4);
     });
     _updateWorkouts();
   }
@@ -93,6 +108,8 @@ class _WorkoutsContainerState extends State<WorkoutsContainer> {
           setState(() {
             widget.workouts.removeAt(index);
             widget.completedlist.removeAt(index);
+            widget.sets.removeAt(index);
+            widget.reps.removeAt(index);
           });
           _updateWorkouts();
           ScaffoldMessenger.of(context).showSnackBar(

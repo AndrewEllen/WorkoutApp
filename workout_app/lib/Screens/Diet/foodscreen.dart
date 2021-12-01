@@ -17,7 +17,7 @@ class _FoodListScreenState extends State<FoodListScreen> {
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
-        backgroundColor: defaultBackgroundColour,
+        backgroundColor: primary,
         appBar: CustomAppBar(
           appbaraccentcolour: DietAccentColour,
           appbarcolour: AppbarColour,

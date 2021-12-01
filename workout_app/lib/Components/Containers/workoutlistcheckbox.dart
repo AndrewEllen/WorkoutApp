@@ -27,7 +27,7 @@ class _WorkoutListCheckboxState extends State<WorkoutListCheckbox> {
     final _completed = widget.completedliststring;
     final updates = {
       "id": _listID,
-      'UserID': _user,
+      'userid': _user,
       'Day': _day,
       'Completed': _completed,
     };

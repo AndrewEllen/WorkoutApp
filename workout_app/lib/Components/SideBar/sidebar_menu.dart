@@ -14,7 +14,7 @@ class SideBarMenu extends StatelessWidget {
       margin: EdgeInsets.all(10),
       decoration: BoxDecoration(
         borderRadius: BorderRadius.all(Radius.circular(5)),
-        color: defaultBackgroundColour,
+        color: primary,
       ),
       child: Column(
         children: <Widget>[

@@ -5,6 +5,7 @@ import 'package:workout_app/Components/SideBar/sidebar.dart';
 import 'dart:async';
 import 'package:workout_app/Components/Screens/dietmealbox.dart';
 import 'package:workout_app/Data/Screens/feedback.dart';
+import 'package:workout_app/Data/Screens/settings.dart';
 import 'package:workout_app/data/Screens/diethome.dart';
 import '../../constants.dart';
 
@@ -15,13 +16,14 @@ class DietHomeScreen extends StatefulWidget {
 
 class _DietHomeScreenState extends State<DietHomeScreen> {
   final currentUser = supabase.auth.user();
-  List sidebardata = [], feedbackdata = [];
+  late List sidebardata, feedbackdata, settingsdata;
   var _loading = false;
   var calories;
 
   void initState() {
     sidebardata = SideBarDiet.getContents();
     feedbackdata = SideBarFeedback.getContents();
+    settingsdata = SideBarSettings.getContents();
     _getProfile(currentUser!.id);
   }
 
@@ -51,7 +53,7 @@ class _DietHomeScreenState extends State<DietHomeScreen> {
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
-        backgroundColor: defaultBackgroundColour,
+        backgroundColor: primary,
         appBar: CustomAppBar(
           appbaraccentcolour: DietAccentColour,
           appbarcolour: AppbarColour,
@@ -62,8 +64,10 @@ class _DietHomeScreenState extends State<DietHomeScreen> {
           sidebarcolour: SideBarColour,
           sidebartitle: "Meals",
           feedbacktitle: "Feedback",
+          settingstitle: "Settings",
           sidebardata: sidebardata,
           feedbackdata: feedbackdata,
+          settingsdata: settingsdata,
         ),
         body: Stack(
           children: [

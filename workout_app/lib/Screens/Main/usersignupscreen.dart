@@ -187,7 +187,8 @@ class _UserSignupState extends State<UserSignup> {
   Widget build(BuildContext context) {
     return SafeArea(
         child: Scaffold(
-      backgroundColor: defaultBackgroundColour,
+          resizeToAvoidBottomInset: false,
+      backgroundColor: primary,
       appBar: AppBar(
         backgroundColor: Colors.grey[900],
         toolbarHeight: 260,

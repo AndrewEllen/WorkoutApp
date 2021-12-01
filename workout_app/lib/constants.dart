@@ -5,19 +5,20 @@ import 'package:supabase_flutter/supabase_flutter.dart';
 final supabase = Supabase.instance.client;
 
 //Screens
-const Color defaultBackgroundColour = Color.fromRGBO(38, 38, 38, 1.0);
-const Color WorkoutsAccentColour = Color.fromRGBO(236, 38, 38, 1.0);
+const Color primary = Color.fromRGBO(15, 15, 15, 1.0);
+const Color secondary = Color.fromRGBO(39,39,39, 1.0);
+const Color tertiary = Color.fromRGBO(255, 255, 255, 1.0);
+const Color WorkoutsAccentColour = Color.fromRGBO(179, 0, 0, 1.0);
 const Color DietAccentColour = Color.fromRGBO(27, 123, 0, 1.0);
 const Color OtherAccentColour = Color.fromRGBO(50, 119, 250, 1.0);
 const Color defaultLoginBackgroundColour = Color(0XFF181818);
 
 //HomeScreen
 
-const double boxSelectionHeight = 175;
-const double boxSelectionWidth = 500;
+const double boxSelectionHeight = double.infinity;
 
-const Color workoutsTintColour = Color.fromRGBO(255, 1, 1, 0.4);
-const Color dietTintColour = Color.fromRGBO(32, 142, 26, 0.4);
+const Color workoutsTintColour = Color.fromRGBO(255, 1, 1, 0.25);
+const Color dietTintColour = Color.fromRGBO(32, 142, 26, 0.25);
 
 const boxSelectionDecoration = BoxDecoration(
   color: Colors.white70,
@@ -36,13 +37,14 @@ const boxSelectionDecoration = BoxDecoration(
 
 //AppBar
 const Color AppbarColour = Color.fromRGBO(50, 50, 50, 1.0);
+const Color HomeAppbarColour = Color.fromRGBO(33, 33, 33, 1.0);
 
 //SideBar
 const Color SideBarColour = Color.fromRGBO(50, 50, 50, 1.0);
 
 // SideBar Menu
 const TextStyle sideBarMenuTextStyle = TextStyle(
-  fontSize: 20,
+  fontSize: 23,
   fontWeight: FontWeight.w400,
   color: Colors.white,
 );
@@ -56,7 +58,7 @@ const EdgeInsets sideBarMenuMargin = EdgeInsets.only(
 // TextBuilder
 
 const TextStyle textBuilderTextStyle = TextStyle(
-  fontSize: 20,
+  fontSize: 25,
   fontWeight: FontWeight.w300,
   color: Colors.white,
   decoration: TextDecoration.underline,

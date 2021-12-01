@@ -23,7 +23,7 @@ class _WorkoutListScreenState extends State<WorkoutListScreen> {
   final _inputController = TextEditingController();
   final _inputformkey = GlobalKey<FormState>();
   late String day, listID;
-  late List workouts,completedlist;
+  late List workouts,completedlist, workoutsSets, workoutsReps;
   bool _loading = true;
 
   void initState() {
@@ -43,12 +43,16 @@ class _WorkoutListScreenState extends State<WorkoutListScreen> {
     final _day = day;
     final _workouts = workouts;
     final _completedlist = completedlist;
+    final _sets = workoutsSets;
+    final _reps = workoutsReps;
     final updates = {
       "id": _listID,
-      'UserID': _user,
+      'userid': _user,
       'Day': _day,
       'Exercises': _workouts,
       'Completed': _completedlist,
+      "ExerciseSets": _sets,
+      "ExerciseReps": _reps,
     };
     final response = await supabase.from('userworkouts').upsert(updates).execute();
     if (response.error != null) {
@@ -66,7 +70,7 @@ class _WorkoutListScreenState extends State<WorkoutListScreen> {
     final response = await supabase
         .from('userworkouts')
         .select()
-        .eq('UserID', userId)
+        .eq('userid', userId)
         .eq('Day', dropdownValueDay)
         .single()
         .execute();
@@ -79,6 +83,8 @@ class _WorkoutListScreenState extends State<WorkoutListScreen> {
       day = response.data!['Day'] as String;
       workouts = response.data!['Exercises'] as List;
       completedlist = response.data!['Completed'] as List;
+      workoutsSets = response.data!['ExerciseSets'] as List;
+      workoutsReps = response.data!['ExerciseReps'] as List;
     }
     setState(() {
       _loading = false;
@@ -89,7 +95,8 @@ class _WorkoutListScreenState extends State<WorkoutListScreen> {
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
-        backgroundColor: defaultBackgroundColour,
+        resizeToAvoidBottomInset: true,
+        backgroundColor: primary,
         appBar: CustomAppBar(
           appbaraccentcolour: WorkoutsAccentColour,
           appbarcolour: AppbarColour,
@@ -140,7 +147,7 @@ class _WorkoutListScreenState extends State<WorkoutListScreen> {
                   height: 500,
                   margin: EdgeInsets.all(10),
                   decoration: BoxDecoration(
-                    color: AppbarColour,
+                    color: secondary,
                     borderRadius: BorderRadius.all(Radius.circular(5)),
                   )) : Container(
                 child: WorkoutsContainer(
@@ -150,6 +157,8 @@ class _WorkoutListScreenState extends State<WorkoutListScreen> {
                   completedlist: _loading? ["loading..."] : completedlist,
                   currentUserID: _loading? "loading..." : currentUser!.id,
                   listID: _loading? "loading..." :  listID,
+                  sets: _loading? ["loading..."] : workoutsSets,
+                  reps: _loading? ["loading..."] : workoutsReps,
                 ),
               )
             ),
@@ -170,6 +179,8 @@ class _WorkoutListScreenState extends State<WorkoutListScreen> {
                       if (_inputformkey.currentState!.validate()) {
                         workouts.add(value);
                         completedlist.add("false");
+                        workoutsSets.add("0");
+                        workoutsReps.add("0");
                         await _updateWorkouts();
                         _getWorkouts(currentUser!.id);
                         _inputController.clear();
@@ -180,12 +191,14 @@ class _WorkoutListScreenState extends State<WorkoutListScreen> {
                     cursorColor: Colors.white,
                     style: TextStyle(
                       color: Colors.white,
+                      fontSize: 20,
                     ),
                     textAlign: TextAlign.center,
                     decoration: InputDecoration(
                       hintText: 'Enter Workout',
                       hintStyle: TextStyle(
                         color: Color.fromRGBO(255, 255, 255, 0.4),
+                        fontSize: 20,
                       ),
                       focusedBorder: UnderlineInputBorder(
                         borderSide: new BorderSide(color: Colors.white),

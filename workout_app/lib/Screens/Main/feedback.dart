@@ -54,7 +54,7 @@ class _FeedBackState extends State<FeedBack> {
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
-        backgroundColor: defaultBackgroundColour,
+        backgroundColor: primary,
         appBar: CustomAppBar(
           appbaraccentcolour: OtherAccentColour,
           appbarcolour: AppbarColour,

@@ -5,14 +5,18 @@ import 'package:workout_app/Screens/Main/homescreen.dart';
 import 'package:workout_app/Screens/Main/loginscreen.dart';
 import 'package:workout_app/Screens/Main/splashscreen.dart';
 import 'Screens/Main/usersignupscreen.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'constants.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
+  await dotenv.load(fileName: "variables.env");
+  String _url = dotenv.get('URL');
+  String _anon = dotenv.get('ANONKEY');
 
   await Supabase.initialize(
-    url: 'https://dqimsmzzvoxuefvmtyjd.supabase.co',
-    anonKey: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJyb2xlIjoiYW5vbiIsImlhdCI6MTYyODkxMzAyMSwiZXhwIjoxOTQ0NDg5MDIxfQ.WW6GLEqWWJJRUR1vAx18Af4sxHlFJivJVvxb6YTBqf0',
+    url: _url,
+    anonKey: _anon,
   );
   runApp(MyApp());
 }
@@ -22,7 +26,10 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'Fitness Tracker',
-      color: defaultBackgroundColour,
+      theme: ThemeData(
+        fontFamily: 'Impact',
+      ),
+      color: primary,
       debugShowCheckedModeBanner: false,
       initialRoute: '/',
       routes: <String, WidgetBuilder>{

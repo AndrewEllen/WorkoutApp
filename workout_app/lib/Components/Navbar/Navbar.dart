@@ -12,6 +12,7 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
     return SafeArea(
       child: AppBar(
         backgroundColor: appbarcolour,
+        elevation: 1,
         leading: null,
         title: Center(
           child: Container(
@@ -21,13 +22,14 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
               style: TextStyle(
                 color: appbaraccentcolour,
                 fontWeight: FontWeight.w400,
-                shadows: [
+                fontSize: 40,
+/*                shadows: [
                   Shadow(
                     blurRadius: 2,
                     color: Colors.black,
                     offset: Offset(0,2),
                   ),
-                ],
+                ],*/
               ),
             ),
           ),

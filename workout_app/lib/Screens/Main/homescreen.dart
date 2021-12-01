@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:workout_app/Components/Clips/HomeAppBar.dart';
 import 'package:workout_app/Components/Screens/homeselectionboxes.dart';
 import 'package:workout_app/Screens/Main/usersettingsscreen.dart';
 import 'package:workout_app/Screens/Workouts/workouthome.dart';
@@ -15,7 +16,7 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
-  late final username;
+  late final username, avatar;
   final currentUser = supabase.auth.user();
   var _loading = false;
 
@@ -39,7 +40,9 @@ class _HomeScreenState extends State<HomeScreen> {
     }
     if (response.data != null) {
       username = response.data!['username'] as String;
+      avatar = response.data!['avatar_url'] as String;
     } else {
+      avatar = "https://i.imgur.com/yKV9vpH.png";
       username = currentUser?.email;
     }
     setState(() {
@@ -64,86 +67,147 @@ class _HomeScreenState extends State<HomeScreen> {
   Widget build(BuildContext context) {
     return SafeArea(
         child: Scaffold(
-            backgroundColor: defaultBackgroundColour,
-            body: Center(
-              child: Stack(
-                children: [
-                  Align(
-                    alignment: Alignment.topCenter,
-                    child: Container(
-                      margin: EdgeInsets.only(),
-                      decoration: BoxDecoration(
-                        color: AppbarColour,
-                        boxShadow: [
-                          BoxShadow(
-                            color: Color.fromRGBO(1, 1, 1, 0.4),
-                            spreadRadius: 1,
-                            blurRadius: 2,
-                            offset: Offset(0, 3),
-                          )
-                        ],
+            backgroundColor: primary,
+            drawer: Drawer(
+              child: Scaffold(
+                backgroundColor: primary,
+                body: Center(
+                  child: Container(
+                    margin: EdgeInsets.only(bottom: 50),
+                    child: ElevatedButton(
+                      onPressed: () {
+                        _logout();
+                        print("Clicked");
+                      },
+                      style: ElevatedButton.styleFrom(
+                        primary: WorkoutsAccentColour,
+                        minimumSize: Size(130,38),
                       ),
-                        child: Container(
-                          height: 80,
-                          decoration: BoxDecoration(
-                            image: DecorationImage(
-                              image: ExactAssetImage('assets/logo.png'),
+                      child: Text(
+                        "Logout",
+                        style: TextStyle(
+                          color: Colors.white,
+                          fontSize: 25
+                        ),
+                      ),
+                    ),
+                  ),
+                ),
+              ),
+            ),
+            body: Align(
+              alignment: Alignment.topCenter,
+              child: Stack(
+                clipBehavior: Clip.none,
+                children: [
+                  Container(
+                    margin: EdgeInsets.only(top: 160),
+                    child: HomeSelectionBox(
+                      containertext: "Diet",
+                      containerroutename: "/DietHome",
+                      containerroutewidget: DietHomeScreen(),
+                      containerimageloc: "assets/diet.png",
+                      tintcolour: dietTintColour,
+                      clip: false,
+                    ),
+                  ),
+                  Container(
+                    margin: EdgeInsets.only(top: 160),
+                    child: HomeSelectionBox(
+                      containertext: "Workouts",
+                      containerroutename: "/WorkoutHome",
+                      containerroutewidget: WorkoutHomeScreen(),
+                      containerimageloc: "assets/workouts.png",
+                      tintcolour: workoutsTintColour,
+                      clip: true,
+                    ),
+                  ),
+                  Container(
+                    height: 200,
+                    child: ClipPath(
+                      clipper: HomeAppBarShadowClip(),
+                      child: CustomPaint(
+                        painter: HomeAppBarPainter(),
+                        child: ClipPath(
+                          clipper: HomeAppBarClip(),
+                          child: Center(
+                            child: Container(
+                              color: primary,
+                              child: Column(
+                                children: [
+                                  Align(
+                                    alignment: Alignment.topCenter,
+                                    child: GestureDetector(
+                                      onTap: () {
+                                        Navigator.push(
+                                            context,
+                                            FadeRouter(
+                                              routeName: '/usersettings',
+                                              screen: UserSettings(),
+                                            ));
+                                      },
+                                      child: Container(
+                                        margin: EdgeInsets.only(top: 23),
+                                        width: 80,
+                                        height: 80,
+                                        decoration: BoxDecoration(
+                                          //color: Colors.white,
+                                          borderRadius: BorderRadius.all(
+                                            Radius.circular(45),
+                                          ),
+                                          image: DecorationImage(
+                                            image: NetworkImage(_loading
+                                                ? 'https://i.imgur.com/yKV9vpH.png'
+                                                : avatar),
+                                          ),
+                                        ),
+                                      ),
+                                    ),
+                                  ),
+                                  Align(
+                                    alignment: Alignment.topCenter,
+                                    child: GestureDetector(
+                                      onTap: () {
+                                        Navigator.push(
+                                            context,
+                                            FadeRouter(
+                                              routeName: '/usersettings',
+                                              screen: UserSettings(),
+                                            ));
+                                      },
+                                      child: Container(
+                                        margin:
+                                            EdgeInsets.only(right: 0, top: 20),
+                                        child: Text(
+                                          'User: ${_loading ? currentUser?.email : username}',
+                                          style: TextStyle(
+                                            fontSize: 22,
+                                            color: WorkoutsAccentColour,
+                                            shadows: [
+                                              Shadow(
+                                                blurRadius: 1,
+                                                color: Colors.black,
+                                                offset: Offset(1, 2),
+                                              ),
+                                            ],
+                                          ),
+                                        ),
+                                      ),
+                                    ),
+                                  ),
+                                ],
+                              ),
                             ),
                           ),
                         ),
                       ),
+                    ),
                   ),
-                  Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children: [
-                      GestureDetector(
-                        onTap: () {
-                          Navigator.pop(context);
-                          Navigator.push(
-                              context,
-                              FadeRouter(
-                                routeName: '/usersettings',
-                                screen: UserSettings(),
-                              ));
-                        },
-                        child: Text(
-                          'User: ${_loading ? currentUser?.email : username}',
-                          style: TextStyle(
-                            fontSize: 16,
-                            color: Colors.white,
-                            shadows: [
-                              Shadow(
-                                blurRadius: 10,
-                                color: Colors.black,
-                                offset: Offset(1, 2),
-                              ),
-                            ],
-                          ),
-                        ),
-                      ),
-                      HomeSelectionBox(
-                        containertext: "Workouts",
-                        containerroutename: "/WorkoutHome",
-                        containerroutewidget: WorkoutHomeScreen(),
-                        containerimageloc: "assets/workouts.jpg",
-                        tintcolour: workoutsTintColour,
-                      ),
-                      HomeSelectionBox(
-                        containertext: "Diet",
-                        containerroutename: "/DietHome",
-                        containerroutewidget: DietHomeScreen(),
-                        containerimageloc: "assets/diet.jpg",
-                        tintcolour: dietTintColour,
-                      ),
 
-
-                    ],
-                  ),
-                  Align(
+                  /*Align(
                     alignment: Alignment.bottomCenter,
                     child: Container(
-                      margin: EdgeInsets.only(bottom:50),
+                      margin: EdgeInsets.only(bottom: 50),
                       child: MaterialButton(
                         color: Colors.black,
                         onPressed: () {
@@ -157,7 +221,7 @@ class _HomeScreenState extends State<HomeScreen> {
                         ),
                       ),
                     ),
-                  )
+                  )*/
                 ],
               ),
             )));

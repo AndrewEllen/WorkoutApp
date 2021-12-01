@@ -167,7 +167,8 @@ class _UserSettingsState extends State<UserSettings> {
   Widget build(BuildContext context) {
     return SafeArea(
         child: Scaffold(
-      backgroundColor: defaultBackgroundColour,
+          resizeToAvoidBottomInset: false,
+      backgroundColor: primary,
       appBar: AppBar(
         backgroundColor: Colors.grey[900],
         toolbarHeight: 260,
