@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:workout_app/Packages/checkboxcustom.dart';
 import '../../constants.dart';
 
 class WorkoutListCheckbox extends StatefulWidget {
@@ -49,28 +50,20 @@ class _WorkoutListCheckboxState extends State<WorkoutListCheckbox> {
   @override
   Widget build(BuildContext context) {
 
-    Color getColor(Set<MaterialState> states) {
-      const Set<MaterialState> interactiveStates = <MaterialState>{
-        MaterialState.pressed,
-        MaterialState.hovered,
-        MaterialState.focused,
-      };
-      if (states.any(interactiveStates.contains)) {
-        return Colors.blue;
-      }
-      return Colors.red;
-    }
-
-    return Checkbox(
-      checkColor: Colors.white,
-      fillColor: MaterialStateProperty.resolveWith(getColor),
-      value: widget.completed,
-      onChanged: (bool? value) {
-        setState(() {
-          widget.completed = value!;
-          _updateWorkouts(widget.completed);
-        });
-      },
+    return CustomCheckbox(
+        selectedIconColor: WorkoutsAccentColour,
+        selectedColor: secondary,
+        borderColor: secondary,
+        isChecked: widget.completed,
+        width: 250,
+        height: 350,
+        iconSize: 200,
+        onChange: (bool? value) {
+          setState(() {
+            widget.completed = value!;
+            _updateWorkouts(widget.completed);
+          });
+          },
     );
   }
 }

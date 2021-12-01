@@ -303,84 +303,96 @@ class _WorkoutHomeScreenState extends State<WorkoutHomeScreen>
               ),
               height: 350,
               width: 250,
-              child: Column(
+              child: Stack(
                 children: [
-                  Container(
-                    margin: EdgeInsets.only(top: 40, bottom: 20),
-                    child: workouts[index].length != 0 ?
-                    Text(
-                      "${workouts[index]}",
-                      textAlign: TextAlign.center,
-                      style: TextStyle(
-                        color: Colors.white,
-                        fontSize: 30,
-                        fontWeight: FontWeight.w500,
-                      ),
-                    ) :
-                    Text(
-                      "No Workout",
-                      textAlign: TextAlign.center,
-                      style: TextStyle(
-                        color: Colors.white,
-                        fontSize: 30,
-                        fontWeight: FontWeight.w500,
-                      ),
-                    ),
-                  ),
+                  Center(
+                    child: Column(
+                      children: [
+                        Container(
+                          margin: EdgeInsets.only(top: 40, bottom: 20),
+                          child: workouts[index].length != 0 ?
+                          Text(
+                            "${workouts[index]}",
+                            textAlign: TextAlign.center,
+                            style: TextStyle(
+                              color: Colors.white,
+                              fontSize: 30,
+                              fontWeight: FontWeight.w500,
+                            ),
+                          ) :
+                          Text(
+                            "No Workout",
+                            textAlign: TextAlign.center,
+                            style: TextStyle(
+                              color: Colors.white,
+                              fontSize: 30,
+                              fontWeight: FontWeight.w500,
+                            ),
+                          ),
+                        ),
 
-                  Container(
-                    margin: EdgeInsets.only(top: 30, bottom: 30),
-                    child: workoutsSets[index].length != 0 ?
-                    Text(
-                      "${workoutsSets[index]} Sets",
-                      textAlign: TextAlign.center,
-                      style: TextStyle(
-                        color: Colors.white,
-                        fontSize: 25,
-                        fontWeight: FontWeight.w500,
-                      ),
-                    ) :
-                    Text(
-                      "0 Sets",
-                      textAlign: TextAlign.center,
-                      style: TextStyle(
-                        color: Colors.white,
-                        fontSize: 25,
-                        fontWeight: FontWeight.w500,
-                      ),
-                    ),
-                  ),
+                        Container(
+                          margin: EdgeInsets.only(top: 30, bottom: 30),
+                          child: workoutsSets[index].length != 0 ?
+                          Text(
+                            "${workoutsSets[index]} Sets",
+                            textAlign: TextAlign.center,
+                            style: TextStyle(
+                              color: Colors.white,
+                              fontSize: 25,
+                              fontWeight: FontWeight.w500,
+                            ),
+                          ) :
+                          Text(
+                            "0 Sets",
+                            textAlign: TextAlign.center,
+                            style: TextStyle(
+                              color: Colors.white,
+                              fontSize: 25,
+                              fontWeight: FontWeight.w500,
+                            ),
+                          ),
+                        ),
 
-                  Container(
-                    margin: EdgeInsets.only(top: 30),
-                    child: workoutsReps[index].length != 0 ?
-                    Text(
-                      "${workoutsReps[index]} Reps",
-                      textAlign: TextAlign.center,
-                      style: TextStyle(
-                        color: Colors.white,
-                        fontSize: 25,
-                        fontWeight: FontWeight.w500,
-                      ),
-                    ) :
-                    Text(
-                      "0 Reps",
-                      textAlign: TextAlign.center,
-                      style: TextStyle(
-                        color: Colors.white,
-                        fontSize: 25,
-                        fontWeight: FontWeight.w500,
-                      ),
+                        Container(
+                          margin: EdgeInsets.only(top: 30),
+                          child: workoutsReps[index].length != 0 ?
+                          Text(
+                            "${workoutsReps[index]} Reps",
+                            textAlign: TextAlign.center,
+                            style: TextStyle(
+                              color: Colors.white,
+                              fontSize: 25,
+                              fontWeight: FontWeight.w500,
+                            ),
+                          ) :
+                          Text(
+                            "0 Reps",
+                            textAlign: TextAlign.center,
+                            style: TextStyle(
+                              color: Colors.white,
+                              fontSize: 25,
+                              fontWeight: FontWeight.w500,
+                            ),
+                          ),
+                        ),
+                      ],
                     ),
                   ),
-                  WorkoutListCheckbox(
-                    day: dropdownValueDay,
-                    completed: completedlist[index],
-                    currentUserID: currentUser!.id,
-                    index: index,
-                    listID: listID,
-                    completedlist: completedlist,
-                    completedliststring: _completedlist,
+                  Positioned(
+                    left: 0,
+                    right: 0,
+                    top: 0,
+                    bottom: 0,
+                    child: WorkoutListCheckbox(
+                        day: dropdownValueDay,
+                        completed: completedlist[index],
+                        currentUserID: currentUser!.id,
+                        index: index,
+                        listID: listID,
+                        completedlist: completedlist,
+                        completedliststring: _completedlist,
+                    ),
                   ),
                 ],
               ),

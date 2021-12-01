@@ -16,7 +16,6 @@ Future<void> resettickboxes(day, daylist, userId) async {
     if (response.data != null) {
       listID = response.data!["id"] as String;
       completedlist = response.data!['Completed'] as List;
-      print(completedlist);
     }
   }
 
@@ -44,8 +43,6 @@ Future<void> resettickboxes(day, daylist, userId) async {
         completedlist[x] = "false";
       }
       await _updateWorkouts(daylist[i]);
-      print(i);
-      print(completedlist);
     }
   }
 
