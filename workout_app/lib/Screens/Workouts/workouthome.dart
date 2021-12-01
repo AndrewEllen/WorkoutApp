@@ -103,7 +103,6 @@ class _WorkoutHomeScreenState extends State<WorkoutHomeScreen>
   }
 
   void _setTabIndex() {
-    print(dropdownValueDay);
     tabController!.index = dropdownlist.indexWhere(
         (dropdownlist) => dropdownlist.startsWith(dropdownValueDay));
   }
