@@ -2,6 +2,7 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:scroll_snap_list/scroll_snap_list.dart';
 import 'package:workout_app/Components/Navbar/Navbar.dart';
+import 'package:workout_app/Packages/horizontaltabs.dart';
 import '../../constants.dart';
 
 class EditCurrentWorkout extends StatefulWidget {
@@ -124,13 +125,13 @@ class _EditCurrentWorkoutState extends State<EditCurrentWorkout>
                         ),
                       ),
                       Center(
-                        child: TabPageSelector(
+                        child: TabPageSelectorHorizontal(
                           controller: tabControllerEdit,
                           color: tertiary,
                           selectedColor: WorkoutsAccentColour,
                           indicatorSize: 13,
-                          direction: Direction.horizontal,
-                          margin: 21,
+/*                          direction: Direction.horizontal,
+                          margin: 21,*/
                         ),
                       ),
                     ],
@@ -163,6 +164,8 @@ class _EditCurrentWorkoutState extends State<EditCurrentWorkout>
 
                     var _keycheck = 0;
                     for (var i = 0; i < widget.workouts.length; i++) {
+                      print(i);
+                      print(_workoutformkeys[i].currentState);
                       if (_workoutformkeys[i].currentState!.validate() &
                       _setformkeys[i].currentState!.validate() &
                       _repformkeys[i].currentState!.validate()) {

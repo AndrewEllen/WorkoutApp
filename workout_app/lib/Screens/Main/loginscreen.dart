@@ -46,11 +46,11 @@ class _LoginScreenState extends AuthState<LoginScreen> {
     super.initState();
   }
 
-  @override
+/*  @override
   void dispose() {
     _emailController.dispose();
     super.dispose();
-  }
+  }*/
 
 
   @override

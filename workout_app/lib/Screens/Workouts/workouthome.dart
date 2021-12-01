@@ -7,6 +7,8 @@ import 'package:workout_app/Components/SideBar/sidebar.dart';
 import 'package:workout_app/Data/Screens/feedback.dart';
 import 'package:workout_app/Data/Screens/settings.dart';
 import 'package:workout_app/Data/resetcheckboxes.dart';
+import 'package:workout_app/Packages/verticaltabs.dart';
+import 'package:workout_app/Packages/horizontaltabs.dart';
 import 'package:workout_app/Screens/Workouts/editcurrentworkout.dart';
 import 'package:workout_app/Screens/Workouts/workoutsscreen.dart';
 import 'package:workout_app/data/Screens/workouthome.dart';
@@ -172,13 +174,13 @@ class _WorkoutHomeScreenState extends State<WorkoutHomeScreen>
                         ),
                       ),
                       Center(
-                          child: TabPageSelector(
+                          child: TabPageSelectorHorizontal(
                             controller: tabControllerWorkouts,
                             color: tertiary,
                             selectedColor: WorkoutsAccentColour,
                             indicatorSize: 13,
-                            direction: Direction.horizontal,
-                            margin: 21,
+/*                            direction: Direction.horizontal,
+                            margin: 21,*/
                           ),
                       ),
                     ],
@@ -215,13 +217,13 @@ class _WorkoutHomeScreenState extends State<WorkoutHomeScreen>
                   ),
                   Container(
                     margin: EdgeInsets.only(right: 30),
-                    child: TabPageSelector(
+                    child: TabPageSelectorVertical(
                       controller: tabController,
                       color: Colors.white,
                       selectedColor: WorkoutsAccentColour,
                       indicatorSize: 13,
-                      direction: Direction.vertical,
-                      margin: 21,
+/*                      direction: Direction.vertical,
+                      margin: 21,*/
                     ),
                   ),
                 ]),
