@@ -307,8 +307,18 @@ class _WorkoutHomeScreenState extends State<WorkoutHomeScreen>
                 children: [
                   Container(
                     margin: EdgeInsets.only(top: 40, bottom: 20),
-                    child: Text(
+                    child: workouts[index].length != 0 ?
+                    Text(
                       "${workouts[index]}",
+                      textAlign: TextAlign.center,
+                      style: TextStyle(
+                        color: Colors.white,
+                        fontSize: 30,
+                        fontWeight: FontWeight.w500,
+                      ),
+                    ) :
+                    Text(
+                      "No Workout",
                       textAlign: TextAlign.center,
                       style: TextStyle(
                         color: Colors.white,
@@ -317,10 +327,21 @@ class _WorkoutHomeScreenState extends State<WorkoutHomeScreen>
                       ),
                     ),
                   ),
+
                   Container(
                     margin: EdgeInsets.only(top: 30, bottom: 30),
-                    child: Text(
+                    child: workoutsSets[index].length != 0 ?
+                    Text(
                       "${workoutsSets[index]} Sets",
+                      textAlign: TextAlign.center,
+                      style: TextStyle(
+                        color: Colors.white,
+                        fontSize: 25,
+                        fontWeight: FontWeight.w500,
+                      ),
+                    ) :
+                    Text(
+                      "0 Sets",
                       textAlign: TextAlign.center,
                       style: TextStyle(
                         color: Colors.white,
@@ -329,10 +350,21 @@ class _WorkoutHomeScreenState extends State<WorkoutHomeScreen>
                       ),
                     ),
                   ),
+
                   Container(
                     margin: EdgeInsets.only(top: 30),
-                    child: Text(
+                    child: workoutsReps[index].length != 0 ?
+                    Text(
                       "${workoutsReps[index]} Reps",
+                      textAlign: TextAlign.center,
+                      style: TextStyle(
+                        color: Colors.white,
+                        fontSize: 25,
+                        fontWeight: FontWeight.w500,
+                      ),
+                    ) :
+                    Text(
+                      "0 Reps",
                       textAlign: TextAlign.center,
                       style: TextStyle(
                         color: Colors.white,

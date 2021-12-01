@@ -161,12 +161,10 @@ class _EditCurrentWorkoutState extends State<EditCurrentWorkout>
                   margin: EdgeInsets.only(top:30),
                   child: FloatingActionButton(
                     onPressed: () {
-
-                    var _keycheck = 0;
+                      /*var _keycheck = 0;
                     for (var i = 0; i < widget.workouts.length; i++) {
-                      print(i);
-                      print(_workoutformkeys[i].currentState);
-                      if (_workoutformkeys[i].currentState!.validate() &
+                      if (
+                      _workoutformkeys[i].currentState!.validate() &
                       _setformkeys[i].currentState!.validate() &
                       _repformkeys[i].currentState!.validate()) {
                         _keycheck++;
@@ -174,7 +172,8 @@ class _EditCurrentWorkoutState extends State<EditCurrentWorkout>
                     }
                     if (_keycheck == widget.workouts.length) {
                       _updateWorkouts();
-                    }
+                    }*/
+                      _updateWorkouts();
                     },
                     elevation: 1,
                     hoverElevation: 1,
@@ -237,6 +236,8 @@ class _EditCurrentWorkoutState extends State<EditCurrentWorkout>
                         validator: (String? value) {
                           if (value!.isEmpty) {
                             return 'Invalid Input';
+                          } else {
+                            return null;
                           }
                         },
                       ),
@@ -272,6 +273,8 @@ class _EditCurrentWorkoutState extends State<EditCurrentWorkout>
                         validator: (String? value) {
                           if (value!.isEmpty) {
                             return 'Invalid Input';
+                          } else {
+                            return null;
                           }
                         },
                       ),
@@ -307,6 +310,8 @@ class _EditCurrentWorkoutState extends State<EditCurrentWorkout>
                         validator: (String? value) {
                           if (value!.isEmpty) {
                             return 'Invalid Input';
+                          } else {
+                            return null;
                           }
                         },
                       ),
