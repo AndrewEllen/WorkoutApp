@@ -4,12 +4,14 @@ import 'package:scroll_snap_list/scroll_snap_list.dart';
 import 'package:workout_app/Components/Navbar/Navbar.dart';
 import 'package:workout_app/Data/errorfeedback.dart';
 import 'package:workout_app/Packages/horizontaltabs.dart';
+import 'package:workout_app/Screens/Workouts/workoutsscreen.dart';
 import '../../constants.dart';
+import '../../router.dart';
 
 class EditCurrentWorkout extends StatefulWidget {
   EditCurrentWorkout({required this.workout, required this.set, required this.rep,
   required this.listID, required this.day, required this.index, required this.workouts,
-  required this.workoutsSets, required this.workoutsReps});
+  required this.workoutsSets, required this.workoutsReps, required this.completedlist});
 
   late String workout,
       set,
@@ -19,7 +21,8 @@ class EditCurrentWorkout extends StatefulWidget {
   late int index;
   late List workouts,
       workoutsSets,
-      workoutsReps;
+      workoutsReps,
+      completedlist;
   final currentUser = supabase.auth.user();
 
   @override
@@ -50,6 +53,7 @@ class _EditCurrentWorkoutState extends State<EditCurrentWorkout>
     final _workouts = widget.workouts;
     final _sets = widget.workoutsSets;
     final _reps = widget.workoutsReps;
+    final _completedlist = widget.completedlist;
     final updates = {
       "id": _listID,
       'userid': _user,
@@ -57,6 +61,7 @@ class _EditCurrentWorkoutState extends State<EditCurrentWorkout>
       'Exercises': _workouts,
       "ExerciseSets": _sets,
       "ExerciseReps": _reps,
+      "Completed": _completedlist,
     };
     final response = await supabase.from('userworkouts').upsert(updates).execute();
     if (response.error != null) {
@@ -72,6 +77,19 @@ class _EditCurrentWorkoutState extends State<EditCurrentWorkout>
         Navigator.pop(context);
       });
     }
+  }
+  
+  void _deleteWorkout(int index) {
+    widget.workouts.removeAt(index);
+    widget.workoutsSets.removeAt(index);
+    widget.workoutsReps.removeAt(index);
+    widget.completedlist.removeAt(index);
+    Navigator.pushReplacement(
+        context,
+        MaterialPageRoute(
+          builder: (BuildContext context) => super.widget
+        ));
+    //_updateWorkouts();
   }
 
   void _onItemFocus(int index) {
@@ -161,33 +179,74 @@ class _EditCurrentWorkoutState extends State<EditCurrentWorkout>
                 ),
                 Container(
                   margin: EdgeInsets.only(top:30),
-                  child: FloatingActionButton(
-                    onPressed: () {
-                      /*var _keycheck = 0;
-                    for (var i = 0; i < widget.workouts.length; i++) {
-                      if (
-                      _workoutformkeys[i].currentState!.validate() &
-                      _setformkeys[i].currentState!.validate() &
-                      _repformkeys[i].currentState!.validate()) {
-                        _keycheck++;
-                      }
-                    }
-                    if (_keycheck == widget.workouts.length) {
-                      _updateWorkouts();
-                    }*/
-                      _updateWorkouts();
-                    },
-                    elevation: 1,
-                    hoverElevation: 1,
-                    focusElevation: 0,
-                    highlightElevation: 0,
-                    backgroundColor: WorkoutsAccentColour,
-                    child: Icon(
-                      Icons.save,
-                      size: 35,
-                    ),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Container(
+                        margin: EdgeInsets.only(left:10,right:10),
+                        child: FloatingActionButton(
+                          heroTag: UniqueKey(),
+                          onPressed: () {
+                            Navigator.push(
+                                context,
+                                FadeRouter(
+                                  routeName: "editworkouts",
+                                  screen: WorkoutListScreen(
+                                    appbartitle: 'Select Workouts',
+                                    currentday: widget.day,
+                                  ),
+                                ));
+                          },
+                          elevation: 1,
+                          hoverElevation: 1,
+                          focusElevation: 0,
+                          highlightElevation: 0,
+                          backgroundColor: WorkoutsAccentColour,
+                          child: Icon(
+                            Icons.list,
+                            size: 35,
+                          ),
+                        ),
+                      ),
+                      Container(
+                        margin: EdgeInsets.only(left:20,right:20),
+                        child: FloatingActionButton(
+                          heroTag: UniqueKey(),
+                          onPressed: () {
+                            _updateWorkouts();
+                            },
+                          elevation: 1,
+                          hoverElevation: 1,
+                          focusElevation: 0,
+                          highlightElevation: 0,
+                          backgroundColor: WorkoutsAccentColour,
+                          child: Icon(
+                            Icons.save,
+                            size: 35,
+                          ),
+                        ),
+                      ),
+                      Container(
+                        margin: EdgeInsets.only(left:10,right:10),
+                        child: FloatingActionButton(
+                          heroTag: UniqueKey(),
+                          onPressed: () {
+                              showConfirmationBox(context);
+                          },
+                          elevation: 1,
+                          hoverElevation: 1,
+                          focusElevation: 0,
+                          highlightElevation: 0,
+                          backgroundColor: WorkoutsAccentColour,
+                          child: Icon(
+                            Icons.delete,
+                            size: 35,
+                          ),
+                        ),
+                      ),
+                    ],
                   ),
-                )
+                ),
               ],
             ),
           )
@@ -325,4 +384,62 @@ class _EditCurrentWorkoutState extends State<EditCurrentWorkout>
       ),
     );
   }
+
+  showConfirmationBox(BuildContext context) {
+    return showDialog(
+          context: context,
+          builder:(context) {
+            return AlertDialog(
+              title: Text(
+                "Delete Current Item?",
+                style: TextStyle(
+                  color: tertiary,
+                  fontSize: 24,
+                ),
+              ),
+              actions: [
+                ElevatedButton(
+                  onPressed: () {
+                    print("Deleted");
+                    _deleteWorkout(widget.index);
+                    Navigator.of(context).pop();
+                    },
+                  style: ElevatedButton.styleFrom(
+                    primary: WorkoutsAccentColour,
+                    minimumSize: Size(130, 38),
+                  ),
+                  child: Text(
+                    "Confirm",
+                    style: TextStyle(
+                      color: tertiary,
+                      fontSize: 22,
+                    ),
+                  ),
+                ),
+                ElevatedButton(
+                  onPressed: () {
+                    print("Cancelled");
+                    Navigator.of(context).pop();
+                    },
+                  style: ElevatedButton.styleFrom(
+                    primary: WorkoutsAccentColour,
+                    minimumSize: Size(130, 38),
+                  ),
+                  child: Text(
+                    "Cancel",
+                    style: TextStyle(
+                      color: tertiary,
+                      fontSize: 22,
+                    ),
+                  ),
+                ),
+              ],
+              backgroundColor: secondary,
+              elevation: 1,
+            );
+          }
+    );
+  }
+
+  void showBox({required BuildContext context, required AlertDialog Function(BuildContext context) builder}) {}
 }

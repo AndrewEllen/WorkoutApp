@@ -25,7 +25,7 @@ class _LoginScreenState extends AuthState<LoginScreen> {
         options: AuthOptions(
             redirectTo: kIsWeb
                 ? null
-                : 'io.supabase.flutterquickstart://login-callback/'));
+                : 'io.supabase.workoutapp://login-callback/'));
     if (response.error != null) {
       ScaffoldMessenger.of(context).showSnackBar(SnackBar(
         content: Text(response.error!.message),

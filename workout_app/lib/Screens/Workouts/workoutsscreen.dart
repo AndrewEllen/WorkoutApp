@@ -8,8 +8,9 @@ import 'package:intl/intl.dart';
 
 class WorkoutListScreen extends StatefulWidget {
   WorkoutListScreen(
-      {required this.appbartitle});
+      {required this.appbartitle, this.currentday = "Monday"});
   final String appbartitle;
+  final String currentday;
 
   @override
   _WorkoutListScreenState createState() => _WorkoutListScreenState();
@@ -19,7 +20,7 @@ class _WorkoutListScreenState extends State<WorkoutListScreen> {
   final currentUser = supabase.auth.user();
   var yesterday = DateTime.now().subtract(Duration(days:1));
   var today = DateTime.now();
-  String dropdownValueDay = "Monday";
+  late String dropdownValueDay = "Monday";
   final _Dayformkey = GlobalKey<FormState>();
   final _inputController = TextEditingController();
   final _inputformkey = GlobalKey<FormState>();
@@ -28,6 +29,9 @@ class _WorkoutListScreenState extends State<WorkoutListScreen> {
   bool _loading = true;
 
   void initState() {
+    if (widget.currentday != null) {
+      dropdownValueDay = widget.currentday;
+    };
     _getWorkouts(currentUser!.id);
   }
 
