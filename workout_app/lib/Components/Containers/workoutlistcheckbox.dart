@@ -49,21 +49,23 @@ class _WorkoutListCheckboxState extends State<WorkoutListCheckbox> {
 
   @override
   Widget build(BuildContext context) {
-
-    return CustomCheckbox(
-        selectedIconColor: WorkoutsAccentColour,
-        selectedColor: secondary,
-        borderColor: secondary,
-        isChecked: widget.completed,
-        width: 250,
-        height: 350,
-        iconSize: 200,
-        onChange: (bool? value) {
-          setState(() {
-            widget.completed = value!;
-            _updateWorkouts(widget.completed);
-          });
-          },
+    return Container(
+      key: UniqueKey(),
+      child: CustomCheckbox(
+          selectedIconColor: WorkoutsAccentColour,
+          selectedColor: secondary,
+          borderColor: secondary,
+          isChecked: widget.completed,
+          width: 250,
+          height: 350,
+          iconSize: 200,
+          onChange: (bool? value) {
+            setState(() {
+              widget.completed = value!;
+              _updateWorkouts(widget.completed);
+            });
+            },
+      ),
     );
   }
 }
