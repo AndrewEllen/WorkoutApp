@@ -31,7 +31,7 @@ class _UserSignupState extends State<UserSignup> {
   Future<void> _updateWorkouts(day) async {
     final _day = day;
     final updates = {
-      'UserID': currentUser!.id,
+      'userid': currentUser!.id,
       'Day': _day,
     };
     final response = await supabase.from('userworkouts').upsert(updates).execute();

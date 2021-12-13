@@ -89,7 +89,7 @@ class _WorkoutHomeScreenState extends State<WorkoutHomeScreen>
         completedlist[i] = _completed;
       }
     }
-    await resettickboxes(dropdownValueDay, daytosave, currentUser!.id);
+    //await resettickboxes(dropdownValueDay, daytosave, currentUser!.id);
     setState(() {
       _loading = false;
     });
@@ -224,8 +224,6 @@ class _WorkoutHomeScreenState extends State<WorkoutHomeScreen>
                       color: Colors.white,
                       selectedColor: WorkoutsAccentColour,
                       indicatorSize: 13,
-/*                      direction: Direction.vertical,
-                      margin: 21,*/
                     ),
                   ),
                 ]),
