@@ -39,6 +39,7 @@ class _CustomCheckboxState extends State<CustomCheckbox> {
   @override
   Widget build(BuildContext context) {
     return Container(
+      key: UniqueKey(),
       child: GestureDetector(
         onTap: () {
           setState(() {
