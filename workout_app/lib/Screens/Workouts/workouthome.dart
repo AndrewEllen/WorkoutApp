@@ -231,22 +231,41 @@ class _WorkoutHomeScreenState extends State<WorkoutHomeScreen>
                 Container(
                   margin: EdgeInsets.only(top:30),
                   child: FloatingActionButton(onPressed: (){
-                    Navigator.push(
-                        context,
-                        FadeRouter(
-                          routeName: "editworkout",
-                          screen: EditCurrentWorkout(
-                            workout: workouts[tabControllerWorkouts!.index],
-                            set: workoutsSets[tabControllerWorkouts!.index],
-                            rep: workoutsReps[tabControllerWorkouts!.index],
-                            workouts: workouts,
-                            workoutsSets: workoutsSets,
-                            workoutsReps: workoutsReps,
-                            day: day,
-                            listID: listID,
-                            index: tabControllerWorkouts!.index,
-                          ),
-                        ));
+                    if (workouts.length > 0) {
+                      Navigator.push(
+                          context,
+                          FadeRouter(
+                            routeName: "editworkout",
+                            screen: EditCurrentWorkout(
+                              workout: workouts[tabControllerWorkouts!.index],
+                              set: workoutsSets[tabControllerWorkouts!.index],
+                              rep: workoutsReps[tabControllerWorkouts!.index],
+                              workouts: workouts,
+                              workoutsSets: workoutsSets,
+                              workoutsReps: workoutsReps,
+                              day: day,
+                              listID: listID,
+                              index: tabControllerWorkouts!.index,
+                            ),
+                          ));
+                    } else {
+                      Navigator.push(
+                          context,
+                          FadeRouter(
+                            routeName: "editworkout",
+                            screen: EditCurrentWorkout(
+                              workout: "",
+                              set: "0",
+                              rep: "0",
+                              workouts: [""],
+                              workoutsSets: ["0"],
+                              workoutsReps: ["0"],
+                              day: day,
+                              listID: listID,
+                              index: tabControllerWorkouts!.index,
+                            ),
+                          ));
+                    }
                   },
                     elevation: 1,
                     hoverElevation: 1,
