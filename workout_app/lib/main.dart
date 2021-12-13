@@ -7,6 +7,7 @@ import 'package:workout_app/Screens/Main/splashscreen.dart';
 import 'Screens/Main/usersignupscreen.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'constants.dart';
+import 'globals.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -25,6 +26,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      scaffoldMessengerKey: snackbarerrorkey,
       title: 'Fitness Tracker',
       theme: ThemeData(
         fontFamily: 'Impact',

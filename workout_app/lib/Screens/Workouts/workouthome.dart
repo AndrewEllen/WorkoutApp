@@ -7,6 +7,7 @@ import 'package:workout_app/Components/Navbar/Navbar.dart';
 import 'package:workout_app/Components/SideBar/sidebar.dart';
 import 'package:workout_app/Data/Screens/feedback.dart';
 import 'package:workout_app/Data/Screens/settings.dart';
+import 'package:workout_app/Data/errorfeedback.dart';
 import 'package:workout_app/Data/resetcheckboxes.dart';
 import 'package:workout_app/Packages/verticaltabs.dart';
 import 'package:workout_app/Packages/horizontaltabs.dart';
@@ -15,7 +16,6 @@ import 'package:workout_app/Screens/Workouts/workoutsscreen.dart';
 import 'package:workout_app/data/Screens/workouthome.dart';
 import '../../constants.dart';
 import 'package:intl/intl.dart';
-
 import '../../router.dart';
 
 // https://dartpad.dev/?null_safety=true&id=afc693da482659e918d46a21c5e80ae4
@@ -69,6 +69,7 @@ class _WorkoutHomeScreenState extends State<WorkoutHomeScreen>
     if (response.error != null && response.status != 406) {
       ScaffoldMessenger.of(context)
           .showSnackBar(SnackBar(content: Text(response.error!.message)));
+      saveError(response.error!.message,"workouthome.dart");
     }
     if (response.data != null) {
       listID = response.data!["id"] as String;
@@ -89,7 +90,7 @@ class _WorkoutHomeScreenState extends State<WorkoutHomeScreen>
         completedlist[i] = _completed;
       }
     }
-    //await resettickboxes(dropdownValueDay, daytosave, currentUser!.id);
+    await resettickboxes(dropdownValueDay, daytosave, currentUser!.id);
     setState(() {
       _loading = false;
     });
@@ -129,7 +130,7 @@ class _WorkoutHomeScreenState extends State<WorkoutHomeScreen>
       dropdownValueDay = DateFormat('EEEE').format(yesterday);
     } else {
       dropdownValueDay = DateFormat('EEEE').format(today);
-      daytosave = DateFormat('yyyy-dd-MM').format(today);
+      daytosave = DateFormat('yyyy-MM-dd').format(today);
     }
 
     tabControllerWorkouts = TabController(

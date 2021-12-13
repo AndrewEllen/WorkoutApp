@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:workout_app/Components/Clips/HomeAppBar.dart';
 import 'package:workout_app/Components/Screens/homeselectionboxes.dart';
+import 'package:workout_app/Data/errorfeedback.dart';
 import 'package:workout_app/Screens/Main/usersettingsscreen.dart';
 import 'package:workout_app/Screens/Workouts/workouthome.dart';
 import '../../constants.dart';
@@ -37,6 +38,7 @@ class _HomeScreenState extends State<HomeScreen> {
     if (response.error != null && response.status != 406) {
       ScaffoldMessenger.of(context)
           .showSnackBar(SnackBar(content: Text(response.error!.message)));
+      saveError(response.error!.message,"homescreen.dart");
     }
     if (response.data != null) {
       username = response.data!['username'] as String;

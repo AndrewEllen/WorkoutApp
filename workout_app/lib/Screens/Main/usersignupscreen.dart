@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:supabase/supabase.dart';
+import 'package:workout_app/Data/errorfeedback.dart';
 import '../../constants.dart';
 
 class UserSignup extends StatefulWidget {
@@ -40,6 +41,7 @@ class _UserSignupState extends State<UserSignup> {
         content: Text(response.error!.message),
         backgroundColor: Colors.red,
       ));
+      saveError(response.error!.message,"usersignupscreen.dart");
     }
   }
 

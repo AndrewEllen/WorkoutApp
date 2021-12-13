@@ -1,6 +1,8 @@
 import 'package:flutter/cupertino.dart';
-
+import 'package:flutter/material.dart';
+import 'package:workout_app/globals.dart';
 import '../constants.dart';
+import 'errorfeedback.dart';
 
 Future<void> resettickboxes(day, daytosave, userId) async {
   late String listID = "null";
@@ -36,8 +38,10 @@ Future<void> resettickboxes(day, daytosave, userId) async {
       "lastdate": _daytosave,
     };
     final response = await supabase.from('userworkouts').upsert(updates).execute();
-    if (response.error != null) {
-      print("Error");
+    if (response.error != null && response.status != 406) {
+      SnackBar snackBar = SnackBar(content: Text(response.error!.message),backgroundColor: Colors.red,);
+        snackbarerrorkey.currentState?.showSnackBar(snackBar);
+      saveError(response.error!.message,"resetcheckboxes.dart");
     }
   }
 

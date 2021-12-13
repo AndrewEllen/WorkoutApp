@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:supabase/supabase.dart';
+import 'package:workout_app/Data/errorfeedback.dart';
 import '../../constants.dart';
 
 class UserSettings extends StatefulWidget {
@@ -86,6 +87,7 @@ class _UserSettingsState extends State<UserSettings> {
       ScaffoldMessenger.of(context)
           .showSnackBar(SnackBar(content: Text(response.error!.message)));
     }
+    saveError(response.error!.message,"usersettingsscreen.dart");
     if (response.data != null) {
       _usernameController.text = response.data!['username'] as String;
       _avatarController.text = response.data!['avatar_url'] as String;
