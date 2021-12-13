@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:workout_app/Components/Navbar/Navbar.dart';
 import 'package:workout_app/Components/Screens/workoutscontainer.dart';
+import 'package:workout_app/Data/errorfeedback.dart';
 import 'package:workout_app/Data/resetcheckboxes.dart';
 import '../../constants.dart';
 import 'package:intl/intl.dart';
@@ -27,13 +28,6 @@ class _WorkoutListScreenState extends State<WorkoutListScreen> {
   bool _loading = true;
 
   void initState() {
-    if (int.parse(DateFormat('HH').format(today)) < 4) {
-      dropdownValueDay = DateFormat('EEEE').format(yesterday);
-    } else {
-      dropdownValueDay = DateFormat('EEEE').format(today);
-      resettickboxes(DateFormat('EEEE').format(yesterday),currentUser!.id);
-    }
-
     _getWorkouts(currentUser!.id);
   }
 
@@ -60,6 +54,7 @@ class _WorkoutListScreenState extends State<WorkoutListScreen> {
         content: Text(response.error!.message),
         backgroundColor: Colors.red,
       ));
+      saveError(response.error!.message,"workoutsscreen.dart");
     }
   }
 

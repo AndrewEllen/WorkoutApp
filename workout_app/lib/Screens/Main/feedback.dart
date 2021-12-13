@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:workout_app/Components/Navbar/Navbar.dart';
+import 'package:workout_app/Data/errorfeedback.dart';
 import '../../constants.dart';
 
 class FeedBack extends StatefulWidget {
@@ -35,6 +36,7 @@ class _FeedBackState extends State<FeedBack> {
     } else {
       ScaffoldMessenger.of(context).showSnackBar(
           const SnackBar(content: Text('Successfully Posted Feedback!')));
+      saveError(response.error!.message,"feedback.dart");
       Timer(Duration(milliseconds: 800), () {
         Navigator.pushNamedAndRemoveUntil(context, "/home", (r) => false);
       });

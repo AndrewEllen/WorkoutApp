@@ -43,7 +43,7 @@ class SettingsPage extends StatelessWidget {
               margin: EdgeInsets.only(bottom: 50),
               child: ElevatedButton(
                 onPressed: () {
-                   _deletedata();
+                   //_deletedata();
                    print("Clicked");
                 },
                 style: ElevatedButton.styleFrom(

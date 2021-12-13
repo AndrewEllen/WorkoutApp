@@ -2,6 +2,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:workout_app/Components/Auth/authstate.dart';
 import 'package:supabase/supabase.dart';
+import 'package:workout_app/Data/errorfeedback.dart';
 import '../../constants.dart';
 
 class LoginScreen extends StatefulWidget {
@@ -30,6 +31,7 @@ class _LoginScreenState extends AuthState<LoginScreen> {
         content: Text(response.error!.message),
         backgroundColor: Colors.red,
       ));
+      saveError(response.error!.message,"loginscreen.dart");
     } else {
       ScaffoldMessenger.of(context).showSnackBar(
           const SnackBar(content: Text('Check your email for login link!')));

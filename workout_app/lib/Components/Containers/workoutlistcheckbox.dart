@@ -1,13 +1,15 @@
 import 'package:flutter/material.dart';
+import 'package:workout_app/Packages/checkboxcustom.dart';
 import '../../constants.dart';
 
 class WorkoutListCheckbox extends StatefulWidget {
   WorkoutListCheckbox({required this.day, required this.currentUserID, required this.listID,
-    required this.completed, required this.index, required this.completedliststring});
+    required this.completed, required this.index, required this.completedlist, required this.completedliststring});
   late String day, currentUserID, listID;
-  late List completedliststring;
+  late List completedlist, completedliststring;
   late int index;
   late bool completed;
+
 
   @override
   _WorkoutListCheckboxState createState() => _WorkoutListCheckboxState();
@@ -38,32 +40,32 @@ class _WorkoutListCheckboxState extends State<WorkoutListCheckbox> {
         backgroundColor: Colors.red,
       ));
     }
+    if (value == true) {
+      widget.completedliststring[widget.index] = true;
+    } else {
+      widget.completedliststring[widget.index] = false;
+    }
   }
 
   @override
   Widget build(BuildContext context) {
-    Color getColor(Set<MaterialState> states) {
-      const Set<MaterialState> interactiveStates = <MaterialState>{
-        MaterialState.pressed,
-        MaterialState.hovered,
-        MaterialState.focused,
-      };
-      if (states.any(interactiveStates.contains)) {
-        return Colors.blue;
-      }
-      return Colors.red;
-    }
-
-    return Checkbox(
-      checkColor: Colors.white,
-      fillColor: MaterialStateProperty.resolveWith(getColor),
-      value: widget.completed,
-      onChanged: (bool? value) {
-        setState(() {
-          widget.completed = value!;
-          _updateWorkouts(widget.completed);
-        });
-      },
+    return Container(
+      key: UniqueKey(),
+      child: CustomCheckbox(
+          selectedIconColor: WorkoutsAccentColour,
+          selectedColor: secondary,
+          borderColor: secondary,
+          isChecked: widget.completed,
+          width: 250,
+          height: 350,
+          iconSize: 200,
+          onChange: (bool? value) {
+            setState(() {
+              widget.completed = value!;
+              _updateWorkouts(widget.completed);
+            });
+            },
+      ),
     );
   }
 }

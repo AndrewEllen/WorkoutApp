@@ -6,6 +6,7 @@ import 'dart:async';
 import 'package:workout_app/Components/Screens/dietmealbox.dart';
 import 'package:workout_app/Data/Screens/feedback.dart';
 import 'package:workout_app/Data/Screens/settings.dart';
+import 'package:workout_app/Data/errorfeedback.dart';
 import 'package:workout_app/data/Screens/diethome.dart';
 import '../../constants.dart';
 
@@ -40,6 +41,7 @@ class _DietHomeScreenState extends State<DietHomeScreen> {
     if (response.error != null && response.status != 406) {
       ScaffoldMessenger.of(context)
           .showSnackBar(SnackBar(content: Text(response.error!.message)));
+      saveError(response.error!.message,"workoutsscreen.dart");
     }
     if (response.data != null) {
       calories = response.data!['daily_calories'];

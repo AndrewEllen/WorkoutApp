@@ -2,10 +2,12 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:scroll_snap_list/scroll_snap_list.dart';
+import 'package:workout_app/Components/Containers/workoutlistcheckbox.dart';
 import 'package:workout_app/Components/Navbar/Navbar.dart';
 import 'package:workout_app/Components/SideBar/sidebar.dart';
 import 'package:workout_app/Data/Screens/feedback.dart';
 import 'package:workout_app/Data/Screens/settings.dart';
+import 'package:workout_app/Data/errorfeedback.dart';
 import 'package:workout_app/Data/resetcheckboxes.dart';
 import 'package:workout_app/Packages/verticaltabs.dart';
 import 'package:workout_app/Packages/horizontaltabs.dart';
@@ -14,7 +16,6 @@ import 'package:workout_app/Screens/Workouts/workoutsscreen.dart';
 import 'package:workout_app/data/Screens/workouthome.dart';
 import '../../constants.dart';
 import 'package:intl/intl.dart';
-
 import '../../router.dart';
 
 // https://dartpad.dev/?null_safety=true&id=afc693da482659e918d46a21c5e80ae4
@@ -52,6 +53,7 @@ class _WorkoutHomeScreenState extends State<WorkoutHomeScreen>
   late bool _completed;
   late TabController? tabController;
   late TabController? tabControllerWorkouts;
+  late final daytosave;
 
   Future<void> _getWorkouts(String userId) async {
     setState(() {
@@ -67,6 +69,7 @@ class _WorkoutHomeScreenState extends State<WorkoutHomeScreen>
     if (response.error != null && response.status != 406) {
       ScaffoldMessenger.of(context)
           .showSnackBar(SnackBar(content: Text(response.error!.message)));
+      saveError(response.error!.message,"workouthome.dart");
     }
     if (response.data != null) {
       listID = response.data!["id"] as String;
@@ -87,6 +90,7 @@ class _WorkoutHomeScreenState extends State<WorkoutHomeScreen>
         completedlist[i] = _completed;
       }
     }
+    await resettickboxes(dropdownValueDay, daytosave, currentUser!.id);
     setState(() {
       _loading = false;
     });
@@ -126,7 +130,7 @@ class _WorkoutHomeScreenState extends State<WorkoutHomeScreen>
       dropdownValueDay = DateFormat('EEEE').format(yesterday);
     } else {
       dropdownValueDay = DateFormat('EEEE').format(today);
-      resettickboxes(DateFormat('EEEE').format(yesterday), currentUser!.id);
+      daytosave = DateFormat('yyyy-MM-dd').format(today);
     }
 
     tabControllerWorkouts = TabController(
@@ -221,8 +225,6 @@ class _WorkoutHomeScreenState extends State<WorkoutHomeScreen>
                       color: Colors.white,
                       selectedColor: WorkoutsAccentColour,
                       indicatorSize: 13,
-/*                      direction: Direction.vertical,
-                      margin: 21,*/
                     ),
                   ),
                 ]),
@@ -302,74 +304,95 @@ class _WorkoutHomeScreenState extends State<WorkoutHomeScreen>
               ),
               height: 350,
               width: 250,
-              child: Column(
+              child: Stack(
                 children: [
-                  Container(
-                    margin: EdgeInsets.only(top: 40, bottom: 20),
-                    child: workouts[index].length != 0 ?
-                    Text(
-                      "${workouts[index]}",
-                      textAlign: TextAlign.center,
-                      style: TextStyle(
-                        color: Colors.white,
-                        fontSize: 30,
-                        fontWeight: FontWeight.w500,
-                      ),
-                    ) :
-                    Text(
-                      "No Workout",
-                      textAlign: TextAlign.center,
-                      style: TextStyle(
-                        color: Colors.white,
-                        fontSize: 30,
-                        fontWeight: FontWeight.w500,
-                      ),
+                  Center(
+                    child: Column(
+                      children: [
+                        Container(
+                          margin: EdgeInsets.only(top: 40, bottom: 20),
+                          child: workouts[index].length != 0 ?
+                          Text(
+                            "${workouts[index]}",
+                            textAlign: TextAlign.center,
+                            style: TextStyle(
+                              color: Colors.white,
+                              fontSize: 30,
+                              fontWeight: FontWeight.w500,
+                            ),
+                          ) :
+                          Text(
+                            "No Workout",
+                            textAlign: TextAlign.center,
+                            style: TextStyle(
+                              color: Colors.white,
+                              fontSize: 30,
+                              fontWeight: FontWeight.w500,
+                            ),
+                          ),
+                        ),
+
+                        Container(
+                          margin: EdgeInsets.only(top: 30, bottom: 30),
+                          child: workoutsSets[index].length != 0 ?
+                          Text(
+                            "${workoutsSets[index]} Sets",
+                            textAlign: TextAlign.center,
+                            style: TextStyle(
+                              color: Colors.white,
+                              fontSize: 25,
+                              fontWeight: FontWeight.w500,
+                            ),
+                          ) :
+                          Text(
+                            "0 Sets",
+                            textAlign: TextAlign.center,
+                            style: TextStyle(
+                              color: Colors.white,
+                              fontSize: 25,
+                              fontWeight: FontWeight.w500,
+                            ),
+                          ),
+                        ),
+
+                        Container(
+                          margin: EdgeInsets.only(top: 30),
+                          child: workoutsReps[index].length != 0 ?
+                          Text(
+                            "${workoutsReps[index]} Reps",
+                            textAlign: TextAlign.center,
+                            style: TextStyle(
+                              color: Colors.white,
+                              fontSize: 25,
+                              fontWeight: FontWeight.w500,
+                            ),
+                          ) :
+                          Text(
+                            "0 Reps",
+                            textAlign: TextAlign.center,
+                            style: TextStyle(
+                              color: Colors.white,
+                              fontSize: 25,
+                              fontWeight: FontWeight.w500,
+                            ),
+                          ),
+                        ),
+                      ],
                     ),
                   ),
-
-                  Container(
-                    margin: EdgeInsets.only(top: 30, bottom: 30),
-                    child: workoutsSets[index].length != 0 ?
-                    Text(
-                      "${workoutsSets[index]} Sets",
-                      textAlign: TextAlign.center,
-                      style: TextStyle(
-                        color: Colors.white,
-                        fontSize: 25,
-                        fontWeight: FontWeight.w500,
-                      ),
-                    ) :
-                    Text(
-                      "0 Sets",
-                      textAlign: TextAlign.center,
-                      style: TextStyle(
-                        color: Colors.white,
-                        fontSize: 25,
-                        fontWeight: FontWeight.w500,
-                      ),
-                    ),
-                  ),
-
-                  Container(
-                    margin: EdgeInsets.only(top: 30),
-                    child: workoutsReps[index].length != 0 ?
-                    Text(
-                      "${workoutsReps[index]} Reps",
-                      textAlign: TextAlign.center,
-                      style: TextStyle(
-                        color: Colors.white,
-                        fontSize: 25,
-                        fontWeight: FontWeight.w500,
-                      ),
-                    ) :
-                    Text(
-                      "0 Reps",
-                      textAlign: TextAlign.center,
-                      style: TextStyle(
-                        color: Colors.white,
-                        fontSize: 25,
-                        fontWeight: FontWeight.w500,
-                      ),
+                  Positioned(
+                    left: 0,
+                    right: 0,
+                    top: 0,
+                    bottom: 0,
+                    child: WorkoutListCheckbox(
+                        day: dropdownValueDay,
+                        completed: completedlist[index],
+                        currentUserID: currentUser!.id,
+                        index: index,
+                        listID: listID,
+                        completedlist: completedlist,
+                        completedliststring: _completedlist,
                     ),
                   ),
                 ],

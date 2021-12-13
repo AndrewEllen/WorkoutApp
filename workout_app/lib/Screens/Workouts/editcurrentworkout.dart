@@ -2,6 +2,7 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:scroll_snap_list/scroll_snap_list.dart';
 import 'package:workout_app/Components/Navbar/Navbar.dart';
+import 'package:workout_app/Data/errorfeedback.dart';
 import 'package:workout_app/Packages/horizontaltabs.dart';
 import '../../constants.dart';
 
@@ -63,6 +64,7 @@ class _EditCurrentWorkoutState extends State<EditCurrentWorkout>
         content: Text(response.error!.message),
         backgroundColor: Colors.red,
       ));
+      saveError(response.error!.message,"editcurrentworkout.dart");
     } else {
       ScaffoldMessenger.of(context).showSnackBar(
           const SnackBar(content: Text('Successfully updated Workout!')));
