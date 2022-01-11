@@ -1,4 +1,5 @@
 import 'package:workout_app/Components/Navbar/Navbar.dart';
+import 'package:workout_app/Data/errorfeedback.dart';
 import "package:workout_app/constants.dart";
 import 'package:flutter/material.dart';
 
@@ -8,9 +9,96 @@ class FriendsHomeScreen extends StatefulWidget {
 }
 
 class _FriendsHomeScreenState extends State<FriendsHomeScreen> {
+  final currentUser = supabase.auth.user();
+
+  bool _loading = true;
+  late var numoffriends;
+  late String username;
+  late List friendsList, pendingFriends;
+
+  void initState() {
+    friendsList = [];
+    pendingFriends = [];
+    _getFriends(currentUser!.id);
+  }
+
+  Future<void> _updateFriends(bool _createnew) async {
+    final updates = {
+      'id': currentUser!.id,
+      'username': username,
+      'friendslist': friendsList,
+      'pendingfriends': pendingFriends,
+    };
+    final response = await supabase.from('friends').upsert(updates).execute();
+    if (response.error != null) {
+      ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+        content: Text(response.error!.message),
+        backgroundColor: Colors.red,
+      ));
+    }
+    if (_createnew == true) {
+      final updates = {
+        'id': currentUser!.id,
+        "numoffriends": null, //todo change this to 0 and fix RLS
+      };
+      final response = await supabase.from('profiles').upsert(updates).execute();
+      if (response.error != null) {
+        ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+          content: Text(response.error!.message),
+          backgroundColor: Colors.red,
+        ));
+      }
+    }
+  }
+
+  Future<void> _getProfile(String userId) async {
+    final response = await supabase
+        .from('profiles')
+        .select()
+        .eq('id', userId)
+        .single()
+        .execute();
+    if (response.error != null && response.status != 406) {
+      ScaffoldMessenger.of(context)
+          .showSnackBar(SnackBar(content: Text(response.error!.message)));
+      saveError(response.error!.message,"friendslist.dart");
+    }
+    if (response.data != null) {
+      username = response.data!['username'];
+      numoffriends = response.data!['numoffriends'];
+    }
+  }
+
+  Future<void> _getFriends(String userId) async {
+    final response = await supabase
+        .from('friends')
+        .select()
+        .eq('id', userId)
+        .single()
+        .execute();
+    if (response.error != null && response.status != 406) {
+      ScaffoldMessenger.of(context)
+          .showSnackBar(SnackBar(content: Text(response.error!.message)));
+      saveError(response.error!.message,"friendslist.dart");
+    }
+    if (response.data != null) {
+      username = response.data!['username'] as String;
+      friendsList = response.data!['friendslist'] as List;
+      pendingFriends = response.data!['pendingfriends'] as List;
+    } else {
+      await _getProfile(currentUser!.id);
+      if (numoffriends == null) {
+        _updateFriends(true);
+      }
+    }
+    setState(() {
+      _loading = false;
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
-    var ScreenData = MediaQuery.of(context);
+    var ScreenData = MediaQuery.of(context).size;
     return SafeArea(
       child: Scaffold(
         backgroundColor: primary,
@@ -19,11 +107,47 @@ class _FriendsHomeScreenState extends State<FriendsHomeScreen> {
           appbarcolour: secondary,
           appbartitle: "Friends",
         ),
-        body: Container(
-          padding,
-          width: ScreenData.size.width,
-          height: ScreenData.size.width,
+        body: _loading ? Container(
+          child: Center(
+            child: CircularProgressIndicator(),
+          ),
+        ) : Container(
+          margin: EdgeInsets.only(
+            left: ScreenData.width*0.01,
+            right: ScreenData.width*0.01,
+            top: ScreenData.height*0.03,
+            bottom: ScreenData.height*0.03,
+          ),
+          width: ScreenData.width,
+          height: ScreenData.height,
           color: secondary,
+          child: ListView.builder(
+            padding: EdgeInsets.only(top: 5),
+            itemCount: friendsList.length,
+            itemBuilder: (BuildContext context, int index) {
+              return Container(
+                padding: EdgeInsets.only(left: 15),
+                height: 50,
+                color: primary,
+                margin: EdgeInsets.only(
+                  top: 2,
+                  bottom: 2,
+                  left: 2,
+                  right: 2,
+                ),
+                child: Align(
+                  alignment: Alignment.centerLeft,
+                  child: Text(
+                    friendsList[index],
+                    style: TextStyle(
+                      color: tertiary,
+                      fontSize: 20,
+                    ),
+                  ),
+                ),
+              );
+            },
+          ),
         ),
       ),
     );
