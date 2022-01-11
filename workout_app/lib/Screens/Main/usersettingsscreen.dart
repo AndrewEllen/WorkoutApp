@@ -86,8 +86,8 @@ class _UserSettingsState extends State<UserSettings> {
     if (response.error != null && response.status != 406) {
       ScaffoldMessenger.of(context)
           .showSnackBar(SnackBar(content: Text(response.error!.message)));
+      saveError(response.error!.message,"usersettingsscreen.dart");
     }
-    saveError(response.error!.message,"usersettingsscreen.dart");
     if (response.data != null) {
       _usernameController.text = response.data!['username'] as String;
       _avatarController.text = response.data!['avatar_url'] as String;

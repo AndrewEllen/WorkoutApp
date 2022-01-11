@@ -3,6 +3,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:workout_app/Components/Clips/HomeAppBar.dart';
 import 'package:workout_app/Components/Screens/homeselectionboxes.dart';
 import 'package:workout_app/Data/errorfeedback.dart';
+import 'package:workout_app/Screens/Friends/friendslist.dart';
 import 'package:workout_app/Screens/Main/usersettingsscreen.dart';
 import 'package:workout_app/Screens/Workouts/workouthome.dart';
 import '../../constants.dart';
@@ -67,6 +68,7 @@ class _HomeScreenState extends State<HomeScreen> {
 
   @override
   Widget build(BuildContext context) {
+    var ScreenData = MediaQuery.of(context);
     return SafeArea(
         child: Scaffold(
             backgroundColor: primary,
@@ -205,7 +207,30 @@ class _HomeScreenState extends State<HomeScreen> {
                       ),
                     ),
                   ),
-
+                  Positioned(
+                    left: ScreenData.size.width*0.83,
+                    height: ScreenData.size.height*0.1,
+                    child: FloatingActionButton(
+                      heroTag: UniqueKey(),
+                      onPressed: () {
+                        Navigator.push(
+                            context,
+                            FadeRouter(
+                              routeName: "friendslist",
+                              screen: FriendsHomeScreen(),
+                            ));
+                      },
+                      elevation: 1,
+                      hoverElevation: 1,
+                      focusElevation: 0,
+                      highlightElevation: 0,
+                      backgroundColor: WorkoutsAccentColour,
+                      child: Icon(
+                        Icons.group,
+                        size: 35,
+                      ),
+                    ),
+                  ),
                   /*Align(
                     alignment: Alignment.bottomCenter,
                     child: Container(
