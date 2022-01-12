@@ -1,7 +1,10 @@
 import 'package:workout_app/Components/Navbar/Navbar.dart';
 import 'package:workout_app/Data/errorfeedback.dart';
+import 'package:workout_app/Screens/Friends/pendingfriendslist.dart';
 import "package:workout_app/constants.dart";
 import 'package:flutter/material.dart';
+
+import '../../router.dart';
 
 class FriendsHomeScreen extends StatefulWidget {
   @override
@@ -19,6 +22,7 @@ class _FriendsHomeScreenState extends State<FriendsHomeScreen> {
   void initState() {
     friendsList = [];
     pendingFriends = [];
+    _getProfile(currentUser!.id);
     _getFriends(currentUser!.id);
   }
 
@@ -39,7 +43,7 @@ class _FriendsHomeScreenState extends State<FriendsHomeScreen> {
     if (_createnew == true) {
       final updates = {
         'id': currentUser!.id,
-        "numoffriends": null, //todo change this to 0 and fix RLS
+        "numoffriends": 0, //todo fix RLS
       };
       final response = await supabase.from('profiles').upsert(updates).execute();
       if (response.error != null) {
@@ -86,9 +90,9 @@ class _FriendsHomeScreenState extends State<FriendsHomeScreen> {
       friendsList = response.data!['friendslist'] as List;
       pendingFriends = response.data!['pendingfriends'] as List;
     } else {
-      await _getProfile(currentUser!.id);
       if (numoffriends == null) {
         _updateFriends(true);
+        numoffriends = 0;
       }
     }
     setState(() {
@@ -100,55 +104,88 @@ class _FriendsHomeScreenState extends State<FriendsHomeScreen> {
   Widget build(BuildContext context) {
     var ScreenData = MediaQuery.of(context).size;
     return SafeArea(
-      child: Scaffold(
-        backgroundColor: primary,
-        appBar: CustomAppBar(
-          appbaraccentcolour: WorkoutsAccentColour,
-          appbarcolour: secondary,
-          appbartitle: "Friends",
-        ),
-        body: _loading ? Container(
-          child: Center(
-            child: CircularProgressIndicator(),
-          ),
-        ) : Container(
-          margin: EdgeInsets.only(
-            left: ScreenData.width*0.01,
-            right: ScreenData.width*0.01,
-            top: ScreenData.height*0.03,
-            bottom: ScreenData.height*0.03,
-          ),
-          width: ScreenData.width,
-          height: ScreenData.height,
-          color: secondary,
-          child: ListView.builder(
-            padding: EdgeInsets.only(top: 5),
-            itemCount: friendsList.length,
-            itemBuilder: (BuildContext context, int index) {
-              return Container(
-                padding: EdgeInsets.only(left: 15),
-                height: 50,
-                color: primary,
+      child: Stack(
+        children: [
+          Scaffold(
+            backgroundColor: primary,
+            appBar: CustomAppBar(
+              appbaraccentcolour: WorkoutsAccentColour,
+              appbarcolour: secondary,
+              appbartitle: "Friends",
+            ),
+            body: _loading ? Container(
+              child: Center(
+                child: CircularProgressIndicator(),
+              ),
+            ) : Container(
                 margin: EdgeInsets.only(
-                  top: 2,
-                  bottom: 2,
-                  left: 2,
-                  right: 2,
+                  left: ScreenData.width*0.01,
+                  right: ScreenData.width*0.01,
+                  top: ScreenData.height*0.03,
+                  bottom: ScreenData.height*0.03,
                 ),
-                child: Align(
-                  alignment: Alignment.centerLeft,
-                  child: Text(
-                    friendsList[index],
-                    style: TextStyle(
-                      color: tertiary,
-                      fontSize: 20,
-                    ),
-                  ),
+                width: ScreenData.width,
+                height: ScreenData.height,
+                color: secondary,
+                child: ListView.builder(
+                  padding: EdgeInsets.only(top: 5),
+                  itemCount: friendsList.length,
+                  itemBuilder: (BuildContext context, int index) {
+                    return Container(
+                      padding: EdgeInsets.only(left: 15),
+                      height: 50,
+                      color: primary,
+                      margin: EdgeInsets.only(
+                        top: 2,
+                        bottom: 2,
+                        left: 2,
+                        right: 2,
+                      ),
+                      child: Align(
+                        alignment: Alignment.centerLeft,
+                        child: Text(
+                          friendsList[index],
+                          style: TextStyle(
+                            color: tertiary,
+                            fontSize: 20,
+                          ),
+                        ),
+                      ),
+                    );
+                  },
                 ),
-              );
-            },
+              ),
+            ),
+          Positioned(
+            left: ScreenData.width*0.83,
+            height: ScreenData.height*0.07,
+            child: FloatingActionButton(
+              heroTag: UniqueKey(),
+              onPressed: () {
+                Navigator.push(
+                    context,
+                    FadeRouter(
+                      routeName: "friendslist",
+                      screen: PendingFriendsHomeScreen(
+                        username: username,
+                        friendsList: friendsList,
+                        pendingFriends: pendingFriends,
+                        numoffriends: numoffriends,
+                      ),
+                    ));
+              },
+              elevation: 0,
+              hoverElevation: 1,
+              focusElevation: 0,
+              highlightElevation: 0,
+              backgroundColor: secondary,
+              child: Icon(
+                Icons.group_add,
+                size: 35,
+              ),
+            ),
           ),
-        ),
+        ],
       ),
     );
   }
