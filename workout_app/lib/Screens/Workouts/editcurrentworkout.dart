@@ -400,7 +400,6 @@ class _EditCurrentWorkoutState extends State<EditCurrentWorkout>
               actions: [
                 ElevatedButton(
                   onPressed: () {
-                    print("Deleted");
                     _deleteWorkout(widget.index);
                     Navigator.of(context).pop();
                     },
@@ -418,7 +417,6 @@ class _EditCurrentWorkoutState extends State<EditCurrentWorkout>
                 ),
                 ElevatedButton(
                   onPressed: () {
-                    print("Cancelled");
                     Navigator.of(context).pop();
                     },
                   style: ElevatedButton.styleFrom(
